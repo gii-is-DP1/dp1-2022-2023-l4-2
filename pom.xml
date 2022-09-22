@@ -47,6 +47,20 @@
                 </picUrl>
             </properties>
         </developer>
+            <developer>
+                <id>juacamgar2</id>
+                <name>Juan Jesús</name>
+                <email>guaje3181@gmail.com</email>
+                <url>http://www.tmht.com/leo</url>
+                <roles>
+                    <role>developer</role>
+                </roles>
+                <properties>
+                    <picUrl>
+                        http://images7.memedroid.com/images/UPLOADED668/5f1a7fb36ff0a.jpeg
+                    </picUrl>
+                </properties>
+        </developer>
         <!-- More developers ...-->
     </developers>
 
