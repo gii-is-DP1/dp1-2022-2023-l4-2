@@ -33,6 +33,20 @@
     </properties>
 
     <developers>
+         <developer>
+            <id>PabloMera6</id>
+            <name>Pablo Mera</name>
+            <email>pabmergom@alum.us.es</email>
+            <url>http://www.tmht.com/leo</url>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <properties>
+                <picUrl>
+                    http://images7.memedroid.com/images/UPLOADED668/5f1a7fb36ff0a.jpeg
+                </picUrl>
+            </properties>
+        </developer>
         <developer>
             <id>Alejandrocg024</id>
             <name>Alejandro Campano</name>
@@ -64,6 +78,7 @@
         <!-- More developers ...-->
     </developers>
 
+>>>>>>> master
     <dependencies>
         <!-- Spring and Spring Boot dependencies -->
         <dependency>
