@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.springframework.samples</groupId>
-    <artifactId>spring-petclinic</artifactId>
+    <artifactId>G2-L4</artifactId>
     <version>2.2.0.BUILD-SNAPSHOT</version>
 
     <parent>
@@ -12,7 +12,7 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.2.4.RELEASE</version>
     </parent>
-    <name>petclinic</name>
+    <name>DP1 L4-2</name>
 
     <properties>
 
@@ -31,8 +31,9 @@
         <spring-format.version>0.0.19</spring-format.version>
 
     </properties>
+
     <developers>
-        <developer>
+         <developer>
             <id>PabloMera6</id>
             <name>Pablo Mera</name>
             <email>pabmergom@alum.us.es</email>
@@ -46,7 +47,38 @@
                 </picUrl>
             </properties>
         </developer>
+        <developer>
+            <id>Alejandrocg024</id>
+            <name>Alejandro Campano</name>
+            <email>alecamgal1@alum.us.es</email>
+            <url>http://www.tmht.com/leo</url>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <properties>
+                <picUrl>
+                    http://images7.memedroid.com/images/UPLOADED668/5f1a7fb36ff0a.jpeg
+                </picUrl>
+            </properties>
+        </developer>
+            <developer>
+                <id>juacamgar2</id>
+                <name>Juan Jesús</name>
+                <email>guaje3181@gmail.com</email>
+                <url>http://www.tmht.com/leo</url>
+                <roles>
+                    <role>developer</role>
+                </roles>
+                <properties>
+                    <picUrl>
+                        http://images7.memedroid.com/images/UPLOADED668/5f1a7fb36ff0a.jpeg
+                    </picUrl>
+                </properties>
+        </developer>
+        <!-- More developers ...-->
     </developers>
+
+>>>>>>> master
     <dependencies>
         <!-- Spring and Spring Boot dependencies -->
         <dependency>
