@@ -89,6 +89,20 @@
                 </picUrl>
             </properties>
         </developer>
+         <developer>
+            <id>davra02</id>
+            <name>David Reyes Alés</name>
+            <email>davidreyesales@gmail.com</email>
+            <url>http://www.tmht.com/leo</url>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <properties>
+                <picUrl>
+                    http://images7.memedroid.com/images/UPLOADED668/5f1a7fb36ff0a.jpeg
+                </picUrl>
+            </properties>
+        </developer>
         <!-- More developers ...-->
     </developers>
 
