@@ -32,6 +32,21 @@
 
     </properties>
 
+    <developer>
+            <id>edupizlop</id>
+            <name>Eduardo Pizarro López</name>
+            <email>edupriv2002@gmail.com</email>
+            <url>http://www.tmht.com/leo</url>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <properties>
+                <picUrl>
+                    http://images7.memedroid.com/images/UPLOADED668/5f1a7fb36ff0a.jpeg
+                </picUrl>
+            </properties>
+        </developer>
+
     <dependencies>
         <!-- Spring and Spring Boot dependencies -->
         <dependency>
