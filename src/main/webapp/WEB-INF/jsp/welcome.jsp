@@ -12,6 +12,8 @@
             <spring:url value="/resources/images/logoPNG_3.png" htmlEscape="true" var="logo"/>
             <img class="img-responsive" src="${petsImage}"/>
             <img class="img-responsive" src="${logo}"/>
+            <spring:url value="/resources/images/logo_laliga.png" htmlEscape="true" var="logoLaliga"/>
+            <img class="img-responsive" src="${logoLaliga}"/>
         </div>
     </div>
 </petclinic:layout>
