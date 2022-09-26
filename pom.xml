@@ -32,7 +32,10 @@
 
     </properties>
 
-    <developer>
+        <developers>
+            <developer>
+                
+           
             <id>edupizlop</id>
             <name>Eduardo Pizarro López</name>
             <email>edupriv2002@gmail.com</email>
@@ -46,6 +49,7 @@
                 </picUrl>
             </properties>
         </developer>
+        </developers>
 
     <dependencies>
         <!-- Spring and Spring Boot dependencies -->
