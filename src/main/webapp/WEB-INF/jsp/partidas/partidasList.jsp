@@ -20,6 +20,7 @@
             <th>Limite</th>
             <th>Faccion ganadora</th>
             <th>Tiempo</th>
+            <th>Eliminar</th>
         </tr>
         </thead>
         <tbody>
@@ -51,6 +52,9 @@
                 </td>
                 <td>
                     <c:out value="${partida.tiempo}"/>
+                </td>
+                <td>
+                    <td><a href="/partidas/delete/${partida.id}"><span class="glyphicon glyphicon-trash alert" aria-hidden="true"></a> </td>
                 </td>
             </tr>
         </c:forEach>

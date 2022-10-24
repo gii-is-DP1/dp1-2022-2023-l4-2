@@ -19,4 +19,8 @@ public class PartidaService {
     public List<Partida> getPartidas(){
         return partidaRepo.findAll();
     }
+    @Transactional
+    public void deletePartida(long id) {
+        partidaRepo.deleteById(id);
+    }
 }
