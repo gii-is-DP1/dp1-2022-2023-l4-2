@@ -91,3 +91,15 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (2, 8, '2013-01-02',
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (3, 8, '2013-01-03', 'neutered');
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04', 'spayed');
 
+INSERT INTO facciones(id,name) VALUES(1,'Leal');
+INSERT INTO facciones(id,name) VALUES(2,'Traidor');
+INSERT INTO facciones(id,name) VALUES(3,'Mercader');
+
+INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
+    VALUES(1,1,1,6,'Guaje',14,12,15,1,20);
+INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
+    VALUES(2,1,1,6,'Jose',10,14,15,2,29);
+INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
+    VALUES(3,4,1,8,'Juan',19,12,20,1,30);
+INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
+    VALUES(4,1,1,6,'Jose',14,14,15,3,26);

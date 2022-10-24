@@ -47,11 +47,13 @@
 				</petclinic:menuItem>
 
 
-				<petclinic:menuItem active="${name eq 'usuarios'}" url="/users"
-					title="usuarios">
-					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-					<span>usuarios</span>
+				<petclinic:menuItem active="${name eq 'partidas'}" url="/partidas"
+					title="partidas">
+					<span class="glyphicon glyphicon-knight" aria-hidden="true"></span>
+					<span>partidas</span>
 				</petclinic:menuItem>
+
+				
 
 			</ul>
 
