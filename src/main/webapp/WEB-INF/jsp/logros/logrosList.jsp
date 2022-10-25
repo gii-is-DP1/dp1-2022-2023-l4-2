@@ -15,6 +15,7 @@
             <th>Descripcion</th>
             <th>Tipo</th>
             <th>Limite</th>
+            <th>Dificultad</th>
         </tr>
         </thead>
         <tbody>
