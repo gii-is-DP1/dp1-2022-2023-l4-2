@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/logros")
 public class LogroController {
     public static final String LOGROS_LISTING = "logros/logrosList";
-    private final String LOGROS_FORM="/achievements/createOrUpdateLogroForm";
+    private final String LOGROS_FORM="/logros/createOrUpdateLogroForm";
 
     private LogroService logroService;
 
@@ -39,7 +39,7 @@ public class LogroController {
     public ModelAndView editLogro(@PathVariable int id){
         Logro logro = logroService.getLogroById(id).get();        
         ModelAndView result=new ModelAndView(LOGROS_FORM);
-        result.addObject("achievement", logro);
+        result.addObject("logro", logro);
         return result;
     }
 
