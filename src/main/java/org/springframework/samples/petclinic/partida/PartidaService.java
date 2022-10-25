@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.partida;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,4 +24,9 @@ public class PartidaService {
     public void deletePartida(long id) {
         partidaRepo.deleteById(id);
     }
+    @Transactional
+    public Optional<Partida> getPartidaById(long id) {
+		Optional<Partida> result = partidaRepo.findById(id);
+		return result;
+	}
 }
