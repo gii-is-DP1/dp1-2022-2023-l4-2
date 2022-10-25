@@ -95,6 +95,10 @@ INSERT INTO facciones(id,name) VALUES(1,'Leal');
 INSERT INTO facciones(id,name) VALUES(2,'Traidor');
 INSERT INTO facciones(id,name) VALUES(3,'Mercader');
 
+INSERT INTO dificultad(id,name) VALUES(1,'Facil');
+INSERT INTO dificultad(id,name) VALUES(2,'Normal');
+INSERT INTO dificultad(id,name) VALUES(3,'Dificil');
+
 INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
     VALUES(1,1,1,6,'Guaje',14,12,15,1,20);
 INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
@@ -103,3 +107,11 @@ INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,vot
     VALUES(3,4,1,8,'Juan',19,12,20,1,30);
 INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
     VALUES(4,1,1,6,'Jose',14,14,15,3,26);
+
+INSERT INTO tipo(id, name)
+    VALUES(1, 'Por ganar');
+INSERT INTO tipo(id, name)
+    VALUES(2, 'Por jugar');
+
+INSERT INTO logro(id, nombre, descripcion, tipo_id, limite, dificultad_id)
+    VALUES(1, 'Maestro Pokemon', 'Obtén todos los pokemon', 1, 10, 3);
