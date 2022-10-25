@@ -29,4 +29,9 @@ public class LogroService {
 		Optional<Logro> result = logroRepo.findById(id);
 		return result;
 	}
+
+    @Transactional
+    public void save(Logro a){
+        logroRepo.save(a);
+    }
 }

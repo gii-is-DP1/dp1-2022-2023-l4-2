@@ -36,6 +36,16 @@
                 <td>
                     <c:out value="${logro.dificultad}"/>
                 </td>
+                <td> 
+                    <a href="/estadistica/logros/${logro.id}/edit"> 
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>                            
+                    </a>       
+                </td>
+                <td> 
+                    <a href="/estadistica/logros/delete/${logro.id}"> 
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    </a>      
+                </td>
             </tr>
         </c:forEach>
         </tbody>
