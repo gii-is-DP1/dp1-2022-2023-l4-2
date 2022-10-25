@@ -20,6 +20,8 @@
             <th>Limite</th>
             <th>Faccion ganadora</th>
             <th>Tiempo</th>
+            <th></th>
+
             <th>Eliminar</th>
         </tr>
         </thead>
