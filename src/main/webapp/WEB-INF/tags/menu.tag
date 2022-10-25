@@ -53,6 +53,12 @@
 					<span>partidas</span>
 				</petclinic:menuItem>
 
+				<petclinic:menuItem active="${name eq 'logros'}" url="/logros"
+					title="logros">
+					<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+					<span>logros</span>
+				</petclinic:menuItem>
+
 				
 
 			</ul>
