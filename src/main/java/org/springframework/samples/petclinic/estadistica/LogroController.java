@@ -46,7 +46,7 @@ public class LogroController {
             result.addObject("logro", logro.get());
         }else{
             result=showLogros();
-            result.addObject("message", "Room with id "+ id + " not foudn");
+            result.addObject("message", "Logro with id "+ id + " not found");
         }
         return result;
     }
