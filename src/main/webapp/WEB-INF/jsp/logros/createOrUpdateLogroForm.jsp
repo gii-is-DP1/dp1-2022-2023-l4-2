@@ -14,28 +14,21 @@
     </jsp:attribute>
     <jsp:body>
         <h2>
-            <c:if test="${logro['new']}">New </c:if> Logro
+            
         </h2>
         <form:form modelAttribute="logro"
                    class="form-horizontal">
             <input type="hidden" name="id" value="${logro.id}"/>
             <div class="form-group has-feedback">                
-                <petclinic:inputField label="Name" name="name"/>
-                <petclinic:inputField label="Description" name="description"/>
-                <petclinic:inputField label="Type" name="type"/>
-                <petclinic:inputField label="Limit" name="limit"/>
-                <petclinic:inputField label="Difficulty" name="difficulty"/>
+                <petclinic:inputField label="Nombre" name="nombre"/>
+                <petclinic:inputField label="Descripcion" name="descripcion"/>
+                <petclinic:inputField label="Tipo" name="tipo"/>
+                <petclinic:inputField label="Limite" name="limite"/>
+                <petclinic:inputField label="Dificultad" name="dificultad.id"/>
             </div>
             <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <c:choose>
-                        <c:when test="${logro['new']}">
-                            <button class="btn btn-default" type="submit">Add Logro</button>
-                        </c:when>
-                        <c:otherwise>
-                            <button class="btn btn-default" type="submit">Update Logro</button>
-                        </c:otherwise>
-                    </c:choose>
+                <div class="col-sm-offset-2 col-sm-10"></div>
+                     <button class="btn btn-default" type="submit">Update Logro</button>
                 </div>
             </div>
         </form:form>        

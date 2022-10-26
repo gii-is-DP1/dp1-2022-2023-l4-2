@@ -117,4 +117,4 @@ INSERT INTO logro(id, nombre, descripcion, tipo_id, limite, dificultad_id)
     VALUES(1, 'Maestro Pokemon', 'Obtén todos los pokemon', 1, 10, 3);
 
 INSERT INTO logro(id, nombre, descripcion, tipo_id, limite, dificultad_id)
-    VALUES(2, 'Maestro Fifa', 'Se mejor que guaje en fifa', 1, 10, 3);    
+    VALUES(2, 'Maestro Fifa', 'Se mejor que guaje en fifa', 2, 10, 3);    
