@@ -24,7 +24,16 @@
                 <petclinic:inputField label="Descripcion" name="descripcion"/>
                 <petclinic:inputField label="Tipo" name="tipo"/>
                 <petclinic:inputField label="Limite" name="limite"/>
-                <petclinic:inputField label="Dificultad" name="dificultad.id"/>
+                <tr>
+                    <td>Dificultad:</td>
+                    <td>
+                        <select name = "dificultad">
+                            <option value="1">Facil</option>
+                            <option value="2">Normal</option>
+                            <option value="3">Dificil</option>
+                        </select>
+                    </td>
+                </tr>
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10"></div>
