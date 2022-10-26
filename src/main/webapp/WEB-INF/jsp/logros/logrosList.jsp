@@ -37,12 +37,12 @@
                     <c:out value="${logro.dificultad}"/>
                 </td>
                 <td> 
-                    <a href="/estadistica/logros/${logro.id}/edit"> 
+                    <a href="/logros/edit/${logro.id}"> 
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>                            
                     </a>       
                 </td>
                 <td> 
-                    <a href="/estadistica/logros/delete/${logro.id}"> 
+                    <a href="/logros/delete/${logro.id}"> 
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                     </a>      
                 </td>
