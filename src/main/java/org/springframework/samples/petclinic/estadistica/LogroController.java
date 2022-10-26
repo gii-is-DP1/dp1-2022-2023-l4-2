@@ -65,7 +65,8 @@ public class LogroController {
         }else{
 
         }
-        return showLogros();
+        //return showLogros();
+        return new ModelAndView("redirect:/logros");
     }
     
 }
