@@ -48,6 +48,7 @@ public class LogroController {
         Optional<Logro> logro = logroService.getLogroById(id);
         if (logro.isPresent()) {
             result.addObject("logro", logro.get());
+
         } else {
             result = showLogros();
             result.addObject("message", "Room with id " + id + " not found");
