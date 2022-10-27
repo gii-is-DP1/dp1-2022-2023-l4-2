@@ -50,4 +50,6 @@
         </c:forEach>
         </tbody>
     </table>
+    <a class="btn btn-default" href="/logros/new">Crear logro</a>
+
 </petclinic:layout>

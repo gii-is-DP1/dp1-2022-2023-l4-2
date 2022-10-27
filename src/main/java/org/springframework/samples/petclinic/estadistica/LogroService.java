@@ -24,7 +24,7 @@ public class LogroService {
     public void deleteLogro(long id) {
         logroRepo.deleteById(id);
     }
-    @Transactional
+    @Transactional(readOnly = true)
     public Optional<Logro> getLogroById(long id) {
 		Optional<Logro> result = logroRepo.findById(id);
 		return result;
