@@ -43,7 +43,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/partidas/**").hasAuthority("admin")
 				.antMatchers("/logros/**").authenticated()
 				.antMatchers("/estadisticas/**").authenticated()
-				.antMatchers("/jugadores/**").authenticated()
+				.antMatchers("/jugadores/**").hasAuthority("admin")
 				.anyRequest().denyAll()
 				.and()
 				 	.formLogin()
@@ -80,7 +80,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		PasswordEncoder encoder =  NoOpPasswordEncoder.getInstance();
 	    return encoder;
 	}
-	
 }
 
 
