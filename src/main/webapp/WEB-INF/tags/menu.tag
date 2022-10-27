@@ -65,6 +65,13 @@
 					<span>Estadisticas</span>
 				</petclinic:menuItem>
 
+				<petclinic:menuItem active="${name eq 'jugadores'}" url="/jugadores"
+					title="jugadores">
+					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+					<span>Jugadores</span>
+				</petclinic:menuItem>
+
+
 				
 
 			</ul>
