@@ -4,12 +4,13 @@
 
 <%@ attribute name="pageName" required="true" %>
 <%@ attribute name="customScript" required="false" fragment="true"%>
+<link href="http://fonts.cdnfonts.com/css/dalek-pinpoint" rel="stylesheet">
 
 <!doctype html>
 <html>
 <petclinic:htmlHeader/>
 
-<body>
+<body style = "font-family: 'Dalek Pinpoint', sans-serif;";>
 <petclinic:bodyHeader menuName="${pageName}"/>
 
 <div class="container-fluid">

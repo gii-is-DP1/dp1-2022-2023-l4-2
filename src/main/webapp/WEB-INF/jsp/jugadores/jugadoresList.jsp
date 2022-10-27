@@ -6,7 +6,7 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="logros">
-    <h2>Logros</h2>
+    <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>Jugadores:</h2>
 
     <table id="logrosTable" class="table table-striped">
         <thead>

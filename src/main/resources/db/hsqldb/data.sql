@@ -124,3 +124,6 @@ INSERT INTO jugador(id, nickname, rol_id, es_anfitrion, num_consul, esta_en_part
 
 INSERT INTO jugador(id, nickname, rol_id, es_anfitrion, num_consul, esta_en_partida)
     VALUES(2, 'Zarro', Null, FALSE, Null, FALSE);
+
+INSERT INTO rol(id,name)
+    VALUES(1,'Cónsul'),(2,'Pretor'),(3,'Edil');

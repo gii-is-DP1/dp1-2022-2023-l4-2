@@ -13,7 +13,7 @@
         </script>
     </jsp:attribute>
     <jsp:body>
-        <h2>
+        <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>
             Actualizar logro
             
         </h2>

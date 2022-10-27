@@ -13,7 +13,7 @@
         </script>
     </jsp:attribute>
     <jsp:body>
-        <h2>
+        <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>
             Nuevo Logro
         </h2>
         <form:form modelAttribute="logro"

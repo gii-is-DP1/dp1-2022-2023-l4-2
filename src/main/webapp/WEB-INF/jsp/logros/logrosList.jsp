@@ -4,9 +4,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <petclinic:layout pageName="logros">
-    <h2>Logros</h2>
+    <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>Logros</h2>
 
     <table id="logrosTable" class="table table-striped">
         <thead>
@@ -36,20 +37,25 @@
                 <td>
                     <c:out value="${logro.dificultad}"/>
                 </td>
+                <sec:authorize access='hasAuthority("admin")' > 
                 <td> 
                     <a href="/logros/edit/${logro.id}"> 
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>                            
                     </a>       
                 </td>
+                </sec:authorize>
+                <sec:authorize access='hasAuthority("admin")' > 
                 <td> 
                     <a href="/logros/delete/${logro.id}"> 
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                     </a>      
                 </td>
+                </sec:authorize>
             </tr>
         </c:forEach>
         </tbody>
     </table>
-    <a class="btn btn-default" href="/logros/new">Crear logro</a>
-
+    <sec:authorize access='hasAuthority("admin")' > 
+        <a class="btn btn-default" href="/logros/new">Crear logro</a>
+    </sec:authorize>
 </petclinic:layout>

@@ -46,12 +46,13 @@
 					<span>Error</span>
 				</petclinic:menuItem>
 
-
+				<sec:authorize access='hasAuthority("admin")' > 
 				<petclinic:menuItem active="${name eq 'partidas'}" url="/partidas"
 					title="partidas">
 					<span class="glyphicon glyphicon-knight" aria-hidden="true"></span>
 					<span>partidas</span>
 				</petclinic:menuItem>
+				</sec:authorize>
 
 				<petclinic:menuItem active="${name eq 'logros'}" url="/logros"
 					title="logros">
@@ -65,11 +66,13 @@
 					<span>Estadisticas</span>
 				</petclinic:menuItem>
 
+				<sec:authorize access='hasAuthority("admin")' > 
 				<petclinic:menuItem active="${name eq 'jugadores'}" url="/jugadores"
 					title="jugadores">
 					<span class="glyphicon glyphicon-bishop" aria-hidden="true"></span>
 					<span>Jugadores</span>
 				</petclinic:menuItem>
+				</sec:authorize>
 
 
 				
