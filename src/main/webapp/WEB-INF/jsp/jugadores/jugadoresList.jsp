@@ -5,14 +5,14 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="jugadores">
-    <h2>Jugdores</h2>
+<petclinic:layout pageName="logros">
+    <h2>Logros</h2>
 
-    <table id="jugadoresTable" class="table table-striped">
+    <table id="logrosTable" class="table table-striped">
         <thead>
         <tr>
-            <th>Nickname</th>
-            <th>EstaEnPartida</th>
+            <th>Nombre de usuario</th>
+            <th>Esta en partida?</th>
         </tr>
         </thead>
         <tbody>
@@ -22,7 +22,7 @@
                     <c:out value="${jugador.nickname}"/>
                 </td>
                 <td>
-                    <c:out value="${jugador.estaEnPartida}"/>
+                    <c:out value="${jugador.estaEnPartida ? 'Si, esta jugando' : 'No esta en ninguna partida'}"/>
                 </td>
                 <td> 
                     <a href="/jugadores/delete/${jugador.id}"> 

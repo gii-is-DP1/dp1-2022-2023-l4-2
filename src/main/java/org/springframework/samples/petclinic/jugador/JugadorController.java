@@ -14,7 +14,6 @@ public class JugadorController {
 
 public static final String JUGADORES_LISTING = "jugadores/jugadoresList";
 
-
 private JugadorService jugadorService;
 
 @Autowired
@@ -25,7 +24,7 @@ public JugadorController(JugadorService jugadorService){
 @GetMapping()
 public ModelAndView showJugadores() {
     ModelAndView result = new ModelAndView(JUGADORES_LISTING);
-    result.addObject("partidas", jugadorService.getJugadores());
+    result.addObject("jugadores", jugadorService.getJugadores());
     return result;
 }
 

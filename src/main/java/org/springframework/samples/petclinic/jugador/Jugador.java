@@ -28,8 +28,9 @@ public class Jugador implements Serializable {
     @ManyToOne
     @JoinColumn
     private RolType rol;
-    private Boolean esAnfitrion;
+    private boolean esAnfitrion;
+    //@Min(0)
     //@Max(numJugadores)
     private Integer numConsul;
-    private Boolean estaEnPartida;
+    private boolean estaEnPartida;
 }
