@@ -2,6 +2,8 @@ package org.springframework.samples.petclinic.estadistica;
 
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,62 +13,80 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.ModelAndViewDefiningException;
 
 @Controller
 @RequestMapping("/logros")
 public class LogroController {
     public static final String LOGROS_LISTING = "logros/logrosList";
-    private final String LOGROS_FORM="/logros/createOrUpdateLogroForm";
+    private final String LOGROS_FORM = "/logros/updateLogroForm";
+    private final String LOGROS_FORM2= "/logros/createLogroForm";
 
     private LogroService logroService;
 
     @Autowired
-    public LogroController(LogroService logroService){
+    public LogroController(LogroService logroService) {
         this.logroService = logroService;
     }
 
     @GetMapping()
-	public ModelAndView showLogros() {
-		ModelAndView result = new ModelAndView(LOGROS_LISTING);
-		result.addObject("logros", logroService.getLogros());
-		return result;
-	}
+    public ModelAndView showLogros() {
+        ModelAndView result = new ModelAndView(LOGROS_LISTING);
+        result.addObject("logros", logroService.getLogros());
+        return result;
+    }
 
     @GetMapping("/delete/{id}")
-    public ModelAndView deleteLogro(@PathVariable("id") long id){
+    public ModelAndView deleteLogro(@PathVariable("id") long id) {
         logroService.deleteLogro(id);
         return new ModelAndView("redirect:/logros");
     }
 
     @GetMapping("/edit/{id}")
-    public ModelAndView editLogro(@PathVariable("id") long id){
+    public ModelAndView editLogro(@PathVariable("id") long id) {
         ModelAndView result = new ModelAndView(LOGROS_FORM);
         Optional<Logro> logro = logroService.getLogroById(id);
-        if(logro.isPresent()){
+        if (logro.isPresent()) {
             result.addObject("logro", logro.get());
-        }else{
-            result=showLogros();
-            result.addObject("message", "Logro with id "+ id + " not found");
+
+        } else {
+            result = showLogros();
+            result.addObject("message", "Room with id " + id + " not found");
         }
         return result;
     }
 
-
     @PostMapping("/edit/{id}")
-    public ModelAndView saveLogro(Logro logro, BindingResult br,@PathVariable("id") long id){
-        
-//        Logro logroToBeUpdated=logroService.getLogroById(id).get();
-//        BeanUtils.copyProperties(logro,logroToBeUpdated,"id");
-//        logroService.save(logroToBeUpdated);
-//        return showLogros();
-        
-        if(br.hasErrors()){
+    public ModelAndView saveLogro(Logro logro, BindingResult br, @PathVariable("id") long id) {
+        if (!br.hasErrors()) {
             logroService.save(logro);
-        }else{
+        } else {
 
         }
-        //return showLogros();
         return new ModelAndView("redirect:/logros");
     }
+     
+    @GetMapping("/new")
+    public ModelAndView createLogro(){
+        Logro logro = new Logro();
+        ModelAndView result = new ModelAndView(LOGROS_FORM2);
+        result.addObject("logro", logro);
+        return result;
+    }
+
+    @PostMapping("/new")
+    public ModelAndView saveNewLogro(@Valid Logro logro, BindingResult br){
+        if(br.hasErrors()){
+            return new ModelAndView(LOGROS_FORM2,br.getModel());
+        }
+        logroService.save(logro);
+        ModelAndView result =new ModelAndView("redirect:/logros");
+        result.addObject("message", "El logro se añadió correctamente");
+        return result;
+    }
+
     
+            
+
 }
+

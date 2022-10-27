@@ -14,7 +14,7 @@
     </jsp:attribute>
     <jsp:body>
         <h2>
-            
+            Nuevo Logro
         </h2>
         <form:form modelAttribute="logro"
                    class="form-horizontal">
@@ -22,7 +22,15 @@
             <div class="form-group has-feedback">                
                 <petclinic:inputField label="Nombre" name="nombre"/>
                 <petclinic:inputField label="Descripcion" name="descripcion"/>
-                <petclinic:inputField label="Tipo" name="tipo"/>
+                <tr>
+                    <td>Tipo:</td>
+                    <td>
+                        <select name = "tipo">
+                            <option value="1">Por jugar</option>
+                            <option value="2">Por ganar</option>
+                        </select>
+                    </td>
+                </tr>
                 <petclinic:inputField label="Limite" name="limite"/>
                 <tr>
                     <td>Dificultad:</td>
@@ -37,7 +45,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10"></div>
-                     <button class="btn btn-default" type="submit">Update Logro</button>
+                     <button class="btn btn-default" type="submit" href="/logros/new">Crear logro</button>
                 </div>
             </div>
         </form:form>        
