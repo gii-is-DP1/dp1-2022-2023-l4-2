@@ -59,6 +59,12 @@
 					<span>logros</span>
 				</petclinic:menuItem>
 
+				<petclinic:menuItem active="${name eq 'estadisticas'}" url="/estadisticas"
+					title="estadisticas">
+					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+					<span>Estadisticas</span>
+				</petclinic:menuItem>
+
 				
 
 			</ul>
