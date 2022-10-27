@@ -3,10 +3,11 @@ package org.springframework.samples.petclinic.jugador;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class JugadorService {
@@ -30,10 +31,5 @@ public class JugadorService {
     @Transactional
     public void deleteJugador(long id){
         jugadorRepo.deleteById(id);
-    }
-
-    @Transactional
-    public void save(Jugador j){
-        jugadorRepo.save(j);
     }
 }
