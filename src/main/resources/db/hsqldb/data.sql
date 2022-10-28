@@ -107,6 +107,12 @@ INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,vot
     VALUES(3,4,1,8,'Juan',19,12,20,1,30);
 INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
     VALUES(4,1,1,6,'Jose',14,14,15,3,26);
+INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
+    VALUES(5,2,1,5,'Pablo',8,10,15,2,26);
+INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
+    VALUES(6,2,2,5,'Pablo',10,10,15,3,26);
+INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
+    VALUES(7,2,3,5,'Pablo',11,10,15,1,26);
 
  INSERT INTO tipo(id, name)
     VALUES(2, 'Por ganar');
