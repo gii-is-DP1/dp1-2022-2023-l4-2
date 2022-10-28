@@ -39,6 +39,14 @@
             <th>Maximo votos en contra Cesar</th>
             <th><c:out value="${maxVotosEnContraCesar}"/></th>
         </tr>
+        <tr>
+            <th>Maxima diferencia de votos en una partida</th>
+            <th><c:out value="${maxDiferenciaDeVotos}"/></th>
+        </tr>
+        <tr>
+            <th>Faccion que ha ganado el menor numero de veces</th>
+            <th><c:out value="${faccionPerdedora}"/></th>
+        </tr>
         </thead>
         <tbody>
             

@@ -1,6 +1,9 @@
 package org.springframework.samples.petclinic.estadistica;
 
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.jdt.internal.compiler.flow.FlowContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +38,8 @@ public class EstadisticaGeneralController {
         result.addObject("mediaMinutosPartida", getMediaMinutosPartida(partidas));
         result.addObject("maxVotosAFavorCesar", getMaxVotosAFavorCesar(partidas));
         result.addObject("maxVotosEnContraCesar", getMaxVotosEnContraCesar(partidas));
+        result.addObject("maxDiferenciaDeVotos", getMaxDifVotos(partidas));
+        result.addObject("faccionPerdedora", getFaccionPerdedora(partidas));
 		return result;
     }
 
@@ -64,7 +69,7 @@ public class EstadisticaGeneralController {
         for(Partida partida: partidas){
             tiempoPartidas += partida.getTiempo();
         }
-        result = tiempoPartidas/partidas.size();
+        result = Float.valueOf(Math.round(tiempoPartidas/partidas.size()));
         return result;
     }
 
@@ -93,6 +98,35 @@ public class EstadisticaGeneralController {
         for(Partida partida: partidas){
             if (partida.getFaccionGanadora().getName().equals("Mercader")){
                 result++;
+            }
+        }
+        return result;
+    }
+
+    private String getFaccionPerdedora(List<Partida> partidas) {
+        String res = "Hay facciones empatadas en numero de victorias";
+        Map<FaccionType,Integer> aux = new HashMap<FaccionType, Integer>();
+        for(Partida partida: partidas){
+            if (aux.containsKey(partida.getFaccionGanadora())){
+                aux.put(partida.getFaccionGanadora(), aux.get(partida.getFaccionGanadora()) + 1);
+            }else{
+                aux.put(partida.getFaccionGanadora(),  1);
+            }
+        }
+        String res1 = aux.entrySet().stream().min(Comparator.comparing(x->x.getValue())).get().getKey().getName();
+        if(res1 != null){
+            return res1;
+        }else{
+            return res;
+        }
+    }
+
+    private Long getMaxDifVotos(List<Partida> partidas) {
+        Long result = 0L;
+        for(Partida partida: partidas){
+            Long res = Math.abs(partida.getVotosFavorCesar() - partida.getVotosContraCesar());
+            if( res > result){
+                result = res;
             }
         }
         return result;
