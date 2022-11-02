@@ -5,7 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="logros">
+<petclinic:layout pageName="jugadores">
     <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>Jugadores:</h2>
 
     <table id="logrosTable" class="table table-striped">
