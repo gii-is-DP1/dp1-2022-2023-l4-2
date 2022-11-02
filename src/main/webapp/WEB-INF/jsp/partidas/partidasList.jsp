@@ -27,7 +27,7 @@
         </thead>
         <tbody>
         <c:forEach items="${partidas}" var="partida">
-            <tr>
+            <tr style = "text-align: center; ";>
                 <td>
                     <c:out value="${partida.ronda}"/>
                 </td>
