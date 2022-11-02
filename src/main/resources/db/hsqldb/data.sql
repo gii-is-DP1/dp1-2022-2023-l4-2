@@ -119,11 +119,19 @@ INSERT INTO logro(id, nombre, descripcion, tipo_id, limite, dificultad_id)
 INSERT INTO logro(id, nombre, descripcion, tipo_id, limite, dificultad_id)
     VALUES(2, 'Maestro Fifa', 'Se mejor que guaje en fifa', 2, 10, 3);
 
-INSERT INTO jugador(id, nickname, rol_id, es_anfitrion, num_consul, esta_en_partida)
-    VALUES(1, 'Guaje', Null, TRUE, 1, TRUE);
-
-INSERT INTO jugador(id, nickname, rol_id, es_anfitrion, num_consul, esta_en_partida)
-    VALUES(2, 'Zarro', Null, FALSE, Null, FALSE);
 
 INSERT INTO rol(id,name)
     VALUES(1,'Cónsul'),(2,'Pretor'),(3,'Edil');
+
+
+INSERT INTO users(username,password,enabled) VALUES ('Guaje', '1111', TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (10, 'Guaje', 'jugador');
+
+INSERT INTO users(username,password,enabled) VALUES ('Antaca', '1111', TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (11, 'Antaca', 'jugador');
+
+INSERT INTO jugador(id,first_name,last_name,username,rol_id,es_anfitrion,num_consul,esta_en_partida)
+    VALUES(1,'Juan Jesús','Campos','Guaje',Null,false,Null,false);
+
+INSERT INTO jugador(id,first_name,last_name,username,rol_id,es_anfitrion,num_consul,esta_en_partida)
+    VALUES(2,'Antonio','Carretero','Antaca',Null,false,Null,false);
