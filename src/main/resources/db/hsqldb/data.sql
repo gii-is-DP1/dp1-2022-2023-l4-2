@@ -141,3 +141,7 @@ INSERT INTO jugador(id,first_name,last_name,username,rol_id,es_anfitrion,num_con
 
 INSERT INTO jugador(id,first_name,last_name,username,rol_id,es_anfitrion,num_consul,esta_en_partida)
     VALUES(2,'Antonio','Carretero','Antaca',Null,false,Null,false);
+
+
+INSERT INTO partida_jugadores(partida_id,jugadores_id) VALUES(1,1);
+INSERT INTO partida_jugadores(partida_id,jugadores_id) VALUES(1,2);
