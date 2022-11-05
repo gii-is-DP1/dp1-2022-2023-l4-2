@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.partida;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -10,6 +11,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.Size;
+
+import org.springframework.samples.petclinic.jugador.Jugador;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -31,9 +36,16 @@ public class Partida implements Serializable{
     private long votosFavorCesar;
     private long votosContraCesar;
     private long limite;
+
+
     @ManyToOne
 	@JoinColumn
     private FaccionType faccionGanadora;
     private long tiempo;
+
+    @OneToMany
+    @Size(min=5,max=8)
+    private List<Jugador> jugadores;
+
     
 }

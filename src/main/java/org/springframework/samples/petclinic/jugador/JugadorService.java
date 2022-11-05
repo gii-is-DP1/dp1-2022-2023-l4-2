@@ -50,4 +50,9 @@ public class JugadorService {
 
         authoritiesService.saveAuthorities(j.getUser().getUsername(),"Jugador");
     }
+
+    @Transactional(readOnly = true)
+    public Jugador getJugadorByUsername(String username){
+        return jugadorRepo.findJugadorByUsername(username);
+    }
 }

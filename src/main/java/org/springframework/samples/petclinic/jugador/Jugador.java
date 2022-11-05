@@ -40,6 +40,7 @@ public class Jugador extends Person {
     private Integer numConsul;
     private boolean estaEnPartida;
 
+    
 
     
 }

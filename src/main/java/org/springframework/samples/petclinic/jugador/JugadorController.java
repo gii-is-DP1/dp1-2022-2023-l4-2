@@ -20,6 +20,7 @@ public class JugadorController {
 
 public static final String JUGADORES_LISTING = "jugadores/jugadoresList";
 public static final String JUGADOR_CREATE = "jugadores/jugadorCreate";
+public static final String JUGADOR_PERFIL = "jugadores/jugadorPerfil";
 
 private JugadorService jugadorService;
 
@@ -58,5 +59,17 @@ public String processCreationForm(@Valid Jugador j, BindingResult br){
         return "welcome";
     }
 }
+
+    @GetMapping("/perfil/{username}")
+    public ModelAndView showPerfil(@PathVariable("username") String username){
+        ModelAndView res = new ModelAndView(JUGADOR_PERFIL);
+        Jugador j = jugadorService.getJugadorByUsername(username);
+        if(j==null){
+            res = new ModelAndView("redirect:/exception");
+        }else{
+            res.addObject("jugador", j);
+        }
+        return res;
+    }
 
 }

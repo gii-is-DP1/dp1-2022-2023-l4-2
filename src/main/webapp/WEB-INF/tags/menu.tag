@@ -74,6 +74,15 @@
 				</petclinic:menuItem>
 				</sec:authorize>
 
+				<sec:authorize access='hasAuthority("jugador")'>
+				
+				<petclinic:menuItem active="${name eq 'perfil'}" url="/jugadores/perfil/"
+					title="perfil">
+					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+					<span>Perfil</span>
+					<span><sec:authentication property="name" /></span>
+				</petclinic:menuItem>
+				</sec:authorize>
 
 				
 

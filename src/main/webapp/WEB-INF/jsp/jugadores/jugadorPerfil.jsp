@@ -1,0 +1,56 @@
+<%@ page session="false" trimDirectiveWhitespaces="true" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+
+<petclinic:layout pageName="perfil">
+
+    <div style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 100px;text-align: center;">
+        <c:out value ="${jugador.user.username}"/>
+    </div>
+    <div>
+        <spring:url value="/resources/images/Soldado.jpg" htmlEscape="true" var="logo"/>
+        <img class="img-responsive" style ="margin: auto;width: 200px;   height: 200px;   border-radius: 50%;" src="${logo}"/>
+    </div>
+
+    <table id="JugadorPerfil" class="table table-striped">
+        <tr>
+            <th>Nombre</th>
+            <th><c:out value = "${jugador.firstName}"/></th>
+        </tr>
+        <tr>
+            <th>Apellidos</th>
+            <th><c:out value = "${jugador.lastName}"/></th>
+        </tr>
+        <tr>
+            <th>Partidas jugadas</th>
+            <th></th>
+        </tr>
+        <tr>
+            <th>Partidas ganadas</th>
+            <th></th>
+        </tr>
+        <tr>
+            <th>Victorias como leal</th>
+            <th></th>
+        </tr>
+        <tr>
+            <th>Victorias como traidor</th>
+            <th></th>
+        </tr>
+        <tr>
+            <th>Victorias como mercader</th>
+            <th></th>
+        </tr>
+        <tr>
+            <th>Tiempo jugado</th>
+            <th></th>
+        </tr>
+        
+    </table>
+
+</petclinic:layout>
