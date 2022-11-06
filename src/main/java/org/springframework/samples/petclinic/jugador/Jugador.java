@@ -18,6 +18,8 @@ import javax.validation.constraints.NotBlank;
 import org.springframework.samples.petclinic.user.User;
 
 import org.springframework.samples.petclinic.model.Person;
+import org.springframework.samples.petclinic.partida.Participacion;
+import org.springframework.samples.petclinic.partida.Partida;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -34,13 +36,14 @@ public class Jugador extends Person {
     @ManyToOne
     @JoinColumn
     private RolType rol;
-    private boolean esAnfitrion;
-    //@Min(0)
-    //@Max(numJugadores)
-    private Integer numConsul;
+
     private boolean estaEnPartida;
 
-    
+    @ManyToMany(cascade = CascadeType.ALL,mappedBy = "jugadores")
+    public List<Partida> partidas;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    public List<Participacion> participaciones;
 
     
 }

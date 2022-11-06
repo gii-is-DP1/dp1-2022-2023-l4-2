@@ -3,6 +3,7 @@ package org.springframework.samples.petclinic.partida;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Size;
@@ -43,9 +45,12 @@ public class Partida implements Serializable{
     private FaccionType faccionGanadora;
     private long tiempo;
 
-    @OneToMany
+    @ManyToMany
     @Size(min=5,max=8)
     private List<Jugador> jugadores;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    List<Participacion> participaciones;
 
     
 }
