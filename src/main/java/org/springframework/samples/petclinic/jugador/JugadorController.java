@@ -37,7 +37,7 @@ public ModelAndView showJugadores() {
 }
 
 @GetMapping("/delete/{id}")
-public ModelAndView deleteJugador(@PathVariable("id") long id){
+public ModelAndView deleteJugador(@PathVariable("id") Integer id){
     jugadorService.deleteJugador(id);
     return new ModelAndView("redirect:/jugadores");
 }

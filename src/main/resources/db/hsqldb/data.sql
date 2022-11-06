@@ -136,12 +136,20 @@ INSERT INTO authorities(id,username,authority) VALUES (10, 'Guaje', 'jugador');
 INSERT INTO users(username,password,enabled) VALUES ('Antaca', '1111', TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (11, 'Antaca', 'jugador');
 
-INSERT INTO jugador(id,first_name,last_name,username,rol_id,es_anfitrion,num_consul,esta_en_partida)
-    VALUES(1,'Juan Jesús','Campos','Guaje',Null,false,Null,false);
+INSERT INTO jugador(id,first_name,last_name,username,rol_id,esta_en_partida)
+    VALUES(1,'Juan Jesús','Campos','Guaje',Null,false);
 
-INSERT INTO jugador(id,first_name,last_name,username,rol_id,es_anfitrion,num_consul,esta_en_partida)
-    VALUES(2,'Antonio','Carretero','Antaca',Null,false,Null,false);
+INSERT INTO jugador(id,first_name,last_name,username,rol_id,esta_en_partida)
+    VALUES(2,'Antonio','Carretero','Antaca',Null,false);
 
 
-INSERT INTO partida_jugadores(partida_id,jugadores_id) VALUES(1,1);
-INSERT INTO partida_jugadores(partida_id,jugadores_id) VALUES(1,2);
+INSERT INTO partida_jugadores(partidas_id,jugadores_id) VALUES(1,1);
+INSERT INTO partida_jugadores(partidas_id,jugadores_id) VALUES(1,2);
+
+
+INSERT INTO participacion(id, es_anfitrion,num_consul,votos_contra_cesar,votos_favor_cesar,votos_neutros,faccion_apoyada_id)
+    VALUES(1,true,1,3,0,0,1);
+INSERT INTO partida_participaciones(partida_id,participaciones_id)
+    VALUES(1,1);
+INSERT INTO jugador_participaciones(jugador_id,participaciones_id)
+    VALUES(1,1);

@@ -33,13 +33,14 @@ public class JugadorService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<Jugador> getJugadorById(long id){
+    public Optional<Jugador> getJugadorById(Integer id){
         return jugadorRepo.findById(id);
     }
     
     @Transactional
-    public void deleteJugador(long id){
+    public void deleteJugador(Integer id){
         jugadorRepo.deleteById(id);
+
     }
 
     @Transactional

@@ -22,7 +22,6 @@
             <th>Tiempo</th>
             <th>Jugadores</th>
 
-            <th>Eliminar</th>
         </tr>
         </thead>
         <tbody>
@@ -59,9 +58,6 @@
                     <c:forEach items="${partida.jugadores}" var="jugador">
                         <c:out value="${jugador.user.username},"/>
                     </c:forEach>
-                </td>
-                <td>
-                    <td><a href="/partidas/delete/${partida.id}"><span class="glyphicon glyphicon-trash alert" aria-hidden="true"></a> </td>
                 </td>
             </tr>
         </c:forEach>
