@@ -119,11 +119,24 @@ INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,vot
  INSERT INTO tipo(id, name)
     VALUES(1, 'Por jugar');
 
+INSERT INTO tipo(id, name)
+    VALUES(3, 'Victorias leal');
+
+INSERT INTO tipo(id, name)
+    VALUES(4, 'Victorias traidor');
+
+INSERT INTO tipo(id, name)
+    VALUES(5, 'Victorias mercader');
+
+
 INSERT INTO logro(id, nombre, descripcion, tipo_id, limite, dificultad_id)
     VALUES(1, 'Maestro Pokemon', 'Obtén todos los pokemon', 1, 10, 3);
 
 INSERT INTO logro(id, nombre, descripcion, tipo_id, limite, dificultad_id)
     VALUES(2, 'Maestro Fifa', 'Se mejor que guaje en fifa', 2, 10, 3);
+
+INSERT INTO logro(id, nombre, descripcion, tipo_id, limite, dificultad_id)
+    VALUES(3, 'Mbappe', 'Sigue los pasos de Mbappe', 4, 100, 3);
 
 
 INSERT INTO rol(id,name)

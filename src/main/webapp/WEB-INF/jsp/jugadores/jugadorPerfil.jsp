@@ -8,14 +8,31 @@
 	uri="http://www.springframework.org/security/tags"%>
 
 <petclinic:layout pageName="perfil">
-
+    
+    
     <div style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 100px;text-align: center;">
         <c:out value ="${jugador.user.username}"/>
     </div>
-    <div>
-        <spring:url value="/resources/images/Soldado.jpg" htmlEscape="true" var="logo"/>
-        <img class="img-responsive" style ="margin: auto;width: 200px;   height: 200px;   border-radius: 50%;" src="${logo}"/>
-    </div>
+    <c:if test="${faccionFavorita == 'Leal'}">
+        <div>
+            <spring:url value="/resources/images/SoldadoLeal.png" htmlEscape="true" var="logo"/>
+            <img class="img-responsive" style ="margin: auto;width: 200px;   height: 200px;   border-radius: 50%;" src="${logo}"/>
+        </div>
+    </c:if>
+
+    <c:if test="${faccionFavorita == 'Mercader'}">
+        <div>
+            <spring:url value="/resources/images/SoldadoNeutral.png" htmlEscape="true" var="logo"/>
+            <img class="img-responsive" style ="margin: auto;width: 200px;   height: 200px;   border-radius: 50%;" src="${logo}"/>
+        </div>
+    </c:if>
+
+    <c:if test="${faccionFavorita == 'Traidor'}">
+        <div>
+            <spring:url value="/resources/images/SoldadoTraidor.jpg" htmlEscape="true" var="logo"/>
+            <img class="img-responsive" style ="margin: auto;width: 200px;   height: 200px;   border-radius: 50%;" src="${logo}"/>
+        </div>
+    </c:if>
 
     <table id="JugadorPerfil" class="table table-striped">
         <tr>
