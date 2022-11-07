@@ -49,7 +49,7 @@ public class Partida implements Serializable{
     @Size(min=5,max=8)
     private List<Jugador> jugadores;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "partidas")
     List<Participacion> participaciones;
 
     
