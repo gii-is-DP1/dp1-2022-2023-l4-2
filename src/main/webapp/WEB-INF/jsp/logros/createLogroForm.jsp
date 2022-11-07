@@ -28,6 +28,9 @@
                         <select name = "tipo">
                             <option value="1">Por jugar</option>
                             <option value="2">Por ganar</option>
+                            <option value="3">Victorias Leal</option>
+                            <option value="4">Victorias Traidor</option>
+                            <option value="5">Victorias Mercader</option>
                         </select>
                     </td>
                 </tr>
