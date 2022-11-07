@@ -28,29 +28,32 @@
         </tr>
         <tr>
             <th>Partidas jugadas</th>
-            <th></th>
+            <th><c:out value = "${numPartidasJugadas}"/></th>
         </tr>
         <tr>
             <th>Partidas ganadas</th>
-            <th></th>
+            <th><c:out value = "${numPartidasGanadas}"/></th>
         </tr>
         <tr>
             <th>Victorias como leal</th>
-            <th></th>
+            <th><c:out value = "${victoriasComoLeal}"/></th>
         </tr>
         <tr>
             <th>Victorias como traidor</th>
-            <th></th>
+            <th><c:out value = "${victoriasComoTraidor}"/></th>
         </tr>
         <tr>
             <th>Victorias como mercader</th>
-            <th></th>
+            <th><c:out value = "${victoriasComoMercader}"/></th>
         </tr>
         <tr>
             <th>Tiempo jugado</th>
-            <th></th>
+            <th><c:out value = "${tiempoJugado}"/></th>
         </tr>
-        
+        <tr>
+            <th>Faccion favorita</th>
+            <th><c:out value = "${faccionFavorita}"/></th>
+        </tr>
     </table>
 
 </petclinic:layout>
