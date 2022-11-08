@@ -149,6 +149,9 @@ INSERT INTO authorities(id,username,authority) VALUES (10, 'Guaje', 'jugador');
 INSERT INTO users(username,password,enabled) VALUES ('Antaca', '1111', TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (11, 'Antaca', 'jugador');
 
+INSERT INTO users(username,password,enabled) VALUES ('Alecam', '1111', TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (12, 'Alecam', 'jugador');
+
 INSERT INTO jugador(id,first_name,last_name,username,rol_id,esta_en_partida)
     VALUES(1,'Juan Jesús','Campos','Guaje',Null,false),
     (2,'Antonio','Carretero','Antaca',Null,false);

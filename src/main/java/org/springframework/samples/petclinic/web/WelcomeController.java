@@ -14,4 +14,11 @@ public class WelcomeController {
 
 	    return "welcome";
 	  }
+	  
+
+	  @GetMapping({"/home"})
+	  public String home(Map<String, Object> model) {	    
+
+	    return "home";
+	  }
 }
