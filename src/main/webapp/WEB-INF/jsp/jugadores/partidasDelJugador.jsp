@@ -11,8 +11,7 @@
 
 <petclinic:layout pageName="historial">
     <div style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 100px;text-align: center;">
-        <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>Historial de  </h2>
-        <c:out value ="${jugador.user.username}"/>
+        <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>Historial de <c:out value ="${username}"/></h2>
     </div>
 
 
@@ -32,34 +31,34 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${jugador}" var="jugador">
+        <c:forEach items="${historial}" var="partida">
             <tr style = "text-align: center; ";>
                 <td>
-                    <c:out value="${jugador.partidas.ronda}"/>
+                    <c:out value="${partida.ronda}"/>
                 </td>
                 <td>
-                    <c:out value="${jugador.partidas.turno}"/>
+                    <c:out value="${partida.turno}"/>
                 </td>
                 <td>
-                    <c:out value="${jugador.partidas.numJugadores}"/>
+                    <c:out value="${partida.numJugadores}"/>
                 </td>
                 <td>
-                    <c:out value="${jugador.partidas.anfitrion}"/>
+                    <c:out value="${partida.anfitrion}"/>
                 </td>
                 <td>
-                    <c:out value="${jugador.partidas.votosFavorCesar}"/>
+                    <c:out value="${partida.votosFavorCesar}"/>
                 </td>
                 <td>
-                    <c:out value="${jugador.partidas.votosContraCesar}"/>
+                    <c:out value="${partida.votosContraCesar}"/>
                 </td>
                 <td>
-                    <c:out value="${jugador.partidas.limite}"/>
+                    <c:out value="${partida.limite}"/>
                 </td>
                 <td>
-                    <c:out value="${jugador.partidas.faccionGanadora}"/>
+                    <c:out value="${partida.faccionGanadora}"/>
                 </td>
                 <td>
-                    <c:out value="${jugador.partidas.tiempo}"/>
+                    <c:out value="${partida.tiempo}"/>
                 </td>
             </tr>
         </c:forEach>

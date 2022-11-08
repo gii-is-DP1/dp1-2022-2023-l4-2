@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.partida.FaccionType;
 import org.springframework.samples.petclinic.partida.Participacion;
 import org.springframework.samples.petclinic.partida.Partida;
+import org.springframework.samples.petclinic.partida.PartidaService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -88,6 +89,7 @@ public String processCreationForm(@Valid Jugador j, BindingResult br){
     public ModelAndView getPartidasDelJugador(@PathVariable("username") String username){
         ModelAndView res = new ModelAndView(JUGADOR_HISTORIAL);
         List<Partida> aux = jugadorService.getJugadorByUsername(username).getPartidas();
+        res.addObject(username);
         res.addObject("historial", aux);
         return res;
     }
