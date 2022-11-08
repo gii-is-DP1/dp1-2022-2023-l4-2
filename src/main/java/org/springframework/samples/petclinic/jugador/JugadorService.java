@@ -56,4 +56,6 @@ public class JugadorService {
     public Jugador getJugadorByUsername(String username){
         return jugadorRepo.findJugadorByUsername(username);
     }
+
+    
 }

@@ -25,6 +25,7 @@ public class JugadorController {
 public static final String JUGADORES_LISTING = "jugadores/jugadoresList";
 public static final String JUGADOR_CREATE = "jugadores/jugadorCreate";
 public static final String JUGADOR_PERFIL = "jugadores/jugadorPerfil";
+public static final String JUGADOR_HISTORIAL = "jugadores/partidasDelJugador";
 
 private JugadorService jugadorService;
 
@@ -80,6 +81,14 @@ public String processCreationForm(@Valid Jugador j, BindingResult br){
             res.addObject("tiempoJugado", getTiempoJugado(username));
             res.addObject("faccionFavorita", getFaccionFavorita(username));
         }
+        return res;
+    }
+
+    @GetMapping("/partidas/{username}")
+    public ModelAndView getPartidasDelJugador(@PathVariable("username") String username){
+        ModelAndView res = new ModelAndView(JUGADOR_HISTORIAL);
+        List<Partida> aux = jugadorService.getJugadorByUsername(username).getPartidas();
+        res.addObject("historial", aux);
         return res;
     }
 
@@ -175,5 +184,6 @@ public String processCreationForm(@Valid Jugador j, BindingResult br){
             return "Mercader";
         }
     }
+
 
 }
