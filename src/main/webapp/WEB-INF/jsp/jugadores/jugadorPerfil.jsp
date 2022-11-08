@@ -55,5 +55,10 @@
             <th><c:out value = "${faccionFavorita}"/></th>
         </tr>
     </table>
-
+    <a class="btn btn-default" href="/jugadores/partidas/${username}">Amigos</a>
+    <div style = "text-align: right">
+        <a class="btn btn-default" href="/jugadores/partidas/${username}">Historial de partidas</a>
+    </div>
+    
+   
 </petclinic:layout>

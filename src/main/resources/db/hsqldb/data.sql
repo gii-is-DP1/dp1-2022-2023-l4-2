@@ -17,7 +17,7 @@ INSERT INTO authorities(id,username,authority) VALUES (5, 'antcardia4', 'owner')
 INSERT INTO users(username,password,enabled) VALUES ('alecamgal1', 'acg', TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (6, 'alecamgal1', 'owner');
 
-INSERT INTO users(username,password,enabled) VALUES ('edupizlop', 'acg', TRUE);
+INSERT INTO users(username,password,enabled) VALUES ('edupizlop', 'epl', TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (7, 'edupizlop', 'owner');
 
 INSERT INTO users(username,password,enabled) VALUES ('pabmergom', 'pmg', TRUE);

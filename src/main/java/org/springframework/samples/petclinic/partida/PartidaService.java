@@ -24,9 +24,11 @@ public class PartidaService {
     public void deletePartida(long id) {
         partidaRepo.deleteById(id);
     }
-    @Transactional
+    @Transactional(readOnly = true)
     public Optional<Partida> getPartidaById(long id) {
 		Optional<Partida> result = partidaRepo.findById(id);
 		return result;
 	}
+
+  
 }
