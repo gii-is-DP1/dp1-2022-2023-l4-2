@@ -13,18 +13,19 @@
         <tr>
             <th>Nombre de usuario</th>
             <th>Esta en partida?</th>
+            <th>Eliminar</th>
         </tr>
         </thead>
         <tbody>
         <c:forEach items="${jugadores}" var="jugador">
             <tr>
                 <td>
-                    <c:out value="${jugador.user.username}"/>
+                    <a href="/jugadores/perfil/${jugador.user.username}">
+                        <c:out value="${jugador.user.username}"/>
+                    </a>
                 </td>
                 <td>
                     <c:out value="${jugador.estaEnPartida ? 'Si, esta jugando' : 'No esta en ninguna partida'}"/>
-                </td>
-                <td>
                 </td>
                 <td> 
                     <a href="/jugadores/delete/${jugador.id}"> 
