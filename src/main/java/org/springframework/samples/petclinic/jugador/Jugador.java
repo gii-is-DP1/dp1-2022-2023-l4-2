@@ -16,7 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 import org.springframework.samples.petclinic.user.User;
-
+import org.springframework.samples.petclinic.estadistica.Logro;
 import org.springframework.samples.petclinic.model.Person;
 import org.springframework.samples.petclinic.partida.Participacion;
 import org.springframework.samples.petclinic.partida.Partida;
@@ -44,6 +44,9 @@ public class Jugador extends Person {
 
     @ManyToMany(cascade = CascadeType.ALL)
     public List<Participacion> participaciones;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    public List<Logro> logros;
 
     
 }

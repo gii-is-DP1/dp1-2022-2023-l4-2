@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.estadistica.Logro;
 import org.springframework.samples.petclinic.partida.FaccionType;
 import org.springframework.samples.petclinic.partida.Participacion;
 import org.springframework.samples.petclinic.partida.Partida;
@@ -27,6 +28,7 @@ public static final String JUGADORES_LISTING = "jugadores/jugadoresList";
 public static final String JUGADOR_CREATE = "jugadores/jugadorCreate";
 public static final String JUGADOR_PERFIL = "jugadores/jugadorPerfil";
 public static final String JUGADOR_HISTORIAL = "jugadores/partidasDelJugador";
+public static final String JUGADOR_LOGROS = "jugadores/logrosDelJugador";
 
 private JugadorService jugadorService;
 
@@ -91,6 +93,15 @@ public String processCreationForm(@Valid Jugador j, BindingResult br){
         List<Partida> aux = jugadorService.getJugadorByUsername(username).getPartidas();
         res.addObject(username);
         res.addObject("historial", aux);
+        return res;
+    }
+
+    @GetMapping("/logros/{username}")
+    public ModelAndView getLogrosDelJugador(@PathVariable("username") String username){
+        ModelAndView res = new ModelAndView(JUGADOR_LOGROS);
+        List<Logro> aux = jugadorService.getJugadorByUsername(username).getLogros();
+        res.addObject(username);
+        res.addObject("logros", aux);
         return res;
     }
 
