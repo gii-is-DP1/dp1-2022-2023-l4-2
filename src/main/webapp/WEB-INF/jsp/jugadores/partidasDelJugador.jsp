@@ -64,4 +64,8 @@
         </c:forEach>
         </tbody>
     </table>
+    <a class="btn btn-default" href="/jugadores/perfil/${username}">Volver al Perfil</a>
+    <div style = "text-align: right">
+        <a class="btn btn-default" href="/jugadores/logros/${username}">Mis Logros</a>
+    </div>
 </petclinic:layout>
