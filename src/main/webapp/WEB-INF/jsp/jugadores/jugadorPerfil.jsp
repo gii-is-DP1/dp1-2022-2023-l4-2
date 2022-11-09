@@ -74,8 +74,10 @@
     </table>
     <a class="btn btn-default" href="/jugadores/partidas/${username}">Amigos</a>
     <div style = "text-align: right">
-        <a class="btn btn-default" href="/jugadores/partidas/${username}">Historial de partidas</a>
+        <a class="btn btn-default" href="/jugadores/partidas/${username}">Historial de Partidas</a>
     </div>
-    
+    <div style = "text-align: center">
+        <a class="btn btn-default" href="/jugadores/logros/${username}">Mis Logros</a>
+    </div>
    
 </petclinic:layout>
