@@ -1,11 +1,11 @@
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="idusmartii" tagdir="/WEB-INF/tags" %>
 
 <link href="http://fonts.cdnfonts.com/css/dalek-pinpoint" rel="stylesheet">
 <!doctype html>
 <html>
-<petclinic:htmlHeader/>
+<idusmartii:htmlHeader/>
 <spring:url value="/resources/images/idusDeMarzo.jpg" htmlEscape="true" var="idusDeMarzo"/>
 
 <body style="background-image: url(/resources/images/idusDeMarzo.jpg); background-repeat: 

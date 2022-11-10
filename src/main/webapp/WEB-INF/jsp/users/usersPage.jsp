@@ -2,9 +2,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="idusmartii" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="users">
+<idusmartii:layout pageName="users">
 
 
-</petclinic:layout>
+</idusmartii:layout>

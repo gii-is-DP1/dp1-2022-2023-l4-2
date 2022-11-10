@@ -3,9 +3,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="idusmartii" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="jugadores">
+<idusmartii:layout pageName="jugadores">
     <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>Jugadores:</h2>
 
     <table id="logrosTable" class="table table-striped">
@@ -37,4 +37,4 @@
         </tbody>
     </table>
 
-</petclinic:layout>
+</idusmartii:layout>
