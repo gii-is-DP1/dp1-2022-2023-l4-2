@@ -13,19 +13,14 @@
         </tr>
         <tr>
             <td>
-                <spring:url value="/resources/docs/instrucciones.pdf" htmlEscape="true" var="pdf"/>
-                <a class="btn btn-default"  href="${pdf}" target="_blank">PDF</a>
-            </td>
-        </tr>
-        <tr>
-            <td>
                 <iframe width="50%" height="315" src="https://www.youtube.com/embed/1Rl2DWWoBmI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </td>
         </tr>
         <tr>
             <td>
-                <iframe src="/resources/docs/instrucciones.pdf" width="70%" height="600px"></iframe>
+                <spring:url value="/resources/docs/instrucciones.pdf" htmlEscape="true" var="pdf"/>
+                <a class="btn btn-default"  href="${pdf}" target="_blank">PDF</a>
             </td>
-        </tr>  
+        </tr>
     </table>
 </petclinic:layout>

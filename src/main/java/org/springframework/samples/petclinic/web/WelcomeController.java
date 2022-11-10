@@ -1,9 +1,11 @@
 package org.springframework.samples.petclinic.web;
 
+import java.security.Principal;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class WelcomeController {
@@ -17,9 +19,12 @@ public class WelcomeController {
 	  
 
 	  @GetMapping({"/home"})
-	  public String home(Map<String, Object> model) {	    
-
-	    return "home";
+	  public ModelAndView home(Map<String, Object> model, Principal principal) {	    
+		ModelAndView mv = new ModelAndView("home");
+		if (principal != null){
+			mv.addObject("userName", principal.getName());
+		}
+	    return mv;
 	  }
 
 	  @GetMapping({"/instrucciones"})
@@ -27,4 +32,6 @@ public class WelcomeController {
 
 	    return "instrucciones";
 	  }
+
+
 }
