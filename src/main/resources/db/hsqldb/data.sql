@@ -26,6 +26,9 @@ INSERT INTO authorities(id,username,authority) VALUES (8, 'pabmergom', 'owner');
 INSERT INTO users(username,password,enabled) VALUES ('juacamgar2', 'jcg', TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (9, 'juacamgar2', 'owner');
 
+INSERT INTO users(username,password,enabled) VALUES ('davreyale', 'dvr', TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (14, 'davreyale', 'owner');
+
 INSERT INTO vets(id, first_name,last_name) VALUES (1, 'James', 'Carter');
 INSERT INTO vets(id, first_name,last_name) VALUES (2, 'Helen', 'Leary');
 INSERT INTO vets(id, first_name,last_name) VALUES (3, 'Linda', 'Douglas');
@@ -66,6 +69,8 @@ INSERT INTO owners VALUES (12, 'Antonio', 'Carretero', '123 Springfield St.', 'M
 INSERT INTO owners VALUES (13, 'Alejandro', 'Campano', '224 Jhon Keneddy', 'Liberty City', '6054678643', 'alecamgal1');
 INSERT INTO owners values (14,'Eduardo', 'Pizarro', '2 To use To use', 'Chipiona', '2222222222', 'edupizlop');
 INSERT INTO owners values (15,'Pablo', 'Mera', '619 Speed St.', 'Los Angeles', '678346789', 'pabmergom');
+INSERT INTO owners values (16,'David', 'Reyes', 'Fukin PM', 'Sevisha', '696969696', 'davreyale');
+
 
 INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (1, 'Leo', '2010-09-07', 1, 1);
 INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (2, 'Basil', '2012-08-06', 6, 2);
@@ -151,6 +156,9 @@ INSERT INTO authorities(id,username,authority) VALUES (11, 'Antaca', 'jugador');
 
 INSERT INTO users(username,password,enabled) VALUES ('Alecam', '1111', TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (12, 'Alecam', 'jugador');
+
+INSERT INTO users(username,password,enabled) VALUES ('Davilillo', '1111', TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (13, 'Davilillo', 'jugador');
 
 INSERT INTO jugador(id,first_name,last_name,username,rol_id,esta_en_partida)
     VALUES(1,'Juan Jesús','Campos','Guaje',Null,false),
