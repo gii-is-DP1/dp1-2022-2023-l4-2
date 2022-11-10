@@ -21,4 +21,10 @@ public class WelcomeController {
 
 	    return "home";
 	  }
+
+	  @GetMapping({"/instrucciones"})
+	  public String instrucciones(Map<String, Object> model) {	    
+
+	    return "instrucciones";
+	  }
 }
