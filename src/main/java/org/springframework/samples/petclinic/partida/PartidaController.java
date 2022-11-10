@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.partida;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -61,13 +62,35 @@ public class PartidaController {
         }
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
         List<Jugador> ls = List.of(j);
+        partida.setRonda(0);
+        partida.setTurno(0);
+        partida.setTiempo(0);
+        partida.setVotosContraCesar(0);
+        partida.setVotosFavorCesar(0);
+        partida.setFaccionGanadora(null);
+        partida.setParticipaciones(new ArrayList<>());
         partida.setJugadores(ls);
         partida.setAnfitrion(j.getUser().getUsername());
-        partida.setLimite(partida.getNumJugadores());
+        partida.setLimite(calculaLimite(partida.getNumJugadores()));
+        partida.setActiva(true);
         partidaService.save(partida);
-        ModelAndView result =new ModelAndView("redirect:/partidas");
-        result.addObject("message", "Ha habido un error creando la partida.");
+        ModelAndView result =new ModelAndView("redirect:/home");
+        //result.addObject("message", "Ha habido un error creando la partida.");
         return result;
+    }
+
+    private Long calculaLimite(Long nJugadores){
+        Long res=0l;
+        if(nJugadores == 5){
+            res = 13l;
+        }else if(nJugadores == 6){
+            res = 15l;
+        }else if(nJugadores == 7){
+            res = 17l;
+        }else{
+            res = 20l;
+        }
+        return res; 
     }
 
     @GetMapping("/delete/{id}")

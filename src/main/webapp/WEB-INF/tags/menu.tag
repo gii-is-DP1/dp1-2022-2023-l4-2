@@ -39,6 +39,7 @@
 						<span class="glyphicon glyphicon-bishop" aria-hidden="true"></span>
 						<span>Jugadores</span>
 					</petclinic:menuItem>
+				</sec:authorize>
 
 					<petclinic:menuItem active="${name eq 'logros'}" url="/logros"
 						title="logros">
@@ -52,7 +53,6 @@
 						<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 						<span>Estadisticas</span>
 					</petclinic:menuItem>
-				</sec:authorize>
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right">

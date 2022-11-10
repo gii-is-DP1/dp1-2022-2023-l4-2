@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.jugador;
 
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -77,7 +78,7 @@ public String processCreationForm(@Valid Jugador j, BindingResult br){
 }
 
     @GetMapping("/perfil/{username}")
-    public ModelAndView showPerfil(@PathVariable("username") String username){
+    public ModelAndView showPerfil(@PathVariable("username") String username,  Principal principal){
         ModelAndView res = new ModelAndView(JUGADOR_PERFIL);
         Jugador j = jugadorService.getJugadorByUsername(username);
         if(j==null){
@@ -91,6 +92,7 @@ public String processCreationForm(@Valid Jugador j, BindingResult br){
             res.addObject("victoriasComoMercader", getVictoriasComoMercader(username));
             res.addObject("tiempoJugado", getTiempoJugado(username));
             res.addObject("faccionFavorita", getFaccionFavorita(username));
+            res.addObject("nombreUsuario",principal.getName());
         }
         return res;
     }
@@ -120,18 +122,19 @@ public String processCreationForm(@Valid Jugador j, BindingResult br){
     }
 
     @GetMapping("/editPerfil/{username}")
-    public ModelAndView editPerfilJugador(@PathVariable("username") String username) {
+    public ModelAndView editPerfilJugador(@PathVariable("username") String username,Principal principal) {
         ModelAndView result = new ModelAndView(JUGADOR_EDITAR_PERFIL);
         Jugador jugador = jugadorService.getJugadorByUsername(username);
         result.addObject(username);
         result.addObject("jugador", jugador);
+        result.addObject("nombreUsuario",principal.getName());
         return result;
     }
 
     @PostMapping("/editPerfil/{username}")
     public ModelAndView savePerfilJugador(Jugador jugador, BindingResult br, @PathVariable("username") String username) {
         if (!br.hasErrors()) {
-            jugadorService.saveJugador(jugador);
+            jugadorService.editJugador(jugador);
         } else {
 
         }
