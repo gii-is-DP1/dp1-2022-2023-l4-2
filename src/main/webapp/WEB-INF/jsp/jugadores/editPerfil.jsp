@@ -27,7 +27,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10"></div>
-                     <button class="btn btn-default" type="submit">Actualizar Perfil</button>
+                     <button class="btn btn-default"  href="/jugadores/perfil/${username}" type="submit">Actualizar Perfil</button>
                 </div>
             </div>
         </form:form>        

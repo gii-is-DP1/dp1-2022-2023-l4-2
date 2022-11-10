@@ -123,7 +123,8 @@ public String processCreationForm(@Valid Jugador j, BindingResult br){
     public ModelAndView editPerfilJugador(@PathVariable("username") String username) {
         ModelAndView result = new ModelAndView(JUGADOR_EDITAR_PERFIL);
         Jugador jugador = jugadorService.getJugadorByUsername(username);
-            result.addObject("jugador", jugador);
+        result.addObject(username);
+        result.addObject("jugador", jugador);
         return result;
     }
 
