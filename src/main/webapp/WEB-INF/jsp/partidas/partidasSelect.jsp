@@ -6,26 +6,25 @@
 
 
 
-<petclinic:layout pageName="home">
+<petclinic:layout pageName="partidas">
 
     <table style="width: 100%; text-align: center; position: relative; top: 30%;">
         <tr>
             <td>
-                <h2 style="font-family: 'Dalek Pinpoint', sans-serif; color: #ecb660;" ;>IDUS MARTII</h2>
+                <h2 style="font-family: 'Dalek Pinpoint', sans-serif; color: #ecb660;" ;>Que prefiere</h2>
             </td>
         </tr>
         <tr>
             <td>
-                <spring:url value="/partidas/seleccionar" htmlEscape="true" var="jugar" />
-                <a class="btn btn-default" href="${jugar}">JUGAR</a>
+                <spring:url value="/partidas/new" htmlEscape="true" var="seleccionar" />
+                <a class="btn btn-default" href="${seleccionar}">CREAR PARTIDA</a>
             </td>
         </tr>
         <tr>
             <td>
-                <spring:url value="/instrucciones" htmlEscape="true" var="como" />
-                <a class="btn btn-default" href="${como}" target="_blank">COMO JUGAR</a>
+                <spring:url value="/partidas/join" htmlEscape="true" var="unirse" />
+                <a class="btn btn-default" href="${unirse}" target="_blank">UNIRSE A UNA PARTIDA</a>
             </td>
         </tr>
     </table>
 </petclinic:layout>
-
