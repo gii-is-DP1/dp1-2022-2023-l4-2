@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.estadistica.Logro;
+import org.springframework.samples.petclinic.estadistica.LogroService;
 import org.springframework.samples.petclinic.partida.FaccionType;
 import org.springframework.samples.petclinic.partida.Participacion;
 import org.springframework.samples.petclinic.partida.Partida;
@@ -34,8 +35,13 @@ private JugadorService jugadorService;
 
 @Autowired
 public JugadorController(JugadorService jugadorService){
+    
     this.jugadorService = jugadorService;
+
 }
+
+@Autowired
+private LogroService logroService;
 
 @GetMapping()
 public ModelAndView showJugadores() {
@@ -100,9 +106,14 @@ public String processCreationForm(@Valid Jugador j, BindingResult br){
     @GetMapping("/logros/{username}")
     public ModelAndView getLogrosDelJugador(@PathVariable("username") String username){
         ModelAndView res = new ModelAndView(JUGADOR_LOGROS);
-        List<Logro> aux = jugadorService.getJugadorByUsername(username).getLogros();
+        List<Logro> aux = logroService.getLogros();
         res.addObject(username);
         res.addObject("logros", aux);
+        res.addObject("partidasJugadas", getPartidasJugadas(username));
+        res.addObject("partidasGanadas", getPartidasGanadas(username));
+        res.addObject("victoriasLeal", getVictoriasComoLeal(username));
+        res.addObject("victoriasTraidor", getVictoriasComoTraidor(username));
+        res.addObject("victoriasMercader", getVictoriasComoMercader(username));
         return res;
     }
 

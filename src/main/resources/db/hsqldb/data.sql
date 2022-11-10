@@ -181,6 +181,3 @@ INSERT INTO partida_jugadores(partidas_id,jugadores_id)
     (3,1),
     (2,2);
 
-INSERT INTO jugador_logros(logros_id, jugador_id)
-    VALUES(1,1);
-
