@@ -1,5 +1,5 @@
 <%@ tag trimDirectiveWhitespaces="true" %>
-<%@ taglib prefix="idusmartii" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%@ attribute name="pageName" required="true" %>
@@ -8,10 +8,10 @@
 
 <!doctype html>
 <html>
-<idusmartii:htmlHeader/>
+<petclinic:htmlHeader/>
 
 <body style = "font-family: 'Dalek Pinpoint', sans-serif;";>
-<idusmartii:bodyHeader menuName="${pageName}"/>
+<petclinic:bodyHeader menuName="${pageName}"/>
 
 <div class="container-fluid">
     <div class="container xd-container">
@@ -26,10 +26,10 @@
 
         <jsp:doBody/>
 
-        <idusmartii:pivotal/>
+        <petclinic:pivotal/>
     </div>
 </div>
-<idusmartii:footer/>
+<petclinic:footer/>
 <jsp:invoke fragment="customScript" />
 
 </body>

@@ -2,9 +2,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="idusmartii" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<idusmartii:layout pageName="owners">
+<petclinic:layout pageName="owners">
 
     <h2>Owner Information</h2>
 
@@ -52,7 +52,7 @@
                         <dt>Name</dt>
                         <dd><c:out value="${pet.name}"/></dd>
                         <dt>Birth Date</dt>
-                        <dd><idusmartii:localDate date="${pet.birthDate}" pattern="yyyy-MM-dd"/></dd>
+                        <dd><petclinic:localDate date="${pet.birthDate}" pattern="yyyy-MM-dd"/></dd>
                         <dt>Type</dt>
                         <dd><c:out value="${pet.type.name}"/></dd>
                     </dl>
@@ -67,7 +67,7 @@
                         </thead>
                         <c:forEach var="visit" items="${pet.visits}">
                             <tr>
-                                <td><idusmartii:localDate date="${visit.date}" pattern="yyyy-MM-dd"/></td>
+                                <td><petclinic:localDate date="${visit.date}" pattern="yyyy-MM-dd"/></td>
                                 <td><c:out value="${visit.description}"/></td>
                             </tr>
                         </c:forEach>
@@ -94,4 +94,4 @@
         </c:forEach>
     </table>
 
-</idusmartii:layout>
+</petclinic:layout>

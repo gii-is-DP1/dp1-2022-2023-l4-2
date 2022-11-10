@@ -3,11 +3,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="idusmartii" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 
-<idusmartii:layout pageName="perfil">
+<petclinic:layout pageName="perfil">
     
     
     <div style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 100px;text-align: center;">
@@ -72,10 +72,10 @@
             <th><c:out value = "${faccionFavorita}"/></th>
         </tr>
     </table>
-    <div style = "text-align: center">
-        <a class="btn btn-default" href="/jugadores/partidas/${username}">Amigos</a>
-        <a class="btn btn-default" href="/jugadores/partidas/${username}">Historial de Partidas</a>
-        <a class="btn btn-default" href="/jugadores/logros/${username}">Mis Logros</a>
+    <a class="btn btn-default" href="/jugadores/partidas/${username}">Amigos</a>
+    <div style = "text-align: right">
+        <a class="btn btn-default" href="/jugadores/partidas/${username}">Historial de partidas</a>
     </div>
+    
    
-</idusmartii:layout>
+</petclinic:layout>

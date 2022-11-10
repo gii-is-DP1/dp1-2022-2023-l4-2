@@ -3,13 +3,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="idusmartii" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 
     
 
-<idusmartii:layout pageName="historial">
+<petclinic:layout pageName="historial">
     <div style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 100px;text-align: center;">
         <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>Historial de <c:out value ="${username}"/></h2>
     </div>
@@ -64,8 +64,4 @@
         </c:forEach>
         </tbody>
     </table>
-    <div style = "text-align: center">
-        <a class="btn btn-default" href="/jugadores/perfil/${username}">Volver al Perfil</a>
-        <a class="btn btn-default" href="/jugadores/logros/${username}">Mis Logros</a>
-    </div>
-</idusmartii:layout>
+</petclinic:layout>

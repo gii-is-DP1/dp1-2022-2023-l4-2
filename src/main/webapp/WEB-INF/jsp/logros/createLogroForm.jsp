@@ -2,9 +2,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="idusmartii" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<idusmartii:layout pageName="logros">
+<petclinic:layout pageName="logros">
     <jsp:attribute name="customScript">
         <script>
             $(function () {
@@ -20,8 +20,8 @@
                    class="form-horizontal">
             <input type="hidden" name="id" value="${logro.id}"/>
             <div class="form-group has-feedback">                
-                <idusmartii:inputField label="Nombre" name="nombre"/>
-                <idusmartii:inputField label="Descripcion" name="descripcion"/>
+                <petclinic:inputField label="Nombre" name="nombre"/>
+                <petclinic:inputField label="Descripcion" name="descripcion"/>
                 <tr>
                     <td>Tipo:</td>
                     <td>
@@ -34,7 +34,7 @@
                         </select>
                     </td>
                 </tr>
-                <idusmartii:inputField label="Limite" name="limite"/>
+                <petclinic:inputField label="Limite" name="limite"/>
                 <tr>
                     <td>Dificultad:</td>
                     <td>
@@ -53,4 +53,4 @@
             </div>
         </form:form>        
     </jsp:body>
-</idusmartii:layout>
+</petclinic:layout>

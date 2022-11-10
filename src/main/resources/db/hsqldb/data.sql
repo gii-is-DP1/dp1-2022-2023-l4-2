@@ -135,7 +135,7 @@ INSERT INTO tipo(id, name)
 
 
 INSERT INTO logro(id, nombre, descripcion, tipo_id, limite, dificultad_id)
-    VALUES(1, 'Maestro Pokemon', 'Obten todos los pokemon', 1, 10, 3);
+    VALUES(1, 'Maestro Pokemon', 'Obtén todos los pokemon', 1, 10, 3);
 
 INSERT INTO logro(id, nombre, descripcion, tipo_id, limite, dificultad_id)
     VALUES(2, 'Maestro Fifa', 'Se mejor que guaje en fifa', 2, 10, 3);
@@ -188,4 +188,5 @@ INSERT INTO partida_jugadores(partidas_id,jugadores_id)
     (2,1),
     (3,1),
     (2,2);
+
 

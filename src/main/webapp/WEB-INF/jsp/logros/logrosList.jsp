@@ -3,10 +3,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="idusmartii" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<idusmartii:layout pageName="logros">
+<petclinic:layout pageName="logros">
     <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>Logros</h2>
 
     <table id="logrosTable" class="table table-striped">
@@ -58,4 +58,4 @@
     <sec:authorize access='hasAuthority("admin")' > 
         <a class="btn btn-default" href="/logros/new">Crear logro</a>
     </sec:authorize>
-</idusmartii:layout>
+</petclinic:layout>

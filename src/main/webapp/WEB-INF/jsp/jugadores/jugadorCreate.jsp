@@ -4,18 +4,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="idusmartii" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<idusmartii:layout pageName="jugadores">
+<petclinic:layout pageName="jugadores">
     <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;">
        Nuevo Jugador
     </h2>
     <form:form modelAttribute="jugador" class="form-horizontal" id="add-jugador-form">
         <div class="form-group has-feedback">
-            <idusmartii:inputField label="First Name" name="firstName"/>
-            <idusmartii:inputField label="Last Name" name="lastName"/>
-            <idusmartii:inputField label="Nombre de usuario" name="user.username"/>
-            <idusmartii:inputField label="Contraseña" name="user.password"/>
+            <petclinic:inputField label="First Name" name="firstName"/>
+            <petclinic:inputField label="Last Name" name="lastName"/>
+            <petclinic:inputField label="Nombre de usuario" name="user.username"/>
+            <petclinic:inputField label="Contraseña" name="user.password"/>
 
         </div>
         <div class="form-group">
@@ -24,4 +24,4 @@
             </div>
         </div>
     </form:form>
-</idusmartii:layout>
+</petclinic:layout>
