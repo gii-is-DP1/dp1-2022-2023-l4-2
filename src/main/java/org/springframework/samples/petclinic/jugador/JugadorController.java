@@ -64,7 +64,7 @@ public String processCreationForm(@Valid Jugador j, BindingResult br){
     }else{
         this.jugadorService.saveJugador(j);
 
-        return "welcome";
+        return "home";
     }
 }
 
@@ -87,6 +87,7 @@ public String processCreationForm(@Valid Jugador j, BindingResult br){
         return res;
     }
 
+    
     @GetMapping("/partidas/{username}")
     public ModelAndView getPartidasDelJugador(@PathVariable("username") String username){
         ModelAndView res = new ModelAndView(JUGADOR_HISTORIAL);
