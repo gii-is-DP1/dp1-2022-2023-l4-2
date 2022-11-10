@@ -90,8 +90,8 @@
         </c:forEach>
         </tbody>
     </table>
-    <a class="btn btn-default" href="/jugadores/perfil/${username}">Volver al Perfil</a>
-    <div style = "text-align: right">
-        <a class="btn btn-default" href="/jugadores/partidas/${username}">Mi Historial de Partidas</a>
+    <div style = "text-align: center" >
+            <a class="btn btn-default" href="/jugadores/perfil/${username}">Volver al Perfil</a>
+            <a class="btn btn-default" href="/jugadores/partidas/${username}">Mi Historial de Partidas</a>
     </div>
 </petclinic:layout>
