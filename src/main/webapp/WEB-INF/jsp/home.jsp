@@ -12,7 +12,7 @@
             <table style="text-align: right; position: relative; top: 30%; width: 100%;">
                 <tr>
                     <td>
-                        <spring:url value="/jugadores/perfil/{username}" htmlEscape="true" var="misEstadisticas">
+                        <spring:url value="/jugadores/perfil/{userName}" htmlEscape="true" var="misEstadisticas">
                             <spring:param name="userName" value="${userName}" />
                         </spring:url>
                         <a class="btn btn-default"  href="${misEstadisticas}">MIS ESTADISTICAS</a>
