@@ -59,7 +59,7 @@ public class PartidaController {
         if(br.hasErrors()){
             return new ModelAndView(PARTIDAS_CREAR,br.getModel());
         }
-        Jugador j = jugadorService.getJugadorByUsername(principal.getName())
+        Jugador j = jugadorService.getJugadorByUsername(principal.getName());
         List<Jugador> ls = List.of(j);
         partida.setJugadores(ls);
         partida.setAnfitrion(j.getUser().getUsername());
