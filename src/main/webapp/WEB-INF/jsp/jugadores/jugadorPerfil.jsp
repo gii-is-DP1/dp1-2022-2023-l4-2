@@ -8,6 +8,8 @@
 	uri="http://www.springframework.org/security/tags"%>
 
 <petclinic:layout pageName="perfil">
+
+    <a class="btn btn-default" href="/jugadores/editPerfil/${username}">Editar Perfil</a>
     
     
     <div style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 100px;text-align: center;">
@@ -72,10 +74,11 @@
             <th><c:out value = "${faccionFavorita}"/></th>
         </tr>
     </table>
-    <div style = "text-align: center">
-        <a class="btn btn-default" href="/jugadores/partidas/${username}">Amigos</a>
-        <a class="btn btn-default" href="/jugadores/partidas/${username}">Historial de Partidas</a>
-        <a class="btn btn-default" href="/jugadores/logros/${username}">Mis Logros</a>
-    </div>
-   
+    <table  style= "width: 100%; text-align:center;position: relative;">
+        <tr>
+            <th style="text-align: left;"><a class="btn btn-default" href="/jugadores/partidas/${username}">Amigos</a></th>
+            <th  style="text-align: center;" ><a class="btn btn-default" href="/jugadores/partidas/${username}">Historial de Partidas</a></th>
+            <th  style="text-align: right;"><a class="btn btn-default" href="/jugadores/logros/${username}">Mis Logros</a></th>
+        </tr>
+    </table>   
 </petclinic:layout>

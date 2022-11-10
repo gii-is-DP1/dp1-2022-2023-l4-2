@@ -7,7 +7,6 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 
-    
 
 <petclinic:layout pageName="logros">
     <div style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 100px;text-align: center;">
@@ -90,8 +89,10 @@
         </c:forEach>
         </tbody>
     </table>
-    <div style = "text-align: center" >
-            <a class="btn btn-default" href="/jugadores/perfil/${username}">Volver al Perfil</a>
-            <a class="btn btn-default" href="/jugadores/partidas/${username}">Mi Historial de Partidas</a>
-    </div>
+    <table  style= "width: 100%; text-align:center;position: relative;">
+        <tr>
+            <th style="text-align: left;"> <a class="btn btn-default" href="/jugadores/perfil/${username}">Volver al Perfil</a></th>
+            <th  style="text-align: right;"> <a class="btn btn-default" href="/jugadores/partidas/${username}">Mi Historial de Partidas</a></th>
+        </tr>
+    </table> 
 </petclinic:layout>
