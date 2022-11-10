@@ -45,8 +45,5 @@ public class Jugador extends Person {
     @ManyToMany(cascade = CascadeType.ALL)
     public List<Participacion> participaciones;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    public List<Logro> logros;
-
     
 }
