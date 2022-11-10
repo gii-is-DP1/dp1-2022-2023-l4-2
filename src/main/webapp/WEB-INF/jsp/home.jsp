@@ -7,25 +7,57 @@
 
 
 <petclinic:layout pageName="home">
+    <sec:authorize access="isAuthenticated()">   
+        <div>
+            <table style="text-align: right; position: relative; top: 30%; width: 100%;">
+                <tr>
+                    <td>
+                        <spring:url value="/jugadores/perfil/{userName}" htmlEscape="true" var="misEstadisticas">
+                            <spring:param name="userName" value="${userName}" />
+                        </spring:url>
+                        <a class="btn btn-default"  href="${misEstadisticas}">MIS ESTADISTICAS</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <spring:url value="#" htmlEscape="true" var="misPartidas">
+                            <spring:param name="userName" value="${userName}" />
+                        </spring:url>
+                        <a class="btn btn-default"  href="${misPartidas}">MIS PARTIDAS</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <spring:url value="#" htmlEscape="true" var="misAmigos">
+                            <spring:param name="userName" value="${userName}" />
+                        </spring:url>
+                        <a class="btn btn-default"  href="${misAmigos}">MIS AMIGOS</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <spring:url value="#" htmlEscape="true" var="misLogros">
+                            <spring:param name="userName" value="${userName}" />
+                        </spring:url>
+                        <a class="btn btn-default"  href="${misLogros}">MIS LOGROS</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </sec:authorize>
+    
+    <div style="text-align: center; position: relative; top: 30%;">
+        <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; color: #ecb660;";>IDUS MARTII</h2>
+        <div>
+            <spring:url value="/instrucciones" htmlEscape="true" var="como"/>
+            <a class="btn btn-default"  href="${como}">COMO JUGAR</a>
 
-    <table style="width: 100%; text-align: center; position: relative; top: 30%;">
-        <tr>
-            <td>
-                <h2 style="font-family: 'Dalek Pinpoint', sans-serif; color: #ecb660;" ;>IDUS MARTII</h2>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <spring:url value="/partidas/seleccionar" htmlEscape="true" var="jugar" />
-                <a class="btn btn-default" href="${jugar}">JUGAR</a>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <spring:url value="/instrucciones" htmlEscape="true" var="como" />
-                <a class="btn btn-default" href="${como}" target="_blank">COMO JUGAR</a>
-            </td>
-        </tr>
-    </table>
+            <spring:url value="#" htmlEscape="true" var="como"/>
+            <a class="btn btn-default"  href="${como}">JUGAR</a>
+
+            <spring:url value="/estadisticas" htmlEscape="true" var="como"/>
+            <a class="btn btn-default"  href="${como}">ESTADISTICAS</a>
+        </div>
+    </div>
 </petclinic:layout>
 

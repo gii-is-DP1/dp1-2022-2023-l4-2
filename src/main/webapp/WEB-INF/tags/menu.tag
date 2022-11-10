@@ -12,16 +12,20 @@
 		<div class="navbar-collapse collapse" id="main-navbar">
 			<ul class="nav navbar-nav">
 
+				<div class="navbar-header">
+					<a class="navbar-brand" href="<spring:url value="/home" htmlEscape="true" />"><span></span></a>
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+					<span class="sr-only"><os-p>Toggle navigation</os-p></span> 
+					<span class="icon-bar"></span> 
+					<span class="icon-bar"></span> 
+					<span class="icon-bar"></span>
+					</button>
+				</div>
+
 				<petclinic:menuItem active="${name eq 'home'}" url="/home"
 					title="home page">
 					<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
 					<span>Inicio</span>
-				</petclinic:menuItem>
-
-				<petclinic:menuItem active="${name eq 'estadisticas'}" url="/estadisticas"
-					title="estadisticas">
-					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-					<span>Estadisticas</span>
 				</petclinic:menuItem>
 
 				<sec:authorize access='hasAuthority("admin")' > 
@@ -41,39 +45,15 @@
 						<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
 						<span>Logros</span>
 					</petclinic:menuItem>
-				</sec:authorize>
 
-				<sec:authorize access='hasAuthority("jugador")'>
-					<petclinic:menuItem active="${name eq 'historial'}" url="#"
-						title="historial">
-						<span class="glyphicon glyphicon-tower" aria-hidden="true"></span>
-						<span>Mis Partidas</span>
-					</petclinic:menuItem>
-
-					<petclinic:menuItem active="${name eq 'misLogros'}" url="/logros" title="misLogros">
-						<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-						<span>Mis Logros</span>
-					</petclinic:menuItem>
-
-					<petclinic:menuItem active="${name eq 'amigos'}" url="#"
-						title="amigos">
-						<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
-						<span>Mis Amigos</span>
-					</petclinic:menuItem>
 					
-					<petclinic:menuItem active="${name eq 'perfil'}" url="#"
-						title="perfil">
-						<span class="glyphicon glyphicon-bitcoin" aria-hidden="true"></span>
-						<span>Mi Perfil</span>
+					<petclinic:menuItem active="${name eq 'estadisticas'}" url="/estadisticas"
+						title="estadisticas">
+						<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+						<span>Estadisticas</span>
 					</petclinic:menuItem>
 				</sec:authorize>
-
-				
-
 			</ul>
-
-
-
 
 			<ul class="nav navbar-nav navbar-right">
 				<sec:authorize access="!isAuthenticated()">
