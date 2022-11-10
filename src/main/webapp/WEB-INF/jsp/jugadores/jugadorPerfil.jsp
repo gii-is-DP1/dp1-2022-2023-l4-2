@@ -8,6 +8,8 @@
 	uri="http://www.springframework.org/security/tags"%>
 
 <petclinic:layout pageName="perfil">
+
+    <a class="btn btn-default" href="/jugadores/editPerfil/${username}">Editar Perfil</a>
     
     
     <div style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 100px;text-align: center;">

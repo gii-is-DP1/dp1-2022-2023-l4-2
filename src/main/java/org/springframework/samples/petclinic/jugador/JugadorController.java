@@ -3,6 +3,7 @@ package org.springframework.samples.petclinic.jugador;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -30,6 +31,7 @@ public static final String JUGADOR_CREATE = "jugadores/jugadorCreate";
 public static final String JUGADOR_PERFIL = "jugadores/jugadorPerfil";
 public static final String JUGADOR_HISTORIAL = "jugadores/partidasDelJugador";
 public static final String JUGADOR_LOGROS = "jugadores/logrosDelJugador";
+public static final String JUGADOR_EDITAR_PERFIL = "jugadores/editPerfil";
 
 private JugadorService jugadorService;
 
@@ -115,6 +117,24 @@ public String processCreationForm(@Valid Jugador j, BindingResult br){
         res.addObject("victoriasTraidor", getVictoriasComoTraidor(username));
         res.addObject("victoriasMercader", getVictoriasComoMercader(username));
         return res;
+    }
+
+    @GetMapping("/editPerfil/{username}")
+    public ModelAndView editPerfilJugador(@PathVariable("username") String username) {
+        ModelAndView result = new ModelAndView(JUGADOR_EDITAR_PERFIL);
+        Jugador jugador = jugadorService.getJugadorByUsername(username);
+            result.addObject("jugador", jugador);
+        return result;
+    }
+
+    @PostMapping("/editPerfil/{username}")
+    public ModelAndView savePerfilJugador(Jugador jugador, BindingResult br, @PathVariable("username") String username) {
+        if (!br.hasErrors()) {
+            jugadorService.saveJugador(jugador);
+        } else {
+
+        }
+        return new ModelAndView("redirect:/jugadores/perfil/{username}");
     }
 
     private Integer getPartidasJugadas(String username){
