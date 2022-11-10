@@ -46,8 +46,6 @@
         </div>
     </sec:authorize>
     
-
-
     <div style="text-align: center; position: relative; top: 30%;">
         <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; color: #ecb660;";>IDUS MARTII</h2>
         <div>

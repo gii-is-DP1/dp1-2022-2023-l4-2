@@ -3,11 +3,13 @@ package org.springframework.samples.petclinic.jugador;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.estadistica.Logro;
+import org.springframework.samples.petclinic.estadistica.LogroService;
 import org.springframework.samples.petclinic.partida.FaccionType;
 import org.springframework.samples.petclinic.partida.Participacion;
 import org.springframework.samples.petclinic.partida.Partida;
@@ -29,13 +31,19 @@ public static final String JUGADOR_CREATE = "jugadores/jugadorCreate";
 public static final String JUGADOR_PERFIL = "jugadores/jugadorPerfil";
 public static final String JUGADOR_HISTORIAL = "jugadores/partidasDelJugador";
 public static final String JUGADOR_LOGROS = "jugadores/logrosDelJugador";
+public static final String JUGADOR_EDITAR_PERFIL = "jugadores/editPerfil";
 
 private JugadorService jugadorService;
 
 @Autowired
 public JugadorController(JugadorService jugadorService){
+    
     this.jugadorService = jugadorService;
+
 }
+
+@Autowired
+private LogroService logroService;
 
 @GetMapping()
 public ModelAndView showJugadores() {
@@ -100,10 +108,34 @@ public String processCreationForm(@Valid Jugador j, BindingResult br){
     @GetMapping("/logros/{username}")
     public ModelAndView getLogrosDelJugador(@PathVariable("username") String username){
         ModelAndView res = new ModelAndView(JUGADOR_LOGROS);
-        List<Logro> aux = jugadorService.getJugadorByUsername(username).getLogros();
+        List<Logro> aux = logroService.getLogros();
         res.addObject(username);
         res.addObject("logros", aux);
+        res.addObject("partidasJugadas", getPartidasJugadas(username));
+        res.addObject("partidasGanadas", getPartidasGanadas(username));
+        res.addObject("victoriasLeal", getVictoriasComoLeal(username));
+        res.addObject("victoriasTraidor", getVictoriasComoTraidor(username));
+        res.addObject("victoriasMercader", getVictoriasComoMercader(username));
         return res;
+    }
+
+    @GetMapping("/editPerfil/{username}")
+    public ModelAndView editPerfilJugador(@PathVariable("username") String username) {
+        ModelAndView result = new ModelAndView(JUGADOR_EDITAR_PERFIL);
+        Jugador jugador = jugadorService.getJugadorByUsername(username);
+        result.addObject(username);
+        result.addObject("jugador", jugador);
+        return result;
+    }
+
+    @PostMapping("/editPerfil/{username}")
+    public ModelAndView savePerfilJugador(Jugador jugador, BindingResult br, @PathVariable("username") String username) {
+        if (!br.hasErrors()) {
+            jugadorService.saveJugador(jugador);
+        } else {
+
+        }
+        return new ModelAndView("redirect:/jugadores/perfil/{username}");
     }
 
     private Integer getPartidasJugadas(String username){

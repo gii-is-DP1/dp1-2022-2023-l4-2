@@ -30,5 +30,9 @@ public class PartidaService {
 		return result;
 	}
 
+    @Transactional
+    public void save(Partida p) {
+        partidaRepo.save(p);
+    }
   
 }
