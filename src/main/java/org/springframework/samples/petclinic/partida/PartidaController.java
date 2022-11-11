@@ -25,6 +25,7 @@ public class PartidaController {
     public static final String PARTIDAS_LISTING = "partidas/partidasList";
     public static final String PARTIDAS_SELECCIONAR = "partidas/partidasSelect";
     public static final String PARTIDAS_CREAR = "partidas/partidaCreate";
+    public static final String PARTIDAS_UNIR = "partidas/partidasDisponibles";
     private PartidaService partidaService;
 
     @Autowired
@@ -52,6 +53,14 @@ public class PartidaController {
         Partida p = new Partida();
         ModelAndView result = new ModelAndView(PARTIDAS_CREAR);
         result.addObject("partida", p);
+        return result;
+    }
+
+    @GetMapping("/join")
+    public ModelAndView joinPartida(){
+        List<Partida> partidas = partidaService.getPartidas();
+        ModelAndView result = new ModelAndView(PARTIDAS_UNIR);
+        result.addObject("partidas", partidas);
         return result;
     }
 

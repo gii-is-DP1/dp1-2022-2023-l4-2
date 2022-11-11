@@ -99,6 +99,7 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04',
 INSERT INTO facciones(id,name) VALUES(1,'Leal');
 INSERT INTO facciones(id,name) VALUES(2,'Traidor');
 INSERT INTO facciones(id,name) VALUES(3,'Mercader');
+INSERT INTO facciones(id,name) VALUES(0, 'No decidido');
 
 INSERT INTO dificultad(id,name) VALUES(1,'Facil');
 INSERT INTO dificultad(id,name) VALUES(2,'Normal');
@@ -118,6 +119,9 @@ INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,vot
     VALUES(6,2,2,5,'Pablo',10,10,15,3,26);
 INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
     VALUES(7,2,3,5,'Pablo',11,10,15,1,26);
+INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo,activa)
+    VALUES(8,0,0,5,'David',0,0,15,Null,0,true);
+
 
  INSERT INTO tipo(id, name)
     VALUES(2, 'Por ganar');
@@ -162,7 +166,8 @@ INSERT INTO authorities(id,username,authority) VALUES (13, 'Davilillo', 'jugador
 
 INSERT INTO jugador(id,first_name,last_name,username,rol_id,esta_en_partida)
     VALUES(1,'Juan Jesús','Campos','Guaje',Null,false),
-    (2,'Antonio','Carretero','Antaca',Null,false);
+    (2,'Antonio','Carretero','Antaca',Null,false),
+    (3,'David','Reyes','Davilillo',Null,true);
 
 INSERT INTO jugador_amigo_de(amigo_de_id, jugador_id)
     VALUES (1,2);
@@ -171,23 +176,28 @@ INSERT INTO participacion(id, es_anfitrion,num_consul,votos_contra_cesar,votos_f
     VALUES(1,true,1,3,0,0,1),
     (2,false,2,2,1,0,2),
     (3,false,1,1,1,2,3),
-    (4,false,1,0,2,2,3);
+    (4,false,1,0,2,2,3),
+    (5,true,0,0,0,0,0);
+
 
 INSERT INTO partida_participaciones(partida_id,participaciones_id)
     VALUES(1,1),
     (2,3),
     (3,4),
-    (2,2);
+    (2,2),
+    (8,5);
     
 INSERT INTO jugador_participaciones(jugador_id,participaciones_id)
     VALUES(1,1),
     (1,3),
     (1,4),
-    (2,2);
+    (2,2),
+    (3,5);
 
 INSERT INTO partida_jugadores(partidas_id,jugadores_id) 
     VALUES(1,1),
     (2,1),
     (3,1),
-    (2,2);
+    (2,2),
+    (8,3);
 
