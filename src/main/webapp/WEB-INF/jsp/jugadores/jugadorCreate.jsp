@@ -12,8 +12,8 @@
     </h2>
     <form:form modelAttribute="jugador" class="form-horizontal" id="add-jugador-form">
         <div class="form-group has-feedback">
-            <petclinic:inputField label="First Name" name="firstName"/>
-            <petclinic:inputField label="Last Name" name="lastName"/>
+            <petclinic:inputField label="Nombre" name="firstName"/>
+            <petclinic:inputField label="Apellidos" name="lastName"/>
             <petclinic:inputField label="Nombre de usuario" name="user.username"/>
             <petclinic:inputField label="Contraseña" name="user.password"/>
 
