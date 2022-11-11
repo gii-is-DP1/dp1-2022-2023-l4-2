@@ -9,8 +9,9 @@
 
 <petclinic:layout pageName="perfil">
 
-    <a class="btn btn-default" href="/jugadores/editPerfil/${username}">Editar Perfil</a>
-    
+    <c:if test = "${jugador.user.username == nombreUsuario}">
+        <a class="btn btn-default" href="/jugadores/editPerfil/${username}">Editar Perfil</a>
+    </c:if>
     
     <div style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 100px;text-align: center;">
         <c:out value ="${jugador.user.username}"/>

@@ -15,12 +15,12 @@
                         <spring:url value="/jugadores/perfil/{userName}" htmlEscape="true" var="misEstadisticas">
                             <spring:param name="userName" value="${userName}" />
                         </spring:url>
-                        <a class="btn btn-default"  href="${misEstadisticas}">MIS ESTADISTICAS</a>
+                        <a class="btn btn-default"  href="${misEstadisticas}">MI PERFIL</a>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <spring:url value="#" htmlEscape="true" var="misPartidas">
+                        <spring:url value="/jugadores/partidas/{userName}" htmlEscape="true" var="misPartidas">
                             <spring:param name="userName" value="${userName}" />
                         </spring:url>
                         <a class="btn btn-default"  href="${misPartidas}">MIS PARTIDAS</a>
@@ -36,7 +36,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <spring:url value="#" htmlEscape="true" var="misLogros">
+                        <spring:url value="jugadores/logros/{userName}" htmlEscape="true" var="misLogros">
                             <spring:param name="userName" value="${userName}" />
                         </spring:url>
                         <a class="btn btn-default"  href="${misLogros}">MIS LOGROS</a>
@@ -52,7 +52,7 @@
             <spring:url value="/instrucciones" htmlEscape="true" var="como"/>
             <a class="btn btn-default"  href="${como}">COMO JUGAR</a>
 
-            <spring:url value="#" htmlEscape="true" var="como"/>
+            <spring:url value="partidas/seleccionar" htmlEscape="true" var="como"/>
             <a class="btn btn-default"  href="${como}">JUGAR</a>
 
             <spring:url value="/estadisticas" htmlEscape="true" var="como"/>

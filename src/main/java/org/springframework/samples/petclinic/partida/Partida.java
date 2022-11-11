@@ -46,11 +46,13 @@ public class Partida implements Serializable{
     private long tiempo;
 
     @ManyToMany
-    @Size(min=5,max=8)
+    //@Size(min=5,max=8)
     private List<Jugador> jugadores;
 
     @OneToMany(cascade = CascadeType.ALL)
     List<Participacion> participaciones;
+
+    private Boolean activa;
 
     
 }

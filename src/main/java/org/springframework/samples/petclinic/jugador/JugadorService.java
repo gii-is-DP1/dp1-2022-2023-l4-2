@@ -52,6 +52,16 @@ public class JugadorService {
         authoritiesService.saveAuthorities(j.getUser().getUsername(),"Jugador");
     }
 
+    @Transactional
+    public void editJugador(Jugador j) throws DataAccessException{
+        Jugador toUpdate = jugadorRepo.findById(j.getId()).get();
+        toUpdate.setFirstName(j.getFirstName());
+        toUpdate.setLastName(j.getLastName());
+        toUpdate.getUser().setPassword(j.getUser().getPassword());
+        jugadorRepo.save(toUpdate);
+        userService.saveUser(toUpdate.getUser());
+    }
+
     @Transactional(readOnly = true)
     public Jugador getJugadorByUsername(String username){
         return jugadorRepo.findJugadorByUsername(username);

@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.jugador;
 
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +33,6 @@ public static final String JUGADOR_HISTORIAL = "jugadores/partidasDelJugador";
 public static final String JUGADOR_LOGROS = "jugadores/logrosDelJugador";
 public static final String JUGADOR_EDITAR_PERFIL = "jugadores/editPerfil";
 public static final String JUGADOR_LISTA_AMIGOS = "jugadores/amigosList";
-public static final String JUGADORES_SEARCH = "jugadores/jugadoresSearch";
 
 private JugadorService jugadorService;
 
@@ -76,25 +76,25 @@ public String processCreationForm(@Valid Jugador j, BindingResult br){
         return "home";
     }
 }
-
-@GetMapping("/perfil/{username}")
-public ModelAndView showPerfil(@PathVariable("username") String username) {
-    ModelAndView res = new ModelAndView(JUGADOR_PERFIL);
-    Jugador j = jugadorService.getJugadorByUsername(username);
-    if (j == null) {
-        res = new ModelAndView("redirect:/exception");
-    } else {
-        res.addObject("jugador", j);
-        res.addObject("numPartidasJugadas", getPartidasJugadas(username));
-        res.addObject("numPartidasGanadas", getPartidasGanadas(username));
-        res.addObject("victoriasComoLeal", getVictoriasComoLeal(username));
-        res.addObject("victoriasComoTraidor", getVictoriasComoTraidor(username));
-        res.addObject("victoriasComoMercader", getVictoriasComoMercader(username));
-        res.addObject("tiempoJugado", getTiempoJugado(username));
-        res.addObject("faccionFavorita", getFaccionFavorita(username));
+    @GetMapping("/perfil/{username}")
+    public ModelAndView showPerfil(@PathVariable("username") String username,  Principal principal){
+        ModelAndView res = new ModelAndView(JUGADOR_PERFIL);
+        Jugador j = jugadorService.getJugadorByUsername(username);
+        if(j==null){
+            res = new ModelAndView("redirect:/exception");
+        }else{
+            res.addObject("jugador", j);
+            res.addObject("numPartidasJugadas", getPartidasJugadas(username));
+            res.addObject("numPartidasGanadas", getPartidasGanadas(username));
+            res.addObject("victoriasComoLeal", getVictoriasComoLeal(username));
+            res.addObject("victoriasComoTraidor", getVictoriasComoTraidor(username));
+            res.addObject("victoriasComoMercader", getVictoriasComoMercader(username));
+            res.addObject("tiempoJugado", getTiempoJugado(username));
+            res.addObject("faccionFavorita", getFaccionFavorita(username));
+            res.addObject("nombreUsuario",principal.getName());
+        }
+        return res;
     }
-    return res;
-}
 
 @GetMapping("/perfil/{username}/amigos")
 public ModelAndView getAmigosDelJugador(@PathVariable("username") String username) {
@@ -128,22 +128,23 @@ public ModelAndView getLogrosDelJugador(@PathVariable("username") String usernam
     return res;
 }
 
-@GetMapping("/editPerfil/{username}")
-public ModelAndView editPerfilJugador(@PathVariable("username") String username) {
-    ModelAndView result = new ModelAndView(JUGADOR_EDITAR_PERFIL);
-    Jugador jugador = jugadorService.getJugadorByUsername(username);
-    result.addObject(username);
-    result.addObject("jugador", jugador);
-    return result;
-}
-
-@PostMapping("/editPerfil/{username}")
-public ModelAndView savePerfilJugador(Jugador jugador, BindingResult br, @PathVariable("username") String username) {
-    if (!br.hasErrors()) {
-        jugadorService.saveJugador(jugador);
-    } else {
-
+    @GetMapping("/editPerfil/{username}")
+    public ModelAndView editPerfilJugador(@PathVariable("username") String username,Principal principal) {
+        ModelAndView result = new ModelAndView(JUGADOR_EDITAR_PERFIL);
+        Jugador jugador = jugadorService.getJugadorByUsername(username);
+        result.addObject(username);
+        result.addObject("jugador", jugador);
+        result.addObject("nombreUsuario",principal.getName());
+        return result;
     }
+
+    @PostMapping("/editPerfil/{username}")
+    public ModelAndView savePerfilJugador(Jugador jugador, BindingResult br, @PathVariable("username") String username) {
+        if (!br.hasErrors()) {
+            jugadorService.editJugador(jugador);
+        } else {
+        
+        }
     return new ModelAndView("redirect:/jugadores/perfil/{username}");
 }
 
