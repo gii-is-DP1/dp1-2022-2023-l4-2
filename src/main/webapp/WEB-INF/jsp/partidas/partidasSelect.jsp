@@ -23,7 +23,7 @@
         <tr>
             <td>
                 <spring:url value="/partidas/join" htmlEscape="true" var="unirse" />
-                <a class="btn btn-default" href="${unirse}" target="_blank">UNIRSE A UNA PARTIDA</a>
+                <a class="btn btn-default" href="${unirse}">UNIRSE A UNA PARTIDA</a>
             </td>
         </tr>
     </table>
