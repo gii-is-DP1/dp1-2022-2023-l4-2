@@ -163,7 +163,9 @@ INSERT INTO authorities(id,username,authority) VALUES (13, 'Davilillo', 'jugador
 INSERT INTO jugador(id,first_name,last_name,username,rol_id,esta_en_partida)
     VALUES(1,'Juan Jesús','Campos','Guaje',Null,false),
     (2,'Antonio','Carretero','Antaca',Null,false);
-    
+
+INSERT INTO jugador_amigo_de(amigo_de_id, jugador_id)
+    VALUES (1,2);
 
 INSERT INTO participacion(id, es_anfitrion,num_consul,votos_contra_cesar,votos_favor_cesar,votos_neutros,faccion_apoyada_id)
     VALUES(1,true,1,3,0,0,1),

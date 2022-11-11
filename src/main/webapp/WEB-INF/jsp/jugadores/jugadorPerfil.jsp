@@ -77,7 +77,7 @@
     </table>
     <table  style= "width: 100%; text-align:center;position: relative;">
         <tr>
-            <th style="text-align: left;"><a class="btn btn-default" href="/jugadores/partidas/${username}">Amigos</a></th>
+            <th style="text-align: left;"><a class="btn btn-default" href="/jugadores/perfil/${username}/amigos">Amigos</a></th>
             <th  style="text-align: center;" ><a class="btn btn-default" href="/jugadores/partidas/${username}">Historial de Partidas</a></th>
             <th  style="text-align: right;"><a class="btn btn-default" href="/jugadores/logros/${username}">Mis Logros</a></th>
         </tr>
