@@ -25,7 +25,8 @@ public class PartidaController {
     public static final String PARTIDAS_LISTING = "partidas/partidasList";
     public static final String PARTIDAS_SELECCIONAR = "partidas/partidasSelect";
     public static final String PARTIDAS_CREAR = "partidas/partidaCreate";
-    public static final String PARTIDAS_UNIR = "partidas/partidasDisponibles";
+    public static final String PARTIDAS_DISPONIBLES = "partidas/partidasDisponibles";
+    public static final String PARTIDAS_UNIR = "partidas/partidaJoin";
     private PartidaService partidaService;
 
     @Autowired
@@ -56,10 +57,29 @@ public class PartidaController {
         return result;
     }
 
-    @GetMapping("/join")
-    public ModelAndView joinPartida(){
-        List<Partida> partidas = partidaService.getPartidas();
+    @GetMapping("/join/{id}")
+    public ModelAndView joinPartida(@PathVariable("id") Long id, Principal principal){
         ModelAndView result = new ModelAndView(PARTIDAS_UNIR);
+        Jugador j = jugadorService.getJugadorByUsername(principal.getName());
+        Partida p = partidaService.getPartidaById(id).get();
+        List<Jugador> jugadores = p.getJugadores();
+
+        if(!p.getJugadores().contains(j)){
+            jugadores.add(j);
+            p.setJugadores(jugadores);
+            partidaService.edit(p);
+        }
+
+        result.addObject("jugadores", jugadores);
+        result.addObject("partida", p);
+        result.addObject("jugadorActual", j);
+        return result;
+    }
+
+    @GetMapping("/join")
+    public ModelAndView partidasDisponibles(){
+        List<Partida> partidas = partidaService.getPartidas();
+        ModelAndView result = new ModelAndView(PARTIDAS_DISPONIBLES);
         result.addObject("partidas", partidas);
         return result;
     }
@@ -83,7 +103,7 @@ public class PartidaController {
         partida.setLimite(calculaLimite(partida.getNumJugadores()));
         partida.setActiva(true);
         partidaService.save(partida);
-        ModelAndView result =new ModelAndView("redirect:/home");
+        ModelAndView result =new ModelAndView("redirect:/partidas/join");
         //result.addObject("message", "Ha habido un error creando la partida.");
         return result;
     }

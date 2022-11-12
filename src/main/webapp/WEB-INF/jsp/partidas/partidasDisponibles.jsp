@@ -35,9 +35,9 @@
                         </c:forEach>
                     </td>
                     <td>
-                        <button>
-                            <a class="btn btn-default" href="/partidas/join/${partida.id}">Unirse</a></th>
-                        </button>
+                            <button>
+                                <a class="btn btn-default" href="/partidas/join/${partida.id}">Unirse</a></th>
+                            </button>
                     </td>
                 </tr>
             </c:if>

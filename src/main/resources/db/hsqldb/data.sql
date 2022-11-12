@@ -120,7 +120,7 @@ INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,vot
 INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
     VALUES(7,2,3,5,'Pablo',11,10,15,1,26);
 INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo,activa)
-    VALUES(8,0,0,5,'David',0,0,15,Null,0,true);
+    VALUES(8,0,0,5,'Davilillo',0,0,15,Null,0,true);
 
 
  INSERT INTO tipo(id, name)
@@ -177,7 +177,9 @@ INSERT INTO participacion(id, es_anfitrion,num_consul,votos_contra_cesar,votos_f
     (2,false,2,2,1,0,2),
     (3,false,1,1,1,2,3),
     (4,false,1,0,2,2,3),
-    (5,true,0,0,0,0,0);
+    (5,true,0,0,0,0,0), 
+    (6,false,0,0,0,0,0);
+
 
 
 INSERT INTO partida_participaciones(partida_id,participaciones_id)
@@ -185,19 +187,22 @@ INSERT INTO partida_participaciones(partida_id,participaciones_id)
     (2,3),
     (3,4),
     (2,2),
-    (8,5);
+    (8,5),
+    (8,6);
     
 INSERT INTO jugador_participaciones(jugador_id,participaciones_id)
     VALUES(1,1),
     (1,3),
     (1,4),
     (2,2),
-    (3,5);
+    (3,5),
+    (1,6);
 
 INSERT INTO partida_jugadores(partidas_id,jugadores_id) 
     VALUES(1,1),
     (2,1),
     (3,1),
     (2,2),
-    (8,3);
+    (8,3),
+    (8,1);
 
