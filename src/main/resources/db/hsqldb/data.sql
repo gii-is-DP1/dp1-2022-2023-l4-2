@@ -120,7 +120,7 @@ INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,vot
 INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
     VALUES(7,2,3,5,'Pablo',11,10,15,1,26);
 INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo,activa)
-    VALUES(8,0,0,5,'Davilillo',0,0,15,Null,0,true);
+    VALUES(8,0,0,5,'Davilillo',0,0,15,1,0,true);
 
 
  INSERT INTO tipo(id, name)
