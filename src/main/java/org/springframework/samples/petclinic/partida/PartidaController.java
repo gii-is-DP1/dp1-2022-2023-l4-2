@@ -80,10 +80,19 @@ public class PartidaController {
     }
 
     @GetMapping("/join")
-    public ModelAndView partidasDisponibles(HttpServletResponse response){
+    public ModelAndView partidasDisponibles(HttpServletResponse response, Principal principal){
         response.addHeader("Refresh", "4");
         List<Partida> partidas = partidaService.getPartidas();
         ModelAndView result = new ModelAndView(PARTIDAS_DISPONIBLES);
+        for(Partida p : partidas){
+            Jugador j = jugadorService.getJugadorByUsername(principal.getName());
+            if(p.getJugadores().contains(j)){
+                List<Jugador> jugadores = p.getJugadores();
+                jugadores.remove(j);
+                p.setJugadores(jugadores);
+                partidaService.edit(p);
+            }
+        }
         result.addObject("partidas", partidas);
         return result;
     }

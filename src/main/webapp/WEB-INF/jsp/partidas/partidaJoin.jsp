@@ -6,6 +6,11 @@
 
 
 <petclinic:layout pageName="partidaJoin">
+
+    <button>
+        <a class="btn btn-default" href="/partidas/join">< Volver</a></th>
+    </button>
+
     <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>Partida de ${partida.anfitrion}</h2>
 
     <table id="partidaJoin" class="table table-striped">
