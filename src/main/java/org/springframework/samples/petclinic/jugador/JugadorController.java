@@ -4,6 +4,7 @@ package org.springframework.samples.petclinic.jugador;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -37,12 +38,16 @@ public static final String JUGADOR_SEARCH = "jugadores/jugadorSearch";
 
 private JugadorService jugadorService;
 
+
 @Autowired
 public JugadorController(JugadorService jugadorService){
     
     this.jugadorService = jugadorService;
 
 }
+
+@Autowired
+public PartidaService partidaService;
 
 @Autowired
 private LogroService logroService;

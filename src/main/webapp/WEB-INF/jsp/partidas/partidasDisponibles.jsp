@@ -35,13 +35,21 @@
                         </c:forEach>
                     </td>
                     <td>
-                            <button>
-                                <a class="btn btn-default" href="/partidas/join/${partida.id}">Unirse</a></th>
-                            </button>
+                            <sec:authorize access='hasRole("admin")' > 
+                                <a class="btn btn-default" href="/partidas/join/${partida.id}">Unirse como jugador</a>
+                            </sec:authorize>
+                            <c:if test="${partida.activa}">
+                                <sec:authorize access='hasRole("admin")' > 
+                                <a class="btn btn-default" href="/partidas/join/${partida.id}">Unirse como espectador</a>
+                            </sec:authorize>
+                            </c:if>
                     </td>
                 </tr>
             </c:if>
         </c:forEach>
         </tbody>
     </table>
+
+    <a class="btn btn-default" href="/partidas/seleccionar">VOLVER AL MENU DE OPCIONES DE PARTIDA</a>
+
 </petclinic:layout>
