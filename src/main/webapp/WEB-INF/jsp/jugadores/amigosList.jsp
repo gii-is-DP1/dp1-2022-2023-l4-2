@@ -20,7 +20,12 @@
             <c:if test = "${amigo.user.username != username}">
                 <tr>
                     <td>
-                        <c:out value="${amigo.user.username}"/>
+                        <c:out value="${amigo.user.username}"/>  
+                    </td>
+                    <td>
+                        <a href="/jugadores/perfil/${username}/amigos/delete/${amigo.user.username}"> 
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        </a> 
                     </td>
                 </tr>
             </c:if>
