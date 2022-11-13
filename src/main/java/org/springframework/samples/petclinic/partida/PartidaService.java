@@ -54,4 +54,9 @@ public class PartidaService {
         toUpdate.setVotosFavorCesar(p.getVotosFavorCesar());
         partidaRepo.save(toUpdate);
     }
+
+    @Transactional(readOnly = true)
+    public List<Partida> getPartidasActivas(){
+        return this.partidaRepo.findPartidasActivas();
+    }
 }
