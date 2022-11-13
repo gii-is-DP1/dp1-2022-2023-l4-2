@@ -82,7 +82,7 @@ public class PartidaController {
     @GetMapping("/join")
     public ModelAndView partidasDisponibles(HttpServletResponse response, Principal principal){
         response.addHeader("Refresh", "4");
-        List<Partida> partidas = partidaService.getPartidas();
+        List<Partida> partidas = partidaService.getPartidasActivas();
         ModelAndView result = new ModelAndView(PARTIDAS_DISPONIBLES);
         for(Partida p : partidas){
             Jugador j = jugadorService.getJugadorByUsername(principal.getName());
@@ -116,7 +116,7 @@ public class PartidaController {
         partida.setLimite(calculaLimite(partida.getNumJugadores()));
         partida.setActiva(true);
         partidaService.save(partida);
-        ModelAndView result =new ModelAndView("redirect:/partidas/join");
+        ModelAndView result =new ModelAndView("redirect:/partidas/join/"+partida.getId());
         //result.addObject("message", "Ha habido un error creando la partida.");
         return result;
     }

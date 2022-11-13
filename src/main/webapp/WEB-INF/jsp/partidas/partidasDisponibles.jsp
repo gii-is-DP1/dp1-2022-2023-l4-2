@@ -21,7 +21,7 @@
 
         <tbody>
         <c:forEach items="${partidas}" var="partida">
-            <c:if test="${partida.activa && partida.ronda == 0}">
+            <c:if test="${partida.ronda == 0}">
                 <tr style = "text-align: left; ";>
                     <td>
                         <c:out value="${partida.jugadores.size()}"/>/<c:out value="${partida.numJugadores}"/>
