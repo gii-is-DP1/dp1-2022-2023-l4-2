@@ -1,10 +1,12 @@
 package org.springframework.samples.petclinic.partida;
 
+import java.net.http.HttpResponse;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +60,8 @@ public class PartidaController {
     }
 
     @GetMapping("/join/{id}")
-    public ModelAndView joinPartida(@PathVariable("id") Long id, Principal principal){
+    public ModelAndView joinPartida(@PathVariable("id") Long id, Principal principal, HttpServletResponse response){
+        response.addHeader("Refresh", "4");
         ModelAndView result = new ModelAndView(PARTIDAS_UNIR);
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
         Partida p = partidaService.getPartidaById(id).get();
@@ -77,7 +80,8 @@ public class PartidaController {
     }
 
     @GetMapping("/join")
-    public ModelAndView partidasDisponibles(){
+    public ModelAndView partidasDisponibles(HttpServletResponse response){
+        response.addHeader("Refresh", "4");
         List<Partida> partidas = partidaService.getPartidas();
         ModelAndView result = new ModelAndView(PARTIDAS_DISPONIBLES);
         result.addObject("partidas", partidas);
