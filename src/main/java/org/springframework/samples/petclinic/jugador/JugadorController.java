@@ -127,6 +127,12 @@ public ModelAndView getJugadoresSinUsuario(Principal principal) {
         }
 }
 
+@GetMapping("/perfil/{username1}/amigos/delete/{username2}")
+    public ModelAndView deleteAmigo(@PathVariable("username1") String username1,@PathVariable("username2") String username2) {
+        jugadorService.deleteAmigo(username1, username2);
+        return new ModelAndView("redirect:/jugadores/perfil/{username1}/amigos");
+}
+
 @GetMapping("/partidas/{username}")
 public ModelAndView getPartidasDelJugador(@PathVariable("username") String username) {
     ModelAndView res = new ModelAndView(JUGADOR_HISTORIAL);

@@ -71,6 +71,16 @@ public class JugadorService {
         jugadorRepo.save(toUpdate);
     }
 
+    @Transactional
+    public void deleteAmigo(String username1, String username2) throws DataAccessException{
+        Jugador toUpdate = jugadorRepo.findJugadorByUsername(username1);
+        List<Jugador> amigos = toUpdate.getAmigoDe();
+        Jugador amigoABorrar = jugadorRepo.findJugadorByUsername(username2);
+        amigos.remove(amigoABorrar);
+        toUpdate.setAmigoDe(amigos);
+        jugadorRepo.save(toUpdate);
+    }
+
     @Transactional(readOnly = true)
     public Jugador getJugadorByUsername(String username){
         return jugadorRepo.findJugadorByUsername(username);
