@@ -25,7 +25,7 @@
                     </c:forEach>
                 </div>
                 <th style="text-align: left;"><button class="btn btn-default" type ="submit">Agregar como amigo</button></th>
-                <th style="text-align: right;"><a class="btn btn-default" href="/jugadores/perfil/${nombreUsuario}/amigos">Mis amigos</a></th>
+                <th style="text-align: right;"><a class="btn btn-default" href="/jugadores/perfil/${nombreUsuario}/amigos">Volver a amigos</a></th>
             </table>
         </form:form>
     </jsp:body>

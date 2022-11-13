@@ -27,6 +27,7 @@
             <th>Limite</th>
             <th>Faccion ganadora</th>
             <th>Tiempo</th>
+            <th>Jugadores de la partida</th>
 
         </tr>
         </thead>
@@ -59,6 +60,11 @@
                 </td>
                 <td>
                     <c:out value="${partida.tiempo}"/>
+                </td>
+                <td>
+                    <c:forEach items="${partida.jugadores}" var="jugador">
+                        <c:out value="${jugador.user.username}  "/>
+                    </c:forEach>
                 </td>
             </tr>
         </c:forEach>

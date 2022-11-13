@@ -33,8 +33,14 @@
         </tbody>
     </table>
 
-    <tr>
-        <th><a class="btn btn-default" href="/jugadores/search">Buscar jugadores</a></th>
-    </tr>
+    <table>
+        <tr>
+            <th><a class="btn btn-default" href="/jugadores/search">Buscar jugadores</a></th>
+        </tr>
+        <tr>
+            <th><a class="btn btn-default" href="/jugadores/perfil/${username}">Volver al Perfil</a></th>
+        </tr>
+    </table>    
+    
 
 </petclinic:layout>
