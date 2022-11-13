@@ -28,7 +28,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <spring:url value="#" htmlEscape="true" var="misAmigos">
+                        <spring:url value="/jugadores/perfil/{userName}/amigos" htmlEscape="true" var="misAmigos">
                             <spring:param name="userName" value="${userName}" />
                         </spring:url>
                         <a class="btn btn-default"  href="${misAmigos}">MIS AMIGOS</a>
