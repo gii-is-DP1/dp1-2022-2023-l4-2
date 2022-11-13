@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.jugador;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,6 +61,14 @@ public class JugadorService {
         toUpdate.getUser().setPassword(j.getUser().getPassword());
         jugadorRepo.save(toUpdate);
         userService.saveUser(toUpdate.getUser());
+    }
+
+    @Transactional
+    public void agregarAmigo(Jugador j, Principal principal) throws DataAccessException{
+        Jugador toUpdate = jugadorRepo.findById(j.getId()).get();
+        List<Jugador> amigos = jugadorRepo.findJugadorByUsername(principal.getName()).getAmigoDe();
+        amigos.add(j);
+        jugadorRepo.save(toUpdate);
     }
 
     @Transactional(readOnly = true)

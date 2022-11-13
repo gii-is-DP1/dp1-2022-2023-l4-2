@@ -29,7 +29,7 @@
     </table>
 
     <tr>
-        <th><a class="btn btn-default" href="#">Buscar jugadores</a></th>
+        <th><a class="btn btn-default" href="/jugadores/search">Buscar jugadores</a></th>
     </tr>
 
 </petclinic:layout>

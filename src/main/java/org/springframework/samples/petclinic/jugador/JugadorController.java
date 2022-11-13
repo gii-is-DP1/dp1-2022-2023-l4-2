@@ -33,6 +33,7 @@ public static final String JUGADOR_HISTORIAL = "jugadores/partidasDelJugador";
 public static final String JUGADOR_LOGROS = "jugadores/logrosDelJugador";
 public static final String JUGADOR_EDITAR_PERFIL = "jugadores/editPerfil";
 public static final String JUGADOR_LISTA_AMIGOS = "jugadores/amigosList";
+public static final String JUGADOR_SEARCH = "jugadores/jugadorSearch";
 
 private JugadorService jugadorService;
 
@@ -105,6 +106,27 @@ public ModelAndView getAmigosDelJugador(@PathVariable("username") String usernam
     return res;
 }
 
+@GetMapping("/search")
+public ModelAndView getJugadoresSinUsuario(Principal principal) {
+    ModelAndView res = new ModelAndView(JUGADOR_SEARCH);
+    List<Jugador> jugadores = jugadorService.getJugadores();
+    List<Jugador> amigos = jugadorService.getJugadorByUsername(principal.getName()).getAmigoDe();
+    res.addObject("jugadores", jugadores);
+    res.addObject("amigos", amigos);
+    res.addObject("nombreUsuario", principal.getName());
+    return res;
+}
+
+@PostMapping("/search")
+    public ModelAndView agregarAmigos(Jugador jugador, Principal principal, BindingResult br) {
+        if (br.hasErrors()) {
+            return new ModelAndView(JUGADOR_SEARCH);
+        } else {
+            jugadorService.agregarAmigo(jugador, principal);
+            return new ModelAndView("redirect:/home");
+        }
+}
+
 @GetMapping("/partidas/{username}")
 public ModelAndView getPartidasDelJugador(@PathVariable("username") String username) {
     ModelAndView res = new ModelAndView(JUGADOR_HISTORIAL);
@@ -143,7 +165,7 @@ public ModelAndView getLogrosDelJugador(@PathVariable("username") String usernam
         if (!br.hasErrors()) {
             jugadorService.editJugador(jugador);
         } else {
-        
+            return new ModelAndView(JUGADOR_EDITAR_PERFIL);
         }
     return new ModelAndView("redirect:/jugadores/perfil/{username}");
 }
