@@ -15,6 +15,7 @@
             <th>Anfitrion</th>
             <th>Participantes</th>
             <th>Unirse</th>
+            
 
         </tr>
         </thead>
@@ -39,10 +40,10 @@
                                 <a class="btn btn-default" href="/partidas/join/${partida.id}">Unirse como jugador</a>
                             </sec:authorize>
                             <c:if test="${partida.activa}">
-                                <sec:authorize access='hasRole("admin")' > 
-                                <a class="btn btn-default" href="/partidas/join/${partida.id}">Unirse como espectador</a>
-                            </sec:authorize>
-                            </c:if>
+                            <sec:authorize access='hasRole("admin")' > 
+                            <a class="btn btn-default" href="/jugadores/espectear/${partida.id}">Unirse como espectador</a>
+                        </sec:authorize>
+                        </c:if>
                     </td>
                 </tr>
             </c:if>

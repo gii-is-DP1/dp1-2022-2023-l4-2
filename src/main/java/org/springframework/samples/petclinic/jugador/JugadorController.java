@@ -35,6 +35,7 @@ public static final String JUGADOR_LOGROS = "jugadores/logrosDelJugador";
 public static final String JUGADOR_EDITAR_PERFIL = "jugadores/editPerfil";
 public static final String JUGADOR_LISTA_AMIGOS = "jugadores/amigosList";
 public static final String JUGADOR_SEARCH = "jugadores/jugadorSearch";
+public static final String PARTIDOS_ESPECTEAR = "jugadores/listaPartidasEspectear";
 
 private JugadorService jugadorService;
 
@@ -180,6 +181,18 @@ public ModelAndView getLogrosDelJugador(@PathVariable("username") String usernam
         }
     return new ModelAndView("redirect:/jugadores/perfil/{username}");
 }
+
+@GetMapping("/espectear/{username}")
+public ModelAndView listaPartidasEspectear(@PathVariable("username") String username, Principal principal){
+    ModelAndView res = new ModelAndView(PARTIDOS_ESPECTEAR);
+    Jugador j = jugadorService.getJugadorByUsername(principal.getName());
+    List<Partida> aux = jugadorService.getPartidaAmigos(j);
+    res.addObject("nombreUsuario",principal.getName());
+    res.addObject("partidasAmigos", aux);
+    return res;
+}
+
+
 
 private Integer getPartidasJugadas(String username) {
     return jugadorService.getJugadorByUsername(username).getPartidas().size();

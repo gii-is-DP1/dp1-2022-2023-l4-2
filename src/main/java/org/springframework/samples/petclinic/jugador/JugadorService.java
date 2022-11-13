@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.jugador;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +9,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.partida.Partida;
 import org.springframework.samples.petclinic.user.AuthoritiesService;
 import org.springframework.samples.petclinic.user.UserService;
 import org.springframework.stereotype.Service;
@@ -84,6 +86,17 @@ public class JugadorService {
     @Transactional(readOnly = true)
     public Jugador getJugadorByUsername(String username){
         return jugadorRepo.findJugadorByUsername(username);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Partida> getPartidaAmigos(Jugador j){
+        List<Jugador> amigos = j.getAmigoDe();
+        List<Partida> partidasAmigos = new ArrayList<Partida>();
+        for(Jugador amigo : amigos){
+            List<Partida> aux = amigo.getPartidas();
+            partidasAmigos.addAll(aux);
+        }
+        return partidasAmigos;
     }
 
     
