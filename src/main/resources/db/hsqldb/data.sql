@@ -158,16 +158,25 @@ INSERT INTO authorities(id,username,authority) VALUES (10, 'Guaje', 'jugador');
 INSERT INTO users(username,password,enabled) VALUES ('Antaca', '1111', TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (11, 'Antaca', 'jugador');
 
-INSERT INTO users(username,password,enabled) VALUES ('Alecam', '1111', TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (12, 'Alecam', 'jugador');
+INSERT INTO users(username,password,enabled) VALUES ('Campanas', '1111', TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (12, 'Campanas', 'jugador');
 
 INSERT INTO users(username,password,enabled) VALUES ('Davilillo', '1111', TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (13, 'Davilillo', 'jugador');
 
+INSERT INTO users(username, password, enabled) VALUES('Bufon', '2222', TRUE);
+INSERT INTO authorities(id, username, authority) VALUES(15, 'Bufon', 'jugador');
+
+INSERT INTO users(username, password, enabled) VALUES('Colombiano', '1111', TRUE);
+INSERT INTO authorities(id, username, authority) VALUES(16, 'Colombiano', 'jugador');
+
 INSERT INTO jugador(id,first_name,last_name,username,rol_id,esta_en_partida)
     VALUES(1,'Juan Jesús','Campos','Guaje',Null,false),
-    (2,'Antonio','Carretero','Antaca',Null,false),
-    (3,'David','Reyes','Davilillo',2,true);
+    (4,'Antonio','Carretero','Antaca',Null,false),
+    (3,'David','Reyes','Davilillo',2,true),
+    (2,'Eduardo', 'Pizarro', 'Bufon', Null, false),
+    (5, 'Alejadro', 'Campano', 'Campanas', Null, false),
+    (6, 'Pablo', 'Mera', 'Colombiano', Null, false);
 
 INSERT INTO participacion(id, es_anfitrion,num_consul,votos_contra_cesar,votos_favor_cesar,votos_neutros,faccion_apoyada_id)
     VALUES(1,true,1,3,0,0,1),
@@ -199,7 +208,16 @@ INSERT INTO partida_jugadores(partidas_id,jugadores_id)
     VALUES(1,1),
     (2,1),
     (3,1),
-    (2,2),
+    (2,4),
+    (3,2),
+    (4,2),
+    (5,2),
+    (4,6),
+    (5,6),
+    (6,6),
+    (5,5),
+    (6,5),
+    (7,5),
     (8,3),
     (8,1);
 
