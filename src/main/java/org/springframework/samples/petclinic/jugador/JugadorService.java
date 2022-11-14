@@ -4,8 +4,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -94,7 +93,12 @@ public class JugadorService {
         List<Partida> partidasAmigos = new ArrayList<Partida>();
         for(Jugador amigo : amigos){
             List<Partida> aux = amigo.getPartidas();
-            partidasAmigos.addAll(aux);
+
+            for(Partida p : aux){
+                if((!partidasAmigos.contains(p)) && p.getActiva()!= null && p.getActiva()){
+                    partidasAmigos.add(p);
+                }
+            }
         }
         return partidasAmigos;
     }

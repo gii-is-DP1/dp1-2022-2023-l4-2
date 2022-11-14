@@ -42,6 +42,14 @@
                         <a class="btn btn-default"  href="${misLogros}">MIS LOGROS</a>
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <spring:url value="jugadores/espectar/{userName}" htmlEscape="true" var="espectar">
+                            <spring:param name="userName" value="${userName}" />
+                        </spring:url>
+                        <a class="btn btn-default"  href="${espectar}">ESPECTAR</a>
+                    </td>
+                </tr>
             </table>
         </div>
     </sec:authorize>

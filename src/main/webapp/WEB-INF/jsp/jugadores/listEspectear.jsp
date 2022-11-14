@@ -24,19 +24,20 @@
 
         <tbody>
         
-        </tbody>
         <c:forEach items="${partidasAmigos}" var="partida">
             <tr>
-                <c:out value="${partida.anfitrion}"/>
-            </tr>
-            <tr>
                 <td>
-                    <c:out value="${partida.jugadores}"/>
+                <c:out value="${partida.anfitrion}"/>
+                </td>
+                <td>
+                    <c:forEach items="${partida.jugadores}" var = "jugador"/>
+                    <c:out value ="${jugador.user.username} "/>
+                </td>
+                <td>
+                <a class="btn btn-default" href="#">Espectar partida</a></th>
                 </td>
             </tr>
-            <tr>
-                <a class="btn btn-default" href="#">Espectear partida</a></th>
-            </tr>
         </c:forEach>
+    </tbody>
     </table>
 </petclinic:layout>

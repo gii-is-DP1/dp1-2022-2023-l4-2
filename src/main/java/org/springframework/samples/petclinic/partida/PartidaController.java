@@ -67,10 +67,15 @@ public class PartidaController {
         Partida p = partidaService.getPartidaById(id).get();
         List<Jugador> jugadores = p.getJugadores();
 
+
         if(!p.getJugadores().contains(j)){
             jugadores.add(j);
             p.setJugadores(jugadores);
             partidaService.edit(p);
+        }
+        if(!j.getPartidas().contains(p)){
+            j.getPartidas().add(p);
+            jugadorService.saveJugador(j);
         }
 
         result.addObject("jugadores", jugadores);
