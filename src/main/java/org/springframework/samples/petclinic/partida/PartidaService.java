@@ -21,15 +21,17 @@ public class PartidaService {
     public List<Partida> getPartidas(){
         return partidaRepo.findAll();
     }
+
+    @Transactional(readOnly = true)
+    public Optional<Partida> getPartidaById(long id) {
+        Optional<Partida> result = partidaRepo.findById(id);
+        return result;
+    }
+    
     @Transactional
     public void deletePartida(long id) {
         partidaRepo.deleteById(id);
     }
-    @Transactional(readOnly = true)
-    public Optional<Partida> getPartidaById(long id) {
-		Optional<Partida> result = partidaRepo.findById(id);
-		return result;
-	}
 
     @Transactional
     public void save(Partida p) {
