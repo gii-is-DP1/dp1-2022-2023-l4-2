@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.jugador;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Set;
 
@@ -11,12 +12,15 @@ import org.springframework.samples.petclinic.partida.Participacion;
 import org.springframework.samples.petclinic.partida.Partida;
 import org.springframework.samples.petclinic.user.Authorities;
 import org.springframework.samples.petclinic.user.User;
+import org.springframework.security.acls.model.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
@@ -70,19 +74,91 @@ public class JugadorServiceTests {
 
     @Test
     public void TestDeleteJugador(){
+        Jugador j = new Jugador();
+        User u = new User();
+        u.setUsername("javi");
+        j.setUser(u);
+        j.setFirstName("Javier");
+        j.setLastName("Varo");      
+        j.setId(7);
+        j.setEstaEnPartida(true);
+        j.setAmigoDe(null);
+        jugadorService.saveJugador(j);
         try{
-            jugadorService.deleteJugador(6);
+            jugadorService.deleteJugador(7);
         }catch(Exception e){
             fail("This expeception should not be thrown!");
         }
     }
 
-    /*@Test
-    public void TestDeleteJugadorFail(){
+
+    @Test
+    public void TestEditJugador(){
+        Jugador jugador = jugadorService.getJugadorById(6).get();
+        jugador.setEstaEnPartida(true);
+        jugadorService.editJugador(jugador);
+        assertEquals(true, jugadorService.getJugadorById(6).get().isEstaEnPartida());
+    }
+
+
+    @Test
+    public void TestAgregarAmigo(){
+        Jugador jugador6 = jugadorService.getJugadorById(6).get();
+        Principal jugador1 = jugadorService.getJugadorById(1).get();
+        jugadorService.agregarAmigo(jugador6, jugador1);
+        assertTrue(jugador6.getAmigoDe().contains(jugador6));
+    }
+
+
+    @Test
+    public void TestDeleteAmigo(){
+        Jugador jugador6 = jugadorService.getJugadorById(6).get();
+        Jugador jugador1 = jugadorService.getJugadorById(1).get();
         try{
-            jugadorService.deleteJugador(33);
+            jugadorService.deleteAmigo(jugador6.getUser().getUsername(), jugador1.getUser().getUsername());;
         }catch(Exception e){
             fail("This expeception should not be thrown!");
         }
-    }*/
+    }
+
+
+    @Test
+    public void TestDeleteAmigoFail(){
+        Jugador jugador6 = jugadorService.getJugadorById(6).get();
+        Jugador jugador1 = jugadorService.getJugadorById(1).get();
+        assertThrows(NotFoundException.class,
+        ()->jugadorService.deleteAmigo(jugador6.getUser().getUsername(), jugador1.getUser().getUsername()));
+    }
+
+
+    @Test
+    public void TestGetJugadorByUsername(){
+        Jugador jugador = jugadorService.getJugadorById(6).get();
+        assertEquals(jugador, jugadorService.getJugadorByUsername("Colombiano"));
+    }
+
+
+    @Test
+    public void TestGetJugadorByUsernameFail(){
+        Jugador jugador = jugadorService.getJugadorById(1).get();
+        assertNotEquals(jugador, jugadorService.getJugadorByUsername("Colombiano"));
+    }
+
+
+    @Test
+    public void TestGetPartidasActivasAmigos(){
+        Jugador jugador6 = jugadorService.getJugadorById(6).get();
+        Principal jugador3 = jugadorService.getJugadorById(3).get();
+        jugadorService.agregarAmigo(jugador6, jugador3);
+        assertNotNull(jugadorService.getPartidasActivasAmigos(jugador6));
+    }
+
+
+    @Test
+    public void TestGetPartidasActivasAmigosFail(){
+        Jugador jugador6 = jugadorService.getJugadorById(6).get();
+        Principal jugador1 = jugadorService.getJugadorById(1).get();
+        jugadorService.agregarAmigo(jugador6, jugador1);
+        assertNull(jugadorService.getPartidasActivasAmigos(jugador6));
+    }
 }
