@@ -60,7 +60,22 @@
                     </c:forEach>
                 </td>
             </tr>
+
         </c:forEach>
+
         </tbody>
+
+    </table>
+    <table>
+        <tr>   
+            <td>Paginas:</td>
+            
+            <c:forEach begin="0" step="1" end="${num}" var="variable">
+                <td>
+                    <spring:url value="/partidas?page=${variable}" htmlEscape="true" var="como"/>
+                    <a class="btn btn-default"  href="${como}" value = "${variable}"><c:out value = "${variable}"/></a>
+                </td>
+            </c:forEach>
+        </tr>
     </table>
 </petclinic:layout>

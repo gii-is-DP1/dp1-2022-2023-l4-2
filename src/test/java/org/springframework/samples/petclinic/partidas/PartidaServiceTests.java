@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.samples.petclinic.partida.FaccionType;
 import org.springframework.samples.petclinic.partida.Partida;
 import org.springframework.samples.petclinic.partida.PartidaService;
@@ -135,6 +137,24 @@ public class PartidaServiceTests {
         List<Partida> partidasActivas = partidaService.getPartidasActivas();
         assertNotNull(partidasActivas);
         assertFalse(partidasActivas.size()==0);
+
+    }
+
+    @Test
+    public void getPartidasPageablesSuccessTest(){
+        Integer numPartidas = 5;
+        Pageable pag = PageRequest.of(0,numPartidas);
+        List<Partida> partidaspaginadas = partidaService.getPartidasPageables(pag);
+        assertEquals(partidaspaginadas.size(), numPartidas);
+
+    }
+
+    @Test
+    public void getPartidasPageablesFailTest(){
+        Integer numPartidas = 5000;
+        Pageable pag = PageRequest.of(0,numPartidas);
+        List<Partida> partidaspaginadas = partidaService.getPartidasPageables(pag);
+        assertNotEquals(partidaspaginadas.size(), numPartidas);
 
     }
 

@@ -29,7 +29,7 @@
 				</petclinic:menuItem>
 
 				<sec:authorize access='hasAuthority("admin")' > 
-					<petclinic:menuItem active="${name eq 'partidas'}" url="/partidas"
+					<petclinic:menuItem active="${name eq 'partidas'}" url="/partidas?page=0"
 						title="partidas">
 						<span class="glyphicon glyphicon-knight" aria-hidden="true"></span>
 						<span>Partidas</span>
