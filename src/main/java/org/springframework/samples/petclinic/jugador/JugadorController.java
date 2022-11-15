@@ -186,7 +186,7 @@ public ModelAndView getLogrosDelJugador(@PathVariable("username") String usernam
 public ModelAndView listaPartidasEspectear(@PathVariable("username") String username, Principal principal){
     ModelAndView res = new ModelAndView(PARTIDOS_ESPECTEAR);
     Jugador j = jugadorService.getJugadorByUsername(principal.getName());
-    List<Partida> aux = jugadorService.getPartidaAmigos(j);
+    List<Partida> aux = jugadorService.getPartidasActivasAmigos(j);
     res.addObject("nombreUsuario",principal.getName());
     res.addObject("partidasAmigos", aux);
     return res;

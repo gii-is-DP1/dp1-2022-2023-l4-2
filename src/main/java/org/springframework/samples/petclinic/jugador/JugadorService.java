@@ -88,7 +88,7 @@ public class JugadorService {
     }
 
     @Transactional(readOnly = true)
-    public List<Partida> getPartidaAmigos(Jugador j){
+    public List<Partida> getPartidasActivasAmigos(Jugador j){
         List<Jugador> amigos = j.getAmigoDe();
         List<Partida> partidasAmigos = new ArrayList<Partida>();
         for(Jugador amigo : amigos){
