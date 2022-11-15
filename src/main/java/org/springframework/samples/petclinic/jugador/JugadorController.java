@@ -128,7 +128,7 @@ public ModelAndView getJugadoresSinUsuario(Principal principal) {
         if (br.hasErrors()) {
             return new ModelAndView(JUGADOR_SEARCH);
         } else {
-            jugadorService.agregarAmigo(jugador, principal);
+            jugadorService.agregarAmigo(jugador, principal.getName());
             return new ModelAndView("redirect:/home");
         }
 }

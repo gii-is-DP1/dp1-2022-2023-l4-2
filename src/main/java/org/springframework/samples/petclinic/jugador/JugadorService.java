@@ -65,9 +65,9 @@ public class JugadorService {
     }
 
     @Transactional
-    public void agregarAmigo(Jugador j, Principal principal) throws DataAccessException{
+    public void agregarAmigo(Jugador j, String userPrincipal) throws DataAccessException{
         Jugador toUpdate = jugadorRepo.findById(j.getId()).get();
-        List<Jugador> amigos = jugadorRepo.findJugadorByUsername(principal.getName()).getAmigoDe();
+        List<Jugador> amigos = jugadorRepo.findJugadorByUsername(userPrincipal).getAmigoDe();
         amigos.add(j);
         jugadorRepo.save(toUpdate);
     }
