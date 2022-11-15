@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.samples.petclinic.jugador.Jugador;
 import org.springframework.samples.petclinic.jugador.JugadorService;
 import org.springframework.security.core.parameters.P;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -39,9 +43,17 @@ public class PartidaController {
     public JugadorService jugadorService;
 
     @GetMapping()
-	public ModelAndView showPartidas() {
+	public ModelAndView showPartidas(@RequestParam("page") int page) {
 		ModelAndView result = new ModelAndView(PARTIDAS_LISTING);
-		result.addObject("partidas", partidaService.getPartidas());
+        Pageable request = PageRequest.of(page,5);
+		result.addObject("partidas", partidaService.getPartidasPageables(request));
+        //result.addObject("partidas", partidaService.getPartidas());
+        Integer partidas = partidaService.getPartidas().size();
+        Integer i = Integer.valueOf(partidas/5);
+        if(i%2==0){
+            i --;
+        }
+        result.addObject("num", i);
 		return result;
 	}
 

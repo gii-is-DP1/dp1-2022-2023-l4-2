@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.hibernate.type.descriptor.java.UUIDTypeDescriptor.ToBytesTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,9 +19,15 @@ public class PartidaService {
     }
 
     @Transactional(readOnly = true)
+    public List<Partida> getPartidasPageables(Pageable pageable){
+        return partidaRepo.findAllPageable(pageable);
+    }
+
+    @Transactional(readOnly = true)
     public List<Partida> getPartidas(){
         return partidaRepo.findAll();
     }
+
 
     @Transactional(readOnly = true)
     public Optional<Partida> getPartidaById(long id) {
