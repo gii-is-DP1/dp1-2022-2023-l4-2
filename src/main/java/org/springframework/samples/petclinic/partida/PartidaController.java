@@ -79,6 +79,10 @@ public class PartidaController {
         List<Jugador> jugadores = p.getJugadores();
 
 
+        if(!p.getJugadores().contains(jugadorService.getJugadorByUsername(p.getAnfitrion()))){
+            result =new ModelAndView("redirect:/partidas/join/");
+            partidaService.deletePartida(p.getId());
+        }
         if(!p.getJugadores().contains(j)){
             jugadores.add(j);
             p.setJugadores(jugadores);
@@ -102,6 +106,10 @@ public class PartidaController {
         ModelAndView result = new ModelAndView(PARTIDAS_DISPONIBLES);
         for(Partida p : partidas){
             Jugador j = jugadorService.getJugadorByUsername(principal.getName());
+            if(!p.getJugadores().contains(jugadorService.getJugadorByUsername(p.getAnfitrion()))){
+                p.setActiva(false);
+                partidaService.edit(p);
+            }
             if(p.getJugadores().contains(j)){
                 List<Jugador> jugadores = p.getJugadores();
                 jugadores.remove(j);
