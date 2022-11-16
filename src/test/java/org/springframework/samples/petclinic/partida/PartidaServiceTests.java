@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.partidas;
+package org.springframework.samples.petclinic.partida;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;

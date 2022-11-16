@@ -73,7 +73,7 @@
             <c:forEach begin="0" step="1" end="${num}" var="variable">
                 <td>
                     <spring:url value="/partidas?page=${variable}" htmlEscape="true" var="como"/>
-                    <a class="btn btn-default"  href="${como}" value = "${variable}"><c:out value = "${variable}"/></a>
+                    <a class="btn btn-default"  href="${como}" value = "${variable}"><c:out value = "${variable+1}"/></a>
                 </td>
             </c:forEach>
         </tr>
