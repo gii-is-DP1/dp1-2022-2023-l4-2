@@ -67,7 +67,9 @@ public class EstadisticaGeneralController {
         Float result = 0f;
         Float tiempoPartidas = 0f;
         for(Partida partida: partidas){
-            tiempoPartidas += partida.getTiempo();
+            if(partida.getTiempo() > 0){
+                tiempoPartidas += partida.getTiempo();
+            }
         }
         result = Float.valueOf(Math.round(tiempoPartidas/partidas.size()));
         return result;
@@ -76,9 +78,11 @@ public class EstadisticaGeneralController {
     private Long getVictoriasLeal(List<Partida> partidas) {
         Long result = 0L;
         for(Partida partida: partidas){
+            if(partida.getFaccionGanadora()!=null){
             if (partida.getFaccionGanadora().getName().equals("Leal")){
                 result++;
             }
+        }
         }
         return result;
     }
@@ -86,9 +90,11 @@ public class EstadisticaGeneralController {
     private Long getVictoriasTraidor(List<Partida> partidas) {
         Long result = 0L;
         for(Partida partida: partidas){
+            if(partida.getFaccionGanadora()!=null){
             if (partida.getFaccionGanadora().getName().equals("Traidor")){
                 result++;
             }
+        }
         }
         return result;
     }
@@ -96,9 +102,11 @@ public class EstadisticaGeneralController {
     private Long getVictoriasMercader(List<Partida> partidas) {
         Long result = 0L;
         for(Partida partida: partidas){
+            if(partida.getFaccionGanadora()!=null){
             if (partida.getFaccionGanadora().getName().equals("Mercader")){
                 result++;
             }
+        }
         }
         return result;
     }
@@ -107,11 +115,13 @@ public class EstadisticaGeneralController {
         String res = "Hay facciones empatadas en numero de victorias";
         Map<FaccionType,Integer> aux = new HashMap<FaccionType, Integer>();
         for(Partida partida: partidas){
+            if(partida.getFaccionGanadora()!=null){
             if (aux.containsKey(partida.getFaccionGanadora())){
                 aux.put(partida.getFaccionGanadora(), aux.get(partida.getFaccionGanadora()) + 1);
             }else{
                 aux.put(partida.getFaccionGanadora(),  1);
             }
+        }
         }
         String res1 = aux.entrySet().stream().min(Comparator.comparing(x->x.getValue())).get().getKey().getName();
         if(res1 != null){
@@ -124,10 +134,12 @@ public class EstadisticaGeneralController {
     private Long getMaxDifVotos(List<Partida> partidas) {
         Long result = 0L;
         for(Partida partida: partidas){
+            if(partida.getVotosFavorCesar()>0 || partida.getVotosContraCesar()>0){
             Long res = Math.abs(partida.getVotosFavorCesar() - partida.getVotosContraCesar());
             if( res > result){
                 result = res;
             }
+        }
         }
         return result;
     }
