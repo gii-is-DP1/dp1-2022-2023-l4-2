@@ -47,7 +47,6 @@ public class PartidaController {
 		ModelAndView result = new ModelAndView(PARTIDAS_LISTING);
         Pageable request = PageRequest.of(page,5);
 		result.addObject("partidas", partidaService.getPartidasPageables(request));
-        //result.addObject("partidas", partidaService.getPartidas());
         Integer partidas = partidaService.getPartidas().size();
         Integer i = Integer.valueOf(partidas/5);
         if(i%2==0){
