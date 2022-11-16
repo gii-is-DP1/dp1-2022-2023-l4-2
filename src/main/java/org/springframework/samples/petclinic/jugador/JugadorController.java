@@ -129,12 +129,12 @@ public ModelAndView getJugadoresSinUsuario(Principal principal) {
             return new ModelAndView(JUGADOR_SEARCH);
         } else {
             jugadorService.agregarAmigo(jugador, principal.getName());
-            return new ModelAndView("redirect:/home");
+            return new ModelAndView("redirect:/jugadores/perfil/"+principal.getName()+"/amigos");
         }
 }
 
 @GetMapping("/perfil/{username1}/amigos/delete/{username2}")
-    public ModelAndView deleteAmigo(@PathVariable("username1") String username1,@PathVariable("username2") String username2) {
+    public ModelAndView deleteAmigo(@PathVariable("username1") String username1,@PathVariable("username2") String username2) throws Exception {
         jugadorService.deleteAmigo(username1, username2);
         return new ModelAndView("redirect:/jugadores/perfil/{username1}/amigos");
 }
