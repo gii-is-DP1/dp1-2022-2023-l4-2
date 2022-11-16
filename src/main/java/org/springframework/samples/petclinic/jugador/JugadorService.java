@@ -68,18 +68,24 @@ public class JugadorService {
     public void agregarAmigo(Jugador j, String userPrincipal) throws DataAccessException{
         Jugador toUpdate = jugadorRepo.findById(j.getId()).get();
         List<Jugador> amigos = jugadorRepo.findJugadorByUsername(userPrincipal).getAmigoDe();
-        amigos.add(j);
-        jugadorRepo.save(toUpdate);
+        if(!amigos.contains(j)){
+            amigos.add(j);
+            jugadorRepo.save(toUpdate);
+        }
     }
 
     @Transactional
-    public void deleteAmigo(String username1, String username2) throws DataAccessException{
+    public void deleteAmigo(String username1, String username2) throws Exception{
         Jugador toUpdate = jugadorRepo.findJugadorByUsername(username1);
         List<Jugador> amigos = toUpdate.getAmigoDe();
         Jugador amigoABorrar = jugadorRepo.findJugadorByUsername(username2);
-        amigos.remove(amigoABorrar);
-        toUpdate.setAmigoDe(amigos);
-        jugadorRepo.save(toUpdate);
+        if(amigos.contains(amigoABorrar)){
+            amigos.remove(amigoABorrar);
+            toUpdate.setAmigoDe(amigos);
+            jugadorRepo.save(toUpdate);
+        } else {
+            throw new Exception("Los usuarios " + username1 + " y " + username2 + " no son amigos");
+        }
     }
 
     @Transactional(readOnly = true)
