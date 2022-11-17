@@ -52,4 +52,14 @@
             
         </tbody>
     </table>
+
+    <h2>BUENAS TARDES</h2>
+    <table class="table table-striped">
+        <c:forEach items="${topJugadoresConVictoria.entrySet()}" var="top">
+            <tr>
+                <th><c:out value="${top.getKey()}"/></th>
+                <th><c:out value="${top.getValue()}"/></th>
+            </tr>
+        </c:forEach>
+    </table>
 </petclinic:layout>
