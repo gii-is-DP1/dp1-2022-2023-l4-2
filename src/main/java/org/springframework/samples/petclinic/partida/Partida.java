@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.Range;
 import org.springframework.samples.petclinic.jugador.Jugador;
 
 import lombok.Getter;
@@ -31,6 +32,7 @@ public class Partida implements Serializable{
     private long id;
     private long ronda;
     private long turno;
+    @Range(min=5,max=8)
     private long numJugadores;
     private String anfitrion;
     //@Embedded

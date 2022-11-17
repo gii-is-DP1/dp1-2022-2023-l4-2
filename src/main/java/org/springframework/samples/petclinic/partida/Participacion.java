@@ -34,6 +34,6 @@ public class Participacion extends BaseEntity{
 
     private long votosNeutros;
 
-    @ManyToMany(cascade =  CascadeType.ALL)
-    List<Partida> partidas;
+    @ManyToOne(cascade =  CascadeType.ALL)
+    Partida partidas;
 }
