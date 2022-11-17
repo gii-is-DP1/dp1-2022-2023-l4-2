@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.jugador;
 
 
 import java.security.Principal;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -112,7 +113,7 @@ public ModelAndView getAmigosDelJugador(@PathVariable("username") String usernam
     return res;
 }
 
-@GetMapping("/search")
+/*@GetMapping("/search")
 public ModelAndView getJugadoresSinUsuario(Principal principal) {
     ModelAndView res = new ModelAndView(JUGADOR_SEARCH);
     List<Jugador> jugadores = jugadorService.getJugadores();
@@ -121,22 +122,55 @@ public ModelAndView getJugadoresSinUsuario(Principal principal) {
     res.addObject("amigos", amigos);
     res.addObject("nombreUsuario", principal.getName());
     return res;
+}*/
+
+@GetMapping(value = "/search")
+public String processFindForm(Jugador jugador, BindingResult result, Map<String, Object> model) {
+
+    if (jugador.getUser().getUsername() == null) {
+        jugador.getUser().setUsername("");; // empty string signifies broadest possible search
+    }
+
+    // find players by username
+    Collection<Jugador> results = this.jugadorService.getJugadoresByUsername(jugador.getUser().getUsername());
+    if (results.isEmpty()) {
+        // no players found
+        result.rejectValue("Username", "notFound", "not found");
+        return "/search";
+    }
+    else if (results.size() == 1) {
+        // 1 player found
+        jugador = results.iterator().next();
+        return "redirect:/search/" + jugador.getUser().getUsername();
+    }
+    else {
+        // multiple players found
+        model.put("selections", results);
+        return "/search";
+    }
+}
+
+@GetMapping("/search/{username}")
+public ModelAndView showJugador(@PathVariable("username") String username){
+    ModelAndView mav = new ModelAndView("search/");
+    mav.addObject(this.jugadorService.getJugadorByUsername(username));
+    return mav;
 }
 
 @PostMapping("/search")
-    public ModelAndView agregarAmigos(Jugador jugador, Principal principal, BindingResult br) {
-        if (br.hasErrors()) {
-            return new ModelAndView(JUGADOR_SEARCH);
-        } else {
-            jugadorService.agregarAmigo(jugador, principal.getName());
-            return new ModelAndView("redirect:/jugadores/perfil/"+principal.getName()+"/amigos");
-        }
+public ModelAndView agregarAmigos(Jugador jugador, Principal principal, BindingResult br) {
+    if (br.hasErrors()) {
+        return new ModelAndView(JUGADOR_SEARCH);
+    } else {
+        jugadorService.agregarAmigo(jugador, principal.getName());
+        return new ModelAndView("redirect:/jugadores/perfil/"+principal.getName()+"/amigos");
+    }
 }
 
 @GetMapping("/perfil/{username1}/amigos/delete/{username2}")
-    public ModelAndView deleteAmigo(@PathVariable("username1") String username1,@PathVariable("username2") String username2) throws Exception {
-        jugadorService.deleteAmigo(username1, username2);
-        return new ModelAndView("redirect:/jugadores/perfil/{username1}/amigos");
+public ModelAndView deleteAmigo(@PathVariable("username1") String username1,@PathVariable("username2") String username2) throws Exception {
+    jugadorService.deleteAmigo(username1, username2);
+    return new ModelAndView("redirect:/jugadores/perfil/{username1}/amigos");
 }
 
 @GetMapping("/partidas/{username}")
