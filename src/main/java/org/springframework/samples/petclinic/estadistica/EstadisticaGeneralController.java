@@ -1,12 +1,21 @@
 package org.springframework.samples.petclinic.estadistica;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
+import java.util.Map.Entry;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.eclipse.jdt.internal.compiler.flow.FlowContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.jugador.Jugador;
+import org.springframework.samples.petclinic.jugador.JugadorService;
 import org.springframework.samples.petclinic.partida.FaccionType;
 import org.springframework.samples.petclinic.partida.Partida;
 import org.springframework.samples.petclinic.partida.PartidaService;
@@ -15,17 +24,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import net.bytebuddy.build.HashCodeAndEqualsPlugin.Sorted;
+
 @Controller
 @RequestMapping("/estadisticas")
 public class EstadisticaGeneralController {
     
     public static final String ESTADISTICAS_PAGE = "estadisticas/estadisticasPage";
     private PartidaService partidaService;
+    private JugadorService jugadorService;
 
     @Autowired
-    public EstadisticaGeneralController (PartidaService partidaService){
+    public EstadisticaGeneralController (PartidaService partidaService, JugadorService jugadorService){
         this.partidaService = partidaService;
+        this.jugadorService = jugadorService;
     }
+
 
     @GetMapping()
     public ModelAndView getEstadisticas(){
@@ -40,9 +54,22 @@ public class EstadisticaGeneralController {
         result.addObject("maxVotosEnContraCesar", getMaxVotosEnContraCesar(partidas));
         result.addObject("maxDiferenciaDeVotos", getMaxDifVotos(partidas));
         result.addObject("faccionPerdedora", getFaccionPerdedora(partidas));
+        result.addObject("topJugadoresConVictoria", getTopJugadoresConVictorias(partidas));
 		return result;
     }
 
+    private Map<String, Integer> getTopJugadoresConVictorias(List<Partida> partidas) {
+        List<Jugador> jugadores = jugadorService.getJugadores();
+        jugadores.stream().sorted(Comparator.comparing(x -> x.getPartidasGanadas()));
+        Map<String, Integer> res = new HashMap<String,Integer>();
+        for(int i = 0; i<jugadores.size() && i<10 ; i++){
+            Jugador j = jugadores.get(i);
+            Integer ganadas = j.getPartidasGanadas();
+            res.put(j.getUser().getUsername(), ganadas);
+        }
+        return res;
+    }
+   
     private Long getMaxVotosEnContraCesar(List<Partida> partidas) {
         Long result = 0L;
         for(Partida partida: partidas){

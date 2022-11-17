@@ -10,7 +10,7 @@
 <html>
 <petclinic:htmlHeader/>
 
-<body style = "font-family: 'Dalek Pinpoint', sans-serif;";>
+<body>
 <petclinic:bodyHeader menuName="${pageName}"/>
 
 <div class="container-fluid">

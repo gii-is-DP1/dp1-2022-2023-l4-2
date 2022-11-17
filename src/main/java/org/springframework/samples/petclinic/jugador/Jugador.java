@@ -20,7 +20,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Jugador extends Person {
+public class Jugador extends Person{
     
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "username",referencedColumnName = "username")
@@ -41,5 +41,103 @@ public class Jugador extends Person {
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     public List<Jugador> amigoDe;
 
+    public Integer getPartidasJugadas() {
+        return getPartidas().size();
+    }
     
+    public Integer getPartidasGanadas() {
+        Integer res = 0;
+        List<Partida> partidas = getPartidas();
+        List<Participacion> participaciones = getParticipaciones();
+        for (Partida partida : partidas) {
+            for (Participacion participacion : participaciones) {
+                if (partida.getParticipaciones().contains(participacion)
+                        && partida.getFaccionGanadora().equals(participacion.getFaccionApoyada())) {
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
+    
+    public Integer getVictoriasComoLeal() {
+        Integer res = 0;
+        List<Partida> partidas = getPartidas();
+        List<Participacion> participaciones = getParticipaciones();
+        for (Partida partida : partidas) {
+            for (Participacion participacion : participaciones) {
+                if (partida.getParticipaciones().contains(participacion)
+                        && participacion.getFaccionApoyada().getName().equals("Leal")
+                        && partida.getFaccionGanadora().equals(participacion.getFaccionApoyada())) {
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
+    
+    public Integer getVictoriasComoTraidor() {
+        Integer res = 0;
+        List<Partida> partidas = getPartidas();
+        List<Participacion> participaciones = getParticipaciones();
+        for (Partida partida : partidas) {
+            for (Participacion participacion : participaciones) {
+                if (partida.getParticipaciones().contains(participacion)
+                        && participacion.getFaccionApoyada().getName().equals("Traidor")
+                        && partida.getFaccionGanadora().equals(participacion.getFaccionApoyada())) {
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
+    
+    public Integer getVictoriasComoMercader() {
+        Integer res = 0;
+        List<Partida> partidas = getPartidas();
+        List<Participacion> participaciones = getParticipaciones();
+        for (Partida partida : partidas) {
+            for (Participacion participacion : participaciones) {
+                if (partida.getParticipaciones().contains(participacion)
+                        && participacion.getFaccionApoyada().getName().equals("Mercader")
+                        && partida.getFaccionGanadora().equals(participacion.getFaccionApoyada())) {
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
+    
+    public Long getTiempoJugado() {
+        Long res = 0L;
+        List<Partida> partidas = getPartidas();
+        for (Partida partida : partidas) {
+            res += partida.getTiempo();
+        }
+        return res;
+    }
+    
+    public String getFaccionFavorita() {
+        Integer leal = 0;
+        Integer traidor = 0;
+        Integer mercader = 0;
+        List<Participacion> participaciones = getParticipaciones();
+        for (Participacion participacion : participaciones) {
+            if (participacion.getFaccionApoyada().getName().equals("Leal")) {
+                leal++;
+            } else if (participacion.getFaccionApoyada().getName().equals("Traidor")) {
+                traidor++;
+            } else {
+                mercader++;
+            }
+        }
+        Integer max = Math.max(leal, traidor);
+        if (Math.max(max, mercader) == leal) {
+            return "Leal";
+        } else if (Math.max(max, mercader) == traidor) {
+            return "Traidor";
+        } else {
+            return "Mercader";
+        }
+    }
 }

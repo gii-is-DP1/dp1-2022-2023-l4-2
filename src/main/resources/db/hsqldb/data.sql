@@ -105,29 +105,6 @@ INSERT INTO dificultad(id,name) VALUES(1,'Facil');
 INSERT INTO dificultad(id,name) VALUES(2,'Normal');
 INSERT INTO dificultad(id,name) VALUES(3,'Dificil');
 
-INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
-    VALUES(1,1,1,6,'Guaje',14,12,15,1,20);
-INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
-    VALUES(2,1,1,6,'Jose',10,14,15,2,29);
-INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
-    VALUES(3,4,1,8,'Juan',19,12,20,1,30);
-INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
-    VALUES(4,1,1,6,'Jose',14,14,15,3,26);
-INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
-    VALUES(5,2,1,5,'Pablo',8,10,15,2,26);
-INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
-    VALUES(6,2,2,5,'Pablo',10,10,15,3,26);
-INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
-    VALUES(7,2,3,5,'Pablo',11,10,15,1,26);
-INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo,activa)
-    VALUES(8,0,0,5,'Davilillo',0,0,15,1,0,true);
-INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo,activa)
-    VALUES(9,2,1,5,'Davilillo',0,0,15,1,0,true);
-INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo,activa)
-    VALUES(10,2,1,5,'Davilillo',0,0,15,1,0,true);
-
-
-
  INSERT INTO tipo(id, name)
     VALUES(2, 'Por ganar');
  INSERT INTO tipo(id, name)
@@ -183,6 +160,28 @@ INSERT INTO jugador(id,first_name,last_name,username,rol_id,esta_en_partida)
     (5, 'Alejadro', 'Campano', 'Campanas', Null, false),
     (6, 'Pablo', 'Mera', 'Colombiano', Null, false);
 
+INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
+    VALUES(1,1,1,6,'Guaje',14,12,15,1,20);
+INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
+    VALUES(2,1,1,6,'Jose',10,14,15,2,29);
+INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
+    VALUES(3,4,1,8,'Juan',19,12,20,1,30);
+INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
+    VALUES(4,1,1,6,'Jose',14,14,15,3,26);
+INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
+    VALUES(5,2,1,5,'Pablo',8,10,15,2,26);
+INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
+    VALUES(6,2,2,5,'Pablo',10,10,15,3,26);
+INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
+    VALUES(7,2,3,5,'Pablo',11,10,15,1,26);
+INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo,activa)
+    VALUES(8,0,0,5,'Davilillo',0,0,15,1,0,true);
+INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo,activa)
+    VALUES(9,2,1,5,'Davilillo',0,0,15,1,0,true);
+INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo,activa)
+    VALUES(10,2,1,5,'Davilillo',0,0,15,1,0,true);
+
+
 INSERT INTO participacion(id, es_anfitrion,num_consul,votos_contra_cesar,votos_favor_cesar,votos_neutros,faccion_apoyada_id)
     VALUES(1,true,1,3,0,0,1),
     (2,false,2,2,1,0,2),
@@ -190,8 +189,6 @@ INSERT INTO participacion(id, es_anfitrion,num_consul,votos_contra_cesar,votos_f
     (4,false,1,0,2,2,3),
     (5,true,0,0,0,0,0), 
     (6,false,0,0,0,0,0);
-
-
 
 INSERT INTO partida_participaciones(partida_id,participaciones_id)
     VALUES(1,1),
