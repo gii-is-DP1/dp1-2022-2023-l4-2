@@ -8,6 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,8 +20,10 @@ import lombok.Setter;
 @Table(name = "users")
 public class User{
 	@Id
+	@Length(min=5, max=50)
 	String username;
 	
+	@Length(min=3, max=50)
 	String password;
 	
 	boolean enabled;

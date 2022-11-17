@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import org.springframework.samples.petclinic.user.User;
 import org.springframework.samples.petclinic.model.Person;
@@ -35,7 +36,7 @@ public class Jugador extends Person{
     @ManyToMany(cascade = CascadeType.ALL,mappedBy = "jugadores")
     public List<Partida> partidas;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     public List<Participacion> participaciones;
 
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
