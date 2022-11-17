@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.jugador;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -91,6 +92,11 @@ public class JugadorService {
     @Transactional(readOnly = true)
     public Jugador getJugadorByUsername(String username){
         return jugadorRepo.findJugadorByUsername(username);
+    }
+
+    @Transactional(readOnly = true)
+    public Collection<Jugador> getJugadoresByUsername(String username){
+        return jugadorRepo.findJugadoresByUsername(username);
     }
 
     @Transactional(readOnly = true)

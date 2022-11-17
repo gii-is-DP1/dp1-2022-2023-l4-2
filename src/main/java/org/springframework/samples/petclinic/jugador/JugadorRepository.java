@@ -1,11 +1,13 @@
 package org.springframework.samples.petclinic.jugador;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.partida.Partida;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +17,11 @@ public interface JugadorRepository extends CrudRepository<Jugador, Integer> {
     List<Jugador> findAll();
 
     @Query("SELECT j FROM Jugador j WHERE j.user.username =?1")
-    Jugador findJugadorByUsername(String username);  
+    Jugador findJugadorByUsername(String username); 
+    
+    @Query("SELECT DISTINCT j FROM Jugador j WHERE j.user.username LIKE :username%")
+    Collection<Jugador> findJugadoresByUsername(@Param("username") String username);
+
     //@Query("SELECT p FROM Jugador p WHERE ")
    // List<Partida> findPartidaAmigos(Jugador j);
 }
