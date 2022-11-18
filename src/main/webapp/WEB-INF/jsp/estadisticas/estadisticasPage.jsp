@@ -53,7 +53,7 @@
         </tbody>
     </table>
 
-    <h2>BUENAS TARDES</h2>
+    <h2>Top 5 jugadores con más vicotiras</h2>
     <table class="table table-striped">
         <c:forEach items="${topJugadoresConVictoria.entrySet()}" var="top">
             <tr>
