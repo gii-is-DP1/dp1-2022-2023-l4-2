@@ -62,7 +62,7 @@ public class EstadisticaGeneralController {
         List<Jugador> jugadores = jugadorService.getJugadores();
         jugadores.stream().sorted(Comparator.comparing(x -> x.getPartidasGanadas()));
         Map<String, Integer> res = new HashMap<String,Integer>();
-        for(int i = 0; i<jugadores.size() && i<10 ; i++){
+        for(int i = 0; i<jugadores.size() && i<5 ; i++){
             Jugador j = jugadores.get(i);
             Integer ganadas = j.getPartidasGanadas();
             res.put(j.getUser().getUsername(), ganadas);
