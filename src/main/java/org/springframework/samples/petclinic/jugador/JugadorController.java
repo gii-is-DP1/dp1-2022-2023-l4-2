@@ -10,6 +10,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.QueryAnnotation;
 import org.springframework.samples.petclinic.estadistica.Logro;
 import org.springframework.samples.petclinic.estadistica.LogroService;
 import org.springframework.samples.petclinic.partida.FaccionType;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -37,6 +39,10 @@ public static final String JUGADOR_EDITAR_PERFIL = "jugadores/editPerfil";
 public static final String JUGADOR_LISTA_AMIGOS = "jugadores/amigosList";
 public static final String JUGADOR_SEARCH = "jugadores/jugadorSearch";
 public static final String PARTIDOS_ESPECTEAR = "jugadores/listEspectear";
+public static final String JUGADOR_AUTO_COMPLETAR = "jugadores/searchFilter";
+
+
+
 
 private JugadorService jugadorService;
 
@@ -99,7 +105,7 @@ public String processCreationForm(@Valid Jugador j, BindingResult br){
             res.addObject("victoriasComoMercader", j.getVictoriasComoMercader());
             res.addObject("tiempoJugado", j.getTiempoJugado());
             res.addObject("faccionFavorita", j.getFaccionFavorita());
-            res.addObject("nombreUsuario",principal.getName());
+            res.addObject("nombreUsuario", principal.getName());
         }
         return res;
     }
@@ -113,7 +119,7 @@ public ModelAndView getAmigosDelJugador(@PathVariable("username") String usernam
     return res;
 }
 
-/*@GetMapping("/search")
+@GetMapping("/search")
 public ModelAndView getJugadoresSinUsuario(Principal principal) {
     ModelAndView res = new ModelAndView(JUGADOR_SEARCH);
     List<Jugador> jugadores = jugadorService.getJugadores();
@@ -122,39 +128,6 @@ public ModelAndView getJugadoresSinUsuario(Principal principal) {
     res.addObject("amigos", amigos);
     res.addObject("nombreUsuario", principal.getName());
     return res;
-}*/
-
-@GetMapping(value = "/search")
-public String processFindForm(Jugador jugador, BindingResult result, Map<String, Object> model) {
-
-    if (jugador.getUser().getUsername() == null) {
-        jugador.getUser().setUsername("");; // empty string signifies broadest possible search
-    }
-
-    // find players by username
-    Collection<Jugador> results = this.jugadorService.getJugadoresByUsername(jugador.getUser().getUsername());
-    if (results.isEmpty()) {
-        // no players found
-        result.rejectValue("Username", "notFound", "not found");
-        return "/search";
-    }
-    else if (results.size() == 1) {
-        // 1 player found
-        jugador = results.iterator().next();
-        return "redirect:/search/" + jugador.getUser().getUsername();
-    }
-    else {
-        // multiple players found
-        model.put("selections", results);
-        return "/search";
-    }
-}
-
-@GetMapping("/search/{username}")
-public ModelAndView showJugador(@PathVariable("username") String username){
-    ModelAndView mav = new ModelAndView("search/");
-    mav.addObject(this.jugadorService.getJugadorByUsername(username));
-    return mav;
 }
 
 @PostMapping("/search")
@@ -165,6 +138,31 @@ public ModelAndView agregarAmigos(Jugador jugador, Principal principal, BindingR
         jugadorService.agregarAmigo(jugador, principal.getName());
         return new ModelAndView("redirect:/jugadores/perfil/"+principal.getName()+"/amigos");
     }
+}
+
+@GetMapping(value = "/searchFilter")
+public ModelAndView processFindForm(String username, String id, Principal principal) {
+    ModelAndView mav = new ModelAndView(JUGADOR_AUTO_COMPLETAR);
+    mav.addObject("username", username);
+    mav.addObject("nombreUsuario", principal.getName());
+    if(id!=null){
+        Jugador j = jugadorService.getJugadorById(Integer.parseInt(id)).get();
+        jugadorService.agregarAmigo(j, principal.getName());
+        return new ModelAndView("redirect:/jugadores/perfil/"+principal.getName()+"/amigos");
+    }
+    if (username == null || username == "") return mav.addObject("error", "No se han encontrado datos");
+    // find players by username
+    Collection<Jugador> elBichoSuuu = this.jugadorService.getJugadoresByUsername(username);
+    List<Jugador> amigos = jugadorService.getJugadorByUsername(principal.getName()).getAmigoDe();
+    // no players found
+    if (elBichoSuuu.isEmpty()) {
+        mav.addObject("error", "No se han encontrado datos");
+        return mav;
+    }
+    // multiple players found
+    mav.addObject("jugadores", elBichoSuuu);
+    mav.addObject("amigos", amigos);
+    return mav;
 }
 
 @GetMapping("/perfil/{username1}/amigos/delete/{username2}")

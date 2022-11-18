@@ -96,6 +96,8 @@ public class JugadorService {
 
     @Transactional(readOnly = true)
     public Collection<Jugador> getJugadoresByUsername(String username){
+        System.out.println("------------------------------------HOLA SUUUUUUUUUUUUUUUUU --------------------------------");
+        System.out.println(username);
         return jugadorRepo.findJugadoresByUsername(username);
     }
 

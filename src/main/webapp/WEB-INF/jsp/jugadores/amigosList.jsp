@@ -13,6 +13,7 @@
         <thead>
         <tr>
             <th>Nombre de usuario</th>
+            <th>Eliminar amigo</th>
         </tr>
         </thead>
         <tbody>
@@ -35,7 +36,10 @@
 
     <table>
         <tr>
-            <th><a class="btn btn-default" href="/jugadores/search">Buscar jugadores</a></th>
+            <th><a class="btn btn-default" href="/jugadores/search">Todos los jugadores</a></th>
+        </tr>
+        <tr>
+            <th><a class="btn btn-default" href="/jugadores/searchFilter">Buscar jugadores</a></th>
         </tr>
         <tr>
             <th><a class="btn btn-default" href="/jugadores/perfil/${username}">Volver al Perfil</a></th>
