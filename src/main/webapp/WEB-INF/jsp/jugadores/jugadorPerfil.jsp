@@ -30,6 +30,13 @@
         </div>
     </c:if>
 
+    <c:if test="${faccionFavorita == ''}">
+        <div>
+            <spring:url value="/resources/images/SoldadoNeutral.png" htmlEscape="true" var="logo"/>
+            <img class="img-responsive" style ="margin: auto;width: 200px;   height: 200px;   border-radius: 50%;" src="${logo}"/>
+        </div>
+    </c:if>
+
     <c:if test="${faccionFavorita == 'Traidor'}">
         <div>
             <spring:url value="/resources/images/SoldadoTraidor.jpg" htmlEscape="true" var="logo"/>
