@@ -17,7 +17,7 @@
         <thead>
         <tr>
             <th>Jugadores en la sala</th>
-            <th>¿Está listo?</th>
+            <th>&#191;Est&aacute; listo?</th>
         </tr>
         </thead>
 
