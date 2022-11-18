@@ -122,23 +122,27 @@ public class Jugador extends Person{
         Integer leal = 0;
         Integer traidor = 0;
         Integer mercader = 0;
+        String res = "";
         List<Participacion> participaciones = getParticipaciones();
-        for (Participacion participacion : participaciones) {
-            if (participacion.getFaccionApoyada().getName().equals("Leal")) {
-                leal++;
-            } else if (participacion.getFaccionApoyada().getName().equals("Traidor")) {
-                traidor++;
+        if(!participaciones.isEmpty()){
+            for (Participacion participacion : participaciones) {
+                if (participacion.getFaccionApoyada().getName().equals("Leal")) {
+                    leal++;
+                } else if (participacion.getFaccionApoyada().getName().equals("Traidor")) {
+                    traidor++;
+                } else {
+                    mercader++;
+                }
+            }
+            Integer max = Math.max(leal, traidor);
+            if (Math.max(max, mercader) == leal) {
+                res = "Leal";
+            } else if (Math.max(max, mercader) == traidor) {
+                res = "Traidor";
             } else {
-                mercader++;
+                res = "Mercader";
             }
         }
-        Integer max = Math.max(leal, traidor);
-        if (Math.max(max, mercader) == leal) {
-            return "Leal";
-        } else if (Math.max(max, mercader) == traidor) {
-            return "Traidor";
-        } else {
-            return "Mercader";
-        }
+        return res;
     }
 }
