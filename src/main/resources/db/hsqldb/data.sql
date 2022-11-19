@@ -131,7 +131,7 @@ INSERT INTO logro(id, nombre, descripcion, tipo_id, limite, dificultad_id)
 
 
 INSERT INTO rol(id,name)
-    VALUES(1,'Cónsul'),(2,'Pretor'),(3,'Edil');
+    VALUES(1,'Consul'),(2,'Pretor'),(3,'Edil'),(4,'Sin rol');
 
 
 INSERT INTO users(username,password,enabled) VALUES ('Guaje', '1111', TRUE);
@@ -153,12 +153,12 @@ INSERT INTO users(username, password, enabled) VALUES('Colombiano', '1111', TRUE
 INSERT INTO authorities(id, username, authority) VALUES(16, 'Colombiano', 'jugador');
 
 INSERT INTO jugador(id,first_name,last_name,username,rol_id,esta_en_partida)
-    VALUES(1,'Juan Jesús','Campos','Guaje',Null,false),
-    (4,'Antonio','Carretero','Antaca',Null,false),
-    (3,'David','Reyes','Davilillo',2,true),
-    (2,'Eduardo', 'Pizarro', 'Bufon', Null, false),
-    (5, 'Alejadro', 'Campano', 'Campanas', Null, false),
-    (6, 'Pablo', 'Mera', 'Colombiano', Null, false);
+    VALUES(1,'Juan Jesús','Campos','Guaje',4,false),
+    (4,'Antonio','Carretero','Antaca',4,false),
+    (3,'David','Reyes','Davilillo',4,true),
+    (2,'Eduardo', 'Pizarro', 'Bufon', 4, false),
+    (5, 'Alejadro', 'Campano', 'Campanas', 4, false),
+    (6, 'Pablo', 'Mera', 'Colombiano', 4, false);
 
 INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
     VALUES(1,1,1,6,'Guaje',14,12,15,1,20);

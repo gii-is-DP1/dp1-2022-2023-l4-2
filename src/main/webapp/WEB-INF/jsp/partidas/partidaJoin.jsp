@@ -5,7 +5,7 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 
-<petclinic:layout pageName="partidaJoin">
+<petclinic:lo2 pageName="partidaJoin">
 
     <button>
         <a class="btn btn-default" href="/partidas/join">< Volver</a></th>
@@ -39,8 +39,8 @@
     <div style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 20px;text-align: center;">
         <c:if test="${partida.anfitrion == jugadorActual.user.username}">
             <button>
-                Comenzar partida
+                <a class="btn btn-default" href="/partidas/jugar/${partida.id}"> Comenzar Partida </a></th>
             </button>
         </c:if>
     </div>
-</petclinic:layout>
+</petclinic:lo2>
