@@ -5,8 +5,12 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.swing.Timer;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.samples.petclinic.jugador.Jugador;
 import org.springframework.samples.petclinic.jugador.JugadorService;
+import org.springframework.samples.petclinic.jugador.RolType;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -33,6 +38,9 @@ public class PartidaController {
     public static final String PARTIDAS_CREAR = "partidas/partidaCreate";
     public static final String PARTIDAS_DISPONIBLES = "partidas/partidasDisponibles";
     public static final String PARTIDAS_UNIR = "partidas/partidaJoin";
+    public static final String PARTIDAS_JUGAR = "partidas/partida";
+
+
     private PartidaService partidaService;
 
     @Autowired
@@ -79,6 +87,9 @@ public class PartidaController {
         List<Jugador> jugadores = p.getJugadores();
 
 
+        if(p.getRonda()!=0 && p.getActiva()){
+            result =new ModelAndView("redirect:/partidas/jugar/{id}");
+        }
         if(!p.getJugadores().contains(jugadorService.getJugadorByUsername(p.getAnfitrion()))){
             result =new ModelAndView("redirect:/partidas/join/");
             partidaService.deletePartida(p.getId());
@@ -118,6 +129,56 @@ public class PartidaController {
             }
         }
         result.addObject("partidas", partidas);
+        return result;
+    }
+
+    RolType edil = new RolType();
+    RolType consul = new RolType();
+    RolType pretor = new RolType();
+
+    @GetMapping("/jugar/{id}")
+    public ModelAndView jugandoPartida(@PathVariable("id") Long id, HttpServletResponse response, Principal principal){
+        ModelAndView result = new ModelAndView(PARTIDAS_JUGAR);
+        response.addHeader("Refresh", "2");
+        Partida p = partidaService.getPartidaById(id).get();
+        List<Jugador> jugadores = p.getJugadores();
+        List<String> nombres = jugadores.stream().map(x -> x.getUser().getUsername()).collect(Collectors.toList());
+
+        if(p.getRonda() == 0){
+            p.setRonda(1);
+            p.setTurno(1);
+            partidaService.edit(p);
+
+            consul.setId(1);
+            consul.setName("Consul");
+            pretor.setId(2);
+            pretor.setName("Pretor");
+            edil.setId(3);
+            edil.setName("Edil");
+
+            List<RolType> roles = new ArrayList<>();
+            roles.add(consul);
+            roles.add(edil);
+            roles.add(edil);
+            roles.add(pretor);
+
+            int i = jugadores.size();
+            for(Jugador j : jugadores){
+                int n = (int) (Math.random() * i);
+                if(n < roles.size()){
+                    j.setRol(roles.get(n));
+                    jugadorService.editJugador(j);
+                    roles.remove(n);
+                }
+                i--;
+            }
+        }
+        String rolActual = jugadorService.getJugadorByUsername(principal.getName()).getRol().getName();
+        result.addObject("rolActual", rolActual);
+        result.addObject("nombres", nombres);
+        result.addObject("jugadores", jugadores);
+        result.addObject("partida", p);
+        result.addObject("principal", principal);
         return result;
     }
 
