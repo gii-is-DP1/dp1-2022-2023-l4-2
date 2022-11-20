@@ -37,10 +37,5 @@
         </tbody>
     </table>
     <div style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 20px;text-align: center;">
-        <c:if test="${partida.anfitrion == jugadorActual.user.username}">
-            <button>
-                <a class="btn btn-default" href="/partidas/jugar/${partida.id}"> Comenzar Partida </a></th>
-            </button>
-        </c:if>
     </div>
 </petclinic:lo2>

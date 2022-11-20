@@ -22,6 +22,9 @@ public interface JugadorRepository extends CrudRepository<Jugador, Integer> {
     @Query("SELECT DISTINCT j FROM Jugador j WHERE j.user.username LIKE :username%")
     Collection<Jugador> findJugadoresByUsername(@Param("username") String username);
 
+    @Query("SELECT r FROM RolType r")
+    List<RolType> findRoles();
+
     //@Query("SELECT p FROM Jugador p WHERE ")
    // List<Partida> findPartidaAmigos(Jugador j);
 }

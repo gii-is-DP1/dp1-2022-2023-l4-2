@@ -145,4 +145,14 @@ public class Jugador extends Person{
         }
         return res;
     }
+
+    public Participacion getParticipacionEnPartida(Partida p){
+        Participacion res = null;
+        for(Participacion part: this.participaciones){
+            if(p.getParticipaciones().contains(part)){
+                res = part;
+            }
+        }
+        return res;
+    }
 }

@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.springframework.samples.petclinic.model.BaseEntity;
 
@@ -19,7 +20,7 @@ import lombok.Setter;
 public class Participacion extends BaseEntity{
     
     
-
+    
     @ManyToOne
 	@JoinColumn
     private FaccionType faccionApoyada;
@@ -36,4 +37,7 @@ public class Participacion extends BaseEntity{
 
     @ManyToOne(cascade =  CascadeType.ALL)
     Partida partidas;
+
+    @ManyToMany
+    List<FaccionType> opciones;
 }
