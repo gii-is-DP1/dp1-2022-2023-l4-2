@@ -117,5 +117,10 @@ public class JugadorService {
         return partidasAmigos;
     }
 
+    @Transactional(readOnly=true)
+    public List<RolType> getRoles(){
+        return jugadorRepo.findRoles();
+    }
+
     
 }

@@ -50,6 +50,9 @@ public class PartidaController {
     @Autowired
     public JugadorService jugadorService;
 
+    @Autowired
+    public ParticipacionService participacionService;
+
     @GetMapping()
 	public ModelAndView showPartidas(@RequestParam("page") int page) {
 		ModelAndView result = new ModelAndView(PARTIDAS_LISTING);
@@ -87,12 +90,16 @@ public class PartidaController {
         List<Jugador> jugadores = p.getJugadores();
 
 
-        if(p.getRonda()!=0 && p.getActiva()){
-            result =new ModelAndView("redirect:/partidas/jugar/{id}");
-        }
+        //if(p.getRonda()!=0 && p.getActiva()){
+        //    result =new ModelAndView("redirect:/partidas/jugar/{id}");
+        //}
         if(!p.getJugadores().contains(jugadorService.getJugadorByUsername(p.getAnfitrion()))){
-            result =new ModelAndView("redirect:/partidas/join/");
-            partidaService.deletePartida(p.getId());
+           result =new ModelAndView("redirect:/partidas/join/");
+           partidaService.deletePartida(p.getId());
+        }
+
+        if(jugadores.size() == p.getNumJugadores()){
+            return new ModelAndView("redirect:/partidas/jugar/{id}");
         }
         if(!p.getJugadores().contains(j)){
             jugadores.add(j);
@@ -143,8 +150,9 @@ public class PartidaController {
         Partida p = partidaService.getPartidaById(id).get();
         List<Jugador> jugadores = p.getJugadores();
         List<String> nombres = jugadores.stream().map(x -> x.getUser().getUsername()).collect(Collectors.toList());
-
+        /* 
         if(p.getRonda() == 0){
+            
             p.setRonda(1);
             p.setTurno(1);
             partidaService.edit(p);
@@ -172,7 +180,34 @@ public class PartidaController {
                 }
                 i--;
             }
+            
         }
+        */
+        Integer i = 1;
+        for(Jugador j:jugadores){
+            Participacion part = new Participacion();
+            part.setNumConsul(i);
+            if(p.getAnfitrion() == j.getUser().getUsername()){
+                part.setEsAnfitrion(true);
+            }else{
+                part.setEsAnfitrion(false);
+            }
+            part.setVotosContraCesar(0);
+            part.setVotosFavorCesar(0);
+            part.setVotosNeutros(0);
+            part.setPartidas(p);
+            part.setOpciones(List.of(new FaccionType()));
+            participacionService.save(part);
+            List<Participacion> ls = j.getParticipaciones();
+            ls.add(part);
+            j.setParticipaciones(ls);
+
+
+        }
+
+        reparteRoles(p);
+
+
         String rolActual = jugadorService.getJugadorByUsername(principal.getName()).getRol().getName();
         result.addObject("rolActual", rolActual);
         result.addObject("nombres", nombres);
@@ -180,6 +215,25 @@ public class PartidaController {
         result.addObject("partida", p);
         result.addObject("principal", principal);
         return result;
+    }
+
+
+    public void reparteRoles(Partida p){
+        List<RolType> roles = jugadorService.getRoles();
+        for(Jugador j: p.getJugadores()){
+            Participacion part = j.getParticipacionEnPartida(p);
+            if(part.getNumConsul()== p.getTurno()){
+                j.setRol(roles.stream().filter(x->x.getName().equals("Consul")).findAny().get());
+            }else if(part.getNumConsul() == p.getTurno()+1%p.getNumJugadores()){
+                j.setRol(roles.stream().filter(x->x.getName().equals("Pretor")).findAny().get());
+            }else if(part.getNumConsul() == p.getTurno()+2%p.getNumJugadores() ||part.getNumConsul() == p.getTurno()+3%p.getNumJugadores()){
+                j.setRol(roles.stream().filter(x->x.getName().equals("Edil")).findAny().get());
+            }else{
+                j.setRol(roles.stream().filter(x->x.getName().equals("Sin rol")).findAny().get());
+            }
+            jugadorService.saveJugador(j);
+
+        }
     }
 
     @PostMapping("/new")
