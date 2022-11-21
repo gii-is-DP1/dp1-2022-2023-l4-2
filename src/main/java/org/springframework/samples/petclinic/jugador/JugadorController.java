@@ -151,16 +151,13 @@ public ModelAndView processFindForm(String username, String id, Principal princi
         return new ModelAndView("redirect:/jugadores/perfil/"+principal.getName()+"/amigos");
     }
     if (username == null || username == "") return mav.addObject("error", "No se han encontrado datos");
-    // find players by username
-    Collection<Jugador> elBichoSuuu = this.jugadorService.getJugadoresByUsername(username);
+    Collection<Jugador> jugadores = this.jugadorService.getJugadoresByUsername(username);
     List<Jugador> amigos = jugadorService.getJugadorByUsername(principal.getName()).getAmigoDe();
-    // no players found
-    if (elBichoSuuu.isEmpty()) {
+    if (jugadores.isEmpty()) {
         mav.addObject("error", "No se han encontrado datos");
         return mav;
     }
-    // multiple players found
-    mav.addObject("jugadores", elBichoSuuu);
+    mav.addObject("jugadores", jugadores);
     mav.addObject("amigos", amigos);
     return mav;
 }

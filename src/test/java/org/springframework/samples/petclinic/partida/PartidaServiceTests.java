@@ -7,8 +7,11 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.samples.petclinic.jugador.Jugador;
+import org.springframework.samples.petclinic.jugador.JugadorService;
 import org.springframework.samples.petclinic.partida.FaccionType;
 import org.springframework.samples.petclinic.partida.Partida;
 import org.springframework.samples.petclinic.partida.PartidaService;
@@ -47,6 +52,37 @@ public class PartidaServiceTests {
         Partida partida1 = partidaService.getPartidaById(1).get();
         assertNotNull(partida1);
         assertNotEquals("Antaca", partida1.getAnfitrion());
+    }
+
+    @Test
+    public void jugadoresConOpcionesDePartidaTest(){
+        Partida partida = new Partida();
+        Jugador jugador1 = new Jugador();
+        Jugador jugador2 = new Jugador();
+        Participacion participacion1 = new Participacion();
+        Participacion participacion2 = new Participacion();
+        participacion1.setEsAnfitrion(true);
+        participacion1.setId(99);
+        participacion1.setNumConsul(1);
+        participacion1.setPartidas(partida);
+        participacion2.setEsAnfitrion(false);
+        participacion2.setId(123);
+        participacion2.setNumConsul(3);
+        participacion2.setPartidas(partida);
+        jugador1.setId(10);
+        jugador1.setFirstName("Paco");
+        jugador1.setLastName("Candela");
+        jugador1.setPartidas(List.of(partida));
+        jugador1.setParticipaciones(List.of(participacion1));
+        jugador2.setId(11);
+        jugador2.setFirstName("Paquito");
+        jugador2.setLastName("Navarro");
+        jugador2.setPartidas(List.of(partida));
+        jugador2.setParticipaciones(List.of(participacion2));
+        partida.setId(99);
+        partida.setJugadores(List.of(jugador1, jugador2));
+        Map<Jugador,List<FaccionType>> res = partidaService.jugadoresConOpcionesDePartida(partida);
+        assertEquals(2, res.entrySet().stream().map(x->x.getValue()).collect(Collectors.toList()).get(0).size());
     }
 
     @Test

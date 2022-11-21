@@ -99,7 +99,7 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04',
 INSERT INTO facciones(id,name) VALUES(1,'Leal');
 INSERT INTO facciones(id,name) VALUES(2,'Traidor');
 INSERT INTO facciones(id,name) VALUES(3,'Mercader');
-INSERT INTO facciones(id,name) VALUES(0, 'No decidido');
+INSERT INTO facciones(id,name) VALUES(4,'No decidido');
 
 INSERT INTO dificultad(id,name) VALUES(1,'Facil');
 INSERT INTO dificultad(id,name) VALUES(2,'Normal');
@@ -187,8 +187,8 @@ INSERT INTO participacion(id, es_anfitrion,num_consul,votos_contra_cesar,votos_f
     (2,false,2,2,1,0,2),
     (3,false,1,1,1,2,3),
     (4,false,1,0,2,2,3),
-    (5,true,0,0,0,0,0), 
-    (6,false,0,0,0,0,0);
+    (5,true,0,0,0,0,4), 
+    (6,false,0,0,0,0,4);
 
 INSERT INTO partida_participaciones(partida_id,participaciones_id)
     VALUES(1,1),

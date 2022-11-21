@@ -1,21 +1,27 @@
 package org.springframework.samples.petclinic.partida;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.hibernate.type.descriptor.java.UUIDTypeDescriptor.ToBytesTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.samples.petclinic.jugador.Jugador;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PartidaService {
     private PartidaRepository partidaRepo;
+    private ParticipacionService participacionService;
 
     @Autowired
-    public PartidaService(PartidaRepository partidaRepo){
+    public PartidaService(PartidaRepository partidaRepo, ParticipacionService participacionService){
         this.partidaRepo = partidaRepo;
+        this.participacionService = participacionService;
     }
 
     @Transactional(readOnly = true)
@@ -77,5 +83,23 @@ public class PartidaService {
     @Transactional(readOnly = true)
     public List<Partida> getPartidasActivas(){
         return this.partidaRepo.findPartidasActivas();
+    }
+    
+    @Transactional
+    public Map<Jugador,List<FaccionType>> jugadoresConOpcionesDePartida(Partida p){
+        Map<Jugador,List<FaccionType>> res = new HashMap<Jugador,List<FaccionType>>();
+        List<Jugador> jugadores = p.getJugadores();
+        for(Jugador j:jugadores){
+            res.put(j, new ArrayList<FaccionType>());
+            List<FaccionType> opcionesJugador = getFaccionesType();
+            res.get(j).add(opcionesJugador.get(getRandomInt(3)));
+            res.get(j).add(opcionesJugador.get(getRandomInt(3)));
+        }
+        return res;
+    }
+
+    private Integer getRandomInt(Integer max){
+        Double res = Math.floor(Math.random() * max);
+        return res.intValue();
     }
 }
