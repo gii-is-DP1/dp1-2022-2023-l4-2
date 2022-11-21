@@ -34,6 +34,16 @@ public class PartidaService {
         Optional<Partida> result = partidaRepo.findById(id);
         return result;
     }
+
+    @Transactional(readOnly = true)
+    public List<FaccionType> getFaccionesType(){
+        return partidaRepo.findAllFaccionType();
+    }
+
+    @Transactional(readOnly = true)
+    public List<FaccionType> getFaccionesTypeByName(String name){
+         return partidaRepo.findFaccionTypeByName(name);
+    }
     
     @Transactional
     public void deletePartida(long id) {

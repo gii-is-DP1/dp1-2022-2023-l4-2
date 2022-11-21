@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -16,4 +17,10 @@ public interface PartidaRepository extends CrudRepository<Partida, Long>{
 
     @Query("SELECT p FROM Partida p WHERE p.activa =TRUE")
     List<Partida> findPartidasActivas();
+
+    @Query("SELECT f FROM FaccionType f")
+    List<FaccionType> findAllFaccionType();
+
+    @Query("SELECT f FROM FaccionType f WHERE f.name = :name")
+    List<FaccionType> findFaccionTypeByName(@Param("name") String name);
 }
