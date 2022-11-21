@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.h2.store.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.partida.Partida;
@@ -63,6 +64,10 @@ public class JugadorService {
         toUpdate.getUser().setPassword(j.getUser().getPassword());
         jugadorRepo.save(toUpdate);
         userService.saveUser(toUpdate.getUser());
+    }
+    @Transactional
+    public void save2(Jugador j) throws DataAccessException{
+        jugadorRepo.save(j);
     }
 
     @Transactional

@@ -3,6 +3,7 @@ package org.springframework.samples.petclinic.partida;
 import java.net.http.HttpResponse;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collector;
@@ -99,7 +100,7 @@ public class PartidaController {
         }
 
         if(jugadores.size() == p.getNumJugadores()){
-            return new ModelAndView("redirect:/partidas/jugar/{id}");
+            return new ModelAndView("redirect:/partidas/iniciar/{id}");
         }
         if(!p.getJugadores().contains(j)){
             jugadores.add(j);
@@ -143,84 +144,66 @@ public class PartidaController {
     RolType consul = new RolType();
     RolType pretor = new RolType();
 
+    @GetMapping("/iniciar/{id}")
+    public String iniciarPartida(@PathVariable("id") Long id, HttpServletResponse response, Principal principal){
+        //ModelAndView result = new ModelAndView(PARTIDAS_JUGAR);
+        //response.addHeader("Refresh", "2");
+        Partida p = partidaService.getPartidaById(id).get();
+        p.setTurno(1);
+        p.setRonda(1);
+        Jugador j =jugadorService.getJugadorByUsername(principal.getName());
+        Integer idp = participacionService.getParticipaciones().stream().map(x->x.getId()).max(Comparator.comparing(x->x)).get();
+        Participacion part = new Participacion();
+        part.setId(idp+1);
+        if(p.getParticipaciones().isEmpty()){
+            part.setNumConsul(0);
+        }else{
+            Integer maxNumConsul = p.participaciones.stream().map(x->x.getNumConsul()).max(Comparator.comparing(x->x)).get();
+            part.setNumConsul(maxNumConsul+1);
+        }
+        if(p.getAnfitrion() == j.getUser().getUsername()){
+        part.setEsAnfitrion(true);
+        }else{
+            part.setEsAnfitrion(false);
+        }
+        part.setVotosContraCesar(0);
+        part.setVotosFavorCesar(0);
+        part.setVotosNeutros(0);
+        part.setPartidas(p);
+        List<FaccionType> aux = partidaService.getFaccionesType();
+        part.setFaccionApoyada(null);
+        part.setOpciones(aux);
+        List<Participacion> ls2 = p.getParticipaciones();
+        List<Participacion> ls = j.getParticipaciones();
+        participacionService.save(part);
+        ls.add(part);
+        ls2.add(part);
+        j.setParticipaciones(ls);
+        jugadorService.editJugador(j);
+        p.setParticipaciones(ls2);
+        partidaService.save(p);
+        if(p.getParticipaciones().size() == p.getNumJugadores()){
+            reparteRoles(p);
+        }
+        return "redirect:/partidas/jugar/{id}";
+    }
+
+
     @GetMapping("/jugar/{id}")
-    public ModelAndView jugandoPartida(@PathVariable("id") Long id, HttpServletResponse response, Principal principal){
+    public ModelAndView jugarPartida(@PathVariable("id") Long id, HttpServletResponse response, Principal principal){
         ModelAndView result = new ModelAndView(PARTIDAS_JUGAR);
         response.addHeader("Refresh", "2");
         Partida p = partidaService.getPartidaById(id).get();
-        List<Jugador> jugadores = p.getJugadores();
-        List<String> nombres = jugadores.stream().map(x -> x.getUser().getUsername()).collect(Collectors.toList());
-        /* 
-        if(p.getRonda() == 0){
-            
-            p.setRonda(1);
-            p.setTurno(1);
-            partidaService.edit(p);
+        Jugador j = jugadorService.getJugadorByUsername(principal.getName());
 
-            consul.setId(1);
-            consul.setName("Consul");
-            pretor.setId(2);
-            pretor.setName("Pretor");
-            edil.setId(3);
-            edil.setName("Edil");
-
-            List<RolType> roles = new ArrayList<>();
-            roles.add(consul);
-            roles.add(edil);
-            roles.add(edil);
-            roles.add(pretor);
-
-            int i = jugadores.size();
-            for(Jugador j : jugadores){
-                int n = (int) (Math.random() * i);
-                if(n < roles.size()){
-                    j.setRol(roles.get(n));
-                    jugadorService.editJugador(j);
-                    roles.remove(n);
-                }
-                i--;
-            }
-            
-        }
-        */
-        Integer i = 1;
-        for(Jugador j:jugadores){
-            Participacion part = new Participacion();
-            part.setNumConsul(i);
-            if(p.getAnfitrion() == j.getUser().getUsername()){
-                part.setEsAnfitrion(true);
-            }else{
-                part.setEsAnfitrion(false);
-            }
-            part.setVotosContraCesar(0);
-            part.setVotosFavorCesar(0);
-            part.setVotosNeutros(0);
-            part.setPartidas(p);
-            part.setOpciones(List.of(new FaccionType()));
-            participacionService.save(part);
-            List<Participacion> ls = j.getParticipaciones();
-            ls.add(part);
-            j.setParticipaciones(ls);
-
-
-        }
-
-        reparteRoles(p);
-
-
-        String rolActual = jugadorService.getJugadorByUsername(principal.getName()).getRol().getName();
-        result.addObject("rolActual", rolActual);
-        result.addObject("nombres", nombres);
-        result.addObject("jugadores", jugadores);
         result.addObject("partida", p);
         result.addObject("principal", principal);
         return result;
     }
-
-
     public void reparteRoles(Partida p){
         List<RolType> roles = jugadorService.getRoles();
-        for(Jugador j: p.getJugadores()){
+        for(int i=0;i<p.getJugadores().size();i++){
+            Jugador j =p.getJugadores().get(i);
             Participacion part = j.getParticipacionEnPartida(p);
             if(part.getNumConsul()== p.getTurno()){
                 j.setRol(roles.stream().filter(x->x.getName().equals("Consul")).findAny().get());
@@ -231,8 +214,7 @@ public class PartidaController {
             }else{
                 j.setRol(roles.stream().filter(x->x.getName().equals("Sin rol")).findAny().get());
             }
-            jugadorService.saveJugador(j);
-
+            jugadorService.save2(j);
         }
     }
 
