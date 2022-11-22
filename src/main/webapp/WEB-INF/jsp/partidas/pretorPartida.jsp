@@ -37,17 +37,6 @@
                 </c:forEach>
             </div>
         </div>
-
-        <c:if test="${jugador.rol == 'Consul'}">
-            <a class="btn btn-default" href="#">Siguiente</a>
-        </c:if>
-        <c:if test="${jugador.rol == 'Edil'}">
-            <a class="btn btn-default" href="#">Siguiente</a>
-        </c:if>
-        <c:if test="${jugador.rol == 'Pretor'}">
-            <a class="btn btn-default" href="#">Siguiente</a>
-        </c:if>
-        
     </div>
    
 </petclinic:lo2>
