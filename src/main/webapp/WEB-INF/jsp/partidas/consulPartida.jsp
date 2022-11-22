@@ -37,6 +37,23 @@
                 </c:forEach>
             </div>
         </div>
+
+        <form:form modelAttribute="faccionType"
+                   class="form-horizontal">
+            <input type="hidden" name="id" value="${faccionType.id}"/>
+            <div class="form-group has-feedback">                
+                <tr>
+                    <td>Faccion elegida:</td>
+                    <td><select path="name" items="${opciones}"></td>
+                </tr>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10"></div>
+                     <button class="btn btn-default" type="submit" >Elegir</button>
+                </div>
+            </div>
+        </form:form>
+
     </div>
    
 </petclinic:lo2>

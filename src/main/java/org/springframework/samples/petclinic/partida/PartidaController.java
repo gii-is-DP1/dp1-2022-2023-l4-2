@@ -40,6 +40,9 @@ public class PartidaController {
     public static final String PARTIDAS_DISPONIBLES = "partidas/partidasDisponibles";
     public static final String PARTIDAS_UNIR = "partidas/partidaJoin";
     public static final String PARTIDAS_JUGAR = "partidas/partida";
+    public static final String EDIL_JUGAR = "partidas/edilPartida";
+    public static final String CONSUL_JUGAR = "partidas/consulPartida";
+    public static final String PRETOR_JUGAR = "partidas/pretorPartida";
 
 
     private PartidaService partidaService;
@@ -53,6 +56,9 @@ public class PartidaController {
 
     @Autowired
     public ParticipacionService participacionService;
+
+    @Autowired
+    public VotoService votoService;
 
     @GetMapping()
 	public ModelAndView showPartidas(@RequestParam("page") int page) {
@@ -170,7 +176,7 @@ public class PartidaController {
         part.setVotosFavorCesar(0);
         part.setVotosNeutros(0);
         part.setPartidas(p);
-        List<FaccionType> aux = partidaService.getFaccionesType();
+        List<FaccionType> aux = partidaService.jugadoresConOpcionesDePartida(p).get(j);
         part.setFaccionApoyada(null);
         part.setOpciones(aux);
         List<Participacion> ls2 = p.getParticipaciones();
@@ -192,14 +198,79 @@ public class PartidaController {
     @GetMapping("/jugar/{id}")
     public ModelAndView jugarPartida(@PathVariable("id") Long id, HttpServletResponse response, Principal principal){
         ModelAndView result = new ModelAndView(PARTIDAS_JUGAR);
-        response.addHeader("Refresh", "2");
+        response.addHeader("Refresh", "20");
         Partida p = partidaService.getPartidaById(id).get();
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
-
+        result.addObject("jugadorLog", j);
         result.addObject("partida", p);
         result.addObject("principal", principal);
         return result;
     }
+
+    @GetMapping("/jugar/edil/{id}")
+    public ModelAndView partidaEdil(@PathVariable("id") Long id, HttpServletResponse response, Principal principal){
+        ModelAndView result = new ModelAndView(EDIL_JUGAR);
+        //response.addHeader("Refresh", "2");
+        Partida p = partidaService.getPartidaById(id).get();
+        Jugador j = jugadorService.getJugadorByUsername(principal.getName());
+        result.addObject("jugadorLog", j);
+        result.addObject("partida", p);
+        result.addObject("principal", principal);
+        return result;
+    }
+
+    
+    @PostMapping("/jugadr/edil/{id}")
+    public ModelAndView guardarVoto(@PathVariable("id") Long id, @Valid FaccionType ft, BindingResult br, Principal principal){
+        //if(br.hasErrors()){
+        //    return new ModelAndView(EDIL_JUGAR,br.getModel());
+        //}
+        Jugador j = jugadorService.getJugadorByUsername(principal.getName());
+        FaccionType faccion = partidaService.getFaccionesTypeByName(ft.getName()).get(0);
+        Partida p = partidaService.getPartidaById(id).get();
+        Integer maxVoto = votoService.getVotos().stream().map(x->x.getId()).max(Comparator.comparing(x->x)).get();
+        Voto v = new Voto();
+
+        v.setId(maxVoto+1);
+        v.setFaccion(faccion);
+        v.setJugador(j);
+        v.setPartida(p);
+        v.setRonda(p.getRonda());
+        v.setTurno(p.getTurno());
+        votoService.saveVoto(v);
+
+        ModelAndView res = new ModelAndView("redirect:/partidas/jugar/{id}");
+        return res;
+        
+    }
+
+    @GetMapping("/jugar/pretor/{id}")
+    public ModelAndView partidaPretor(@PathVariable("id") Long id, HttpServletResponse response, Principal principal){
+        ModelAndView result = new ModelAndView(PRETOR_JUGAR);
+        //response.addHeader("Refresh", "2");
+        Partida p = partidaService.getPartidaById(id).get();
+        Jugador j = jugadorService.getJugadorByUsername(principal.getName());
+        result.addObject("jugadorLog", j);
+        result.addObject("partida", p);
+        result.addObject("principal", principal);
+        return result;
+    }
+    
+    @GetMapping("/jugar/consul/{id}")
+    public ModelAndView partidaConsul(@PathVariable("id") Long id, HttpServletResponse response, Principal principal){
+        ModelAndView result = new ModelAndView(CONSUL_JUGAR);
+        //response.addHeader("Refresh", "2");
+        Partida p = partidaService.getPartidaById(id).get();
+        Jugador j = jugadorService.getJugadorByUsername(principal.getName());
+        List<String> opciones = j.getParticipacionEnPartida(p).getOpciones().stream().map(x->x.getName()).collect(Collectors.toList());
+        result.addObject("opciones", opciones);
+        result.addObject("jugadorLog", j);
+        result.addObject("partida", p);
+        result.addObject("principal", principal);
+        return result;
+    }
+
+
     public void reparteRoles(Partida p){
         List<RolType> roles = jugadorService.getRoles();
         for(int i=0;i<p.getJugadores().size();i++){
@@ -236,6 +307,7 @@ public class PartidaController {
         partida.setAnfitrion(j.getUser().getUsername());
         partida.setLimite(calculaLimite(partida.getNumJugadores()));
         partida.setActiva(true);
+        partida.setFase(0);
         partidaService.save(partida);
         ModelAndView result =new ModelAndView("redirect:/partidas/join/"+partida.getId());
         //result.addObject("message", "Ha habido un error creando la partida.");
