@@ -56,7 +56,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10"></div>
-                     <button class="btn btn-default" type="submit" href="/logros/new">Crear logro</button>
+                     <button class="btn btn-default" type="submit" href="/jugadr/edil/{partida.id}">Votar</button>
                 </div>
             </div>
         </form:form>
@@ -79,7 +79,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10"></div>
-                     <button class="btn btn-default" type="submit" href="/logros/new">Crear logro</button>
+                     <button class="btn btn-default" type="submit" href="/jugadr/edil/{partida.id}">Votar</button>
                 </div>
             </div>
         </form:form>

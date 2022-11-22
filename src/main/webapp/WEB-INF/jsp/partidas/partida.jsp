@@ -38,13 +38,13 @@
             </div>
         </div>
 
-        <c:if test="${jugador.rol == 'Consul'}">
-            <a class="btn btn-default" href="#">Siguiente</a>
+        <c:if test="${jugadorLog.rol.getName() == 'Consul'}">
+            <a class="btn btn-default" href="/partidas/jugar/consul/${partida.id}">Siguiente</a>
         </c:if>
-        <c:if test="${jugador.rol == 'Edil'}">
-            <a class="btn btn-default" href="#">Siguiente</a>
+        <c:if test="${jugadorLog.rol.getName() == 'Edil'}">
+            <a class="btn btn-default" href="/partidas/jugar/edil/${partida.id}">Siguiente</a>
         </c:if>
-        <c:if test="${jugador.rol == 'Pretor'}">
+        <c:if test="${jugadorLog.rol.getName() == 'Pretor'}">
             <a class="btn btn-default" href="#">Siguiente</a>
         </c:if>
         

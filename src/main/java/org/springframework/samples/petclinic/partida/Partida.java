@@ -56,5 +56,8 @@ public class Partida implements Serializable{
 
     private Boolean activa;
 
+    private Integer fase;
+    //Si fase=1 el pretor acaba de terminar.
+    
     
 }
