@@ -39,22 +39,22 @@
         </div>
 
         <div>
-            <c:if test= "${partida.fase == 1}">
+            <c:if test= "${partida.fase == 0}">
                 <form:form modelAttribute="faccionType"
                    class="form-horizontal">
-                    <input type="hidden" name="id" value="${faccionType.id}"/>
+                   <input type="hidden" name="id" value="${faccionType.id}"/>
                     <div class="form-group has-feedback">                
                         <tr>
                             <td>Faccion apoyada:</td>
                                 <c:forEach items="${opciones}" var="opcion">
-                                    <td>${opcion.name}<td>
-                                    <input type="radio" name="name" value="${opcion.name}"/>
+                                    <td>${opcion}<td>
+                                    <input type="radio" name="name" value="${opcion}"/>
                                 </c:forEach>
                         </tr>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10"></div>
-                            <button class="btn btn-default" type="submit">Votar</button>
+                            <button class="btn btn-default" type="submit">Apoyar</button>
                         </div>
                     </div>
                 </form:form>

@@ -39,7 +39,9 @@
         </div>
 
         <c:if test="${jugadorLog.rol.getName() == 'Consul'}">
-            <a class="btn btn-default" href="/partidas/jugar/consul/${partida.id}">Siguiente</a>
+            <c:if test = "${faccionApoyada == null}">
+                <a class="btn btn-default" href="/partidas/jugar/consul/${partida.id}">Siguiente</a>
+            </c:if>
         </c:if>
         <c:if test="${jugadorLog.rol.getName() == 'Edil'}">
             <c:if test = "${numVotos == 0}">
