@@ -42,8 +42,9 @@ public class Partida implements Serializable{
     private long limite;
 
 
-   
-    
+    @ManyToOne
+	@JoinColumn
+    private FaccionType faccionGanadora;
     private long tiempo;
 
     @ManyToMany
@@ -60,7 +61,7 @@ public class Partida implements Serializable{
     
     @ManyToOne
 	@JoinColumn
-    public FaccionType faccionGanadora(){
+    public FaccionType faccionGanadora2(){
         FaccionType res = null;
         res.setId(4);
         res.setName("No decidido");
