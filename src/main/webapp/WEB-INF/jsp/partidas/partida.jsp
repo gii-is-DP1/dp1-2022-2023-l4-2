@@ -47,7 +47,9 @@
             </c:if>
         </c:if>
         <c:if test="${jugadorLog.rol.getName() == 'Pretor'}">
-            <a class="btn btn-default" href="/partidas/jugar/pretor/${partida.id}">Siguiente</a>
+            <c:if test = "&{partida.fase==0}">
+                <a class="btn btn-default" href="/partidas/jugar/pretor/${partida.id}">Siguiente</a>
+            </c:if>
         </c:if>
         
     </div>
