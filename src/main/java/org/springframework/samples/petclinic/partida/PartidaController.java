@@ -201,11 +201,13 @@ public class PartidaController {
         response.addHeader("Refresh", "20");
         Partida p = partidaService.getPartidaById(id).get();
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
+        FaccionType faccionApoyada = j.getParticipacionEnPartida(p).getFaccionApoyada();
         Integer numVotos = votoService.getVotosTurnoJugador(p, j).size();
         result.addObject("jugadorLog", j);
         result.addObject("partida", p);
         result.addObject("principal", principal);
         result.addObject("numVotos", numVotos);
+        result.addObject("faccionApoyada", faccionApoyada);
         return result;
     }
 
@@ -232,7 +234,7 @@ public class PartidaController {
         //    return new ModelAndView(EDIL_JUGAR,br.getModel());
         //}
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
-        FaccionType faccion = partidaService.getFaccionesTypeByName(ft.getName()).get(0);
+        FaccionType faccion = partidaService.getFaccionesTypeByName(ft.getName());
         Partida p = partidaService.getPartidaById(id).get();
         Integer maxVoto = votoService.getVotos().stream().map(x->x.getId()).max(Comparator.comparing(x->x)).orElse(1);
         Voto v = new Voto();
@@ -291,9 +293,9 @@ public class PartidaController {
     
     public Voto cambiarVoto(Voto v){
         if(v.getFaccion().getName() == "Leal"){
-            v.setFaccion(partidaService.getFaccionesTypeByName("Traidor").get(0));
+            v.setFaccion(partidaService.getFaccionesTypeByName("Traidor"));
         }else{
-            v.setFaccion(partidaService.getFaccionesTypeByName("Leal").get(0));
+            v.setFaccion(partidaService.getFaccionesTypeByName("Leal"));
         }
         return v;
     }
@@ -305,7 +307,11 @@ public class PartidaController {
         //response.addHeader("Refresh", "2");
         Partida p = partidaService.getPartidaById(id).get();
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
+        FaccionType ft = new FaccionType();
+        Integer maxid = partidaService.getFaccionesType().stream().map(x->x.getId()).max(Comparator.comparing(x->x)).orElse(1);
+        ft.setId(maxid+1);
         List<String> opciones = j.getParticipacionEnPartida(p).getOpciones().stream().map(x->x.getName()).collect(Collectors.toList());
+        result.addObject("faccionType", ft);
         result.addObject("opciones", opciones);
         result.addObject("jugadorLog", j);
         result.addObject("partida", p);
@@ -314,14 +320,12 @@ public class PartidaController {
 
     @PostMapping("/jugar/consul/{id}")
     public ModelAndView guardarFaccion(@PathVariable("id") Long id, @Valid FaccionType ft, BindingResult br, Principal principal){
-        //if(br.hasErrors()){
-        //    return new ModelAndView(EDIL_JUGAR,br.getModel());
-        //}
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
-        FaccionType faccion = partidaService.getFaccionesTypeByName(ft.getName()).get(0);
+        FaccionType faccion = partidaService.getFaccionesTypeByName(ft.getName());
         Partida p = partidaService.getPartidaById(id).get();
         Participacion participacion = j.getParticipacionEnPartida(p);
         participacion.setFaccionApoyada(faccion);
+        p.setFase(p.getFase()+1);
         participacionService.save(participacion);
         ModelAndView res = new ModelAndView("redirect:/partidas/jugar/{id}");
         return res;

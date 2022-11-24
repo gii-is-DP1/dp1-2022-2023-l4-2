@@ -47,7 +47,7 @@ public class PartidaService {
     }
 
     @Transactional(readOnly = true)
-    public List<FaccionType> getFaccionesTypeByName(String name){
+    public FaccionType getFaccionesTypeByName(String name){
          return partidaRepo.findFaccionTypeByName(name);
     }
     
