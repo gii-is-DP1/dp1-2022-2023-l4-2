@@ -37,6 +37,16 @@
                 </c:forEach>
             </div>
         </div>
+        <c:forEach items="${votos}" var="voto">
+                    <tr style = "text-align: left; ";>
+                        <td>
+                            <div>
+                                <c:out value="${voto.faccion.getName()}"/> - 
+                                <button class="btn btn-default" href="/partidas/jugar/pretor/edit/${partida.id}/${voto.id}" type="submit">Editar</button>
+                            </div>
+                        </td>
+                    </tr>
+                </c:forEach>
     </div>
    
 </petclinic:lo2>

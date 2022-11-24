@@ -42,10 +42,12 @@
             <a class="btn btn-default" href="/partidas/jugar/consul/${partida.id}">Siguiente</a>
         </c:if>
         <c:if test="${jugadorLog.rol.getName() == 'Edil'}">
-            <a class="btn btn-default" href="/partidas/jugar/edil/${partida.id}">Siguiente</a>
+            <c:if test = "${numVotos == 0}">
+                <a class="btn btn-default" href="/partidas/jugar/edil/${partida.id}">Siguiente</a>
+            </c:if>
         </c:if>
         <c:if test="${jugadorLog.rol.getName() == 'Pretor'}">
-            <a class="btn btn-default" href="#">Siguiente</a>
+            <a class="btn btn-default" href="/partidas/jugar/pretor/${partida.id}">Siguiente</a>
         </c:if>
         
     </div>

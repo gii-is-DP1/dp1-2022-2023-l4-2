@@ -162,9 +162,9 @@ public class PartidaController {
         Participacion part = new Participacion();
         part.setId(idp+1);
         if(p.getParticipaciones().isEmpty()){
-            part.setNumConsul(0);
+            part.setNumConsul(1);
         }else{
-            Integer maxNumConsul = p.participaciones.stream().map(x->x.getNumConsul()).max(Comparator.comparing(x->x)).get();
+            Integer maxNumConsul = p.participaciones.stream().map(x->x.getNumConsul()).max(Comparator.comparing(x->x)).orElse(1);
             part.setNumConsul(maxNumConsul+1);
         }
         if(p.getAnfitrion() == j.getUser().getUsername()){
@@ -201,9 +201,11 @@ public class PartidaController {
         response.addHeader("Refresh", "20");
         Partida p = partidaService.getPartidaById(id).get();
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
+        Integer numVotos = votoService.getVotosTurnoJugador(p, j).size();
         result.addObject("jugadorLog", j);
         result.addObject("partida", p);
         result.addObject("principal", principal);
+        result.addObject("numVotos", numVotos);
         return result;
     }
 
@@ -250,15 +252,53 @@ public class PartidaController {
     @GetMapping("/jugar/pretor/{id}")
     public ModelAndView partidaPretor(@PathVariable("id") Long id, HttpServletResponse response, Principal principal){
         ModelAndView result = new ModelAndView(PRETOR_JUGAR);
-        //response.addHeader("Refresh", "2");
+        response.addHeader("Refresh", "10");
         Partida p = partidaService.getPartidaById(id).get();
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
+        List<Voto> votos = votoService.getVotosRondaTurno(p);
         result.addObject("jugadorLog", j);
         result.addObject("partida", p);
         result.addObject("principal", principal);
+        result.addObject("votos", votos);
         return result;
     }
+
+    @PostMapping("/jugar/pretor/edit/{partidaId}/{votoId}")
+    public String partidaPretor(@PathVariable("partidaId") Long partidaId,@PathVariable("votoId") Long votoId,
+                                    HttpServletResponse response, Principal principal){
+        response.addHeader("Refresh", "10");
+        Partida p = partidaService.getPartidaById(partidaId).get();
+        Voto voto = votoService.getVotoById(votoId).get();
+        Voto votoCambiado = cambiarVoto(voto);
+        votoService.saveVoto(votoCambiado);
+        List<Voto> votos = votoService.getVotosRondaTurno(p);
+        for(Voto v: votos){
+            Participacion participacion = voto.getJugador().getParticipacionEnPartida(p);
+
+            if(v.getFaccion().getName().equals("Traidor")){
+                p.setVotosContraCesar(p.getVotosContraCesar()+1);
+                participacion.setVotosContraCesar(participacion.getVotosContraCesar()+1);
+            }else{
+                p.setVotosFavorCesar(p.getVotosFavorCesar()+1);
+                participacion.setVotosFavorCesar(participacion.getVotosFavorCesar()+1);
+            }
+            participacionService.save(participacion);
+        }
+        p.setFase(1);
+        partidaService.save(p);
+        return "redirect:/partidas/jugar/{partidaId}";
+    }
     
+    public Voto cambiarVoto(Voto v){
+        if(v.getFaccion().getName() == "Leal"){
+            v.setFaccion(partidaService.getFaccionesTypeByName("Traidor").get(0));
+        }else{
+            v.setFaccion(partidaService.getFaccionesTypeByName("Leal").get(0));
+        }
+        return v;
+    }
+
+
     @GetMapping("/jugar/consul/{id}")
     public ModelAndView partidaConsul(@PathVariable("id") Long id, HttpServletResponse response, Principal principal){
         ModelAndView result = new ModelAndView(CONSUL_JUGAR);
