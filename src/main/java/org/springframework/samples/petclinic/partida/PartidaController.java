@@ -213,6 +213,10 @@ public class PartidaController {
         //response.addHeader("Refresh", "2");
         Partida p = partidaService.getPartidaById(id).get();
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
+        FaccionType ft = new FaccionType();
+        Integer maxid = partidaService.getFaccionesType().stream().map(x->x.getId()).max(Comparator.comparing(x->x)).orElse(1);
+        ft.setId(maxid+1);
+        result.addObject("faccionType", ft);
         result.addObject("jugadorLog", j);
         result.addObject("partida", p);
         result.addObject("principal", principal);
@@ -220,7 +224,7 @@ public class PartidaController {
     }
 
     
-    @PostMapping("/jugadr/edil/{id}")
+    @PostMapping("/jugar/edil/{id}")
     public ModelAndView guardarVoto(@PathVariable("id") Long id, @Valid FaccionType ft, BindingResult br, Principal principal){
         //if(br.hasErrors()){
         //    return new ModelAndView(EDIL_JUGAR,br.getModel());
@@ -228,7 +232,7 @@ public class PartidaController {
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
         FaccionType faccion = partidaService.getFaccionesTypeByName(ft.getName()).get(0);
         Partida p = partidaService.getPartidaById(id).get();
-        Integer maxVoto = votoService.getVotos().stream().map(x->x.getId()).max(Comparator.comparing(x->x)).get();
+        Integer maxVoto = votoService.getVotos().stream().map(x->x.getId()).max(Comparator.comparing(x->x)).orElse(1);
         Voto v = new Voto();
 
         v.setId(maxVoto+1);
@@ -238,7 +242,6 @@ public class PartidaController {
         v.setRonda(p.getRonda());
         v.setTurno(p.getTurno());
         votoService.saveVoto(v);
-
         ModelAndView res = new ModelAndView("redirect:/partidas/jugar/{id}");
         return res;
         

@@ -65,7 +65,6 @@ public class LogroController {
         }
         return new ModelAndView("redirect:/logros");
     }
-     
     @GetMapping("/new")
     public ModelAndView createLogro(){
         Logro logro = new Logro();
