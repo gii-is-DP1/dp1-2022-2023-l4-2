@@ -42,9 +42,8 @@ public class Partida implements Serializable{
     private long limite;
 
 
-    @ManyToOne
-	@JoinColumn
-    private FaccionType faccionGanadora;
+   
+    
     private long tiempo;
 
     @ManyToMany
@@ -59,5 +58,27 @@ public class Partida implements Serializable{
     private Integer fase;
     //Si fase=1 el pretor acaba de terminar.
     
+    @ManyToOne
+	@JoinColumn
+    public FaccionType faccionGanadora(){
+        FaccionType res = null;
+        res.setId(4);
+        res.setName("No decidido");
+        if(this.tiempo == 0 || this.turno == 6 && this.ronda == 2){
+            if(this.getVotosFavorCesar() - this.getVotosContraCesar() > 1 && Math.max(this.getVotosContraCesar(), this.getVotosFavorCesar()) <= this.limite){
+                res.setName("Leal");
+                res.setId(0);
+            }
+            else if(this.getVotosContraCesar() - this.getVotosFavorCesar() > 1 && Math.max(this.getVotosContraCesar(), this.getVotosFavorCesar()) <= this.limite){
+                res.setName("Traidor");
+                res.setId(2);
+            }
+            else if(Math.abs(this.getVotosContraCesar() - this.getVotosFavorCesar()) <= 1 || Math.max(this.getVotosContraCesar(), this.getVotosFavorCesar()) > this.limite ){
+                res.setName("Mercader");
+                res.setId(3);
+            }
+        }
+        return res;
+    }
     
 }
