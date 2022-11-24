@@ -269,8 +269,23 @@ public class PartidaController {
         result.addObject("opciones", opciones);
         result.addObject("jugadorLog", j);
         result.addObject("partida", p);
-        result.addObject("principal", principal);
         return result;
+    }
+
+    @PostMapping("/jugar/consul/{id}")
+    public ModelAndView guardarFaccion(@PathVariable("id") Long id, @Valid FaccionType ft, BindingResult br, Principal principal){
+        //if(br.hasErrors()){
+        //    return new ModelAndView(EDIL_JUGAR,br.getModel());
+        //}
+        Jugador j = jugadorService.getJugadorByUsername(principal.getName());
+        FaccionType faccion = partidaService.getFaccionesTypeByName(ft.getName()).get(0);
+        Partida p = partidaService.getPartidaById(id).get();
+        Participacion participacion = j.getParticipacionEnPartida(p);
+        participacion.setFaccionApoyada(faccion);
+        participacionService.save(participacion);
+        ModelAndView res = new ModelAndView("redirect:/partidas/jugar/{id}");
+        return res;
+        
     }
 
 

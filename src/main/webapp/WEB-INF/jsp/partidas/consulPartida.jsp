@@ -38,22 +38,29 @@
             </div>
         </div>
 
-        <form:form modelAttribute="faccionType"
+        <div>
+            <c:if test= "${partida.fase == 1}">
+                <form:form modelAttribute="faccionType"
                    class="form-horizontal">
-            <input type="hidden" name="id" value="${faccionType.id}"/>
-            <div class="form-group has-feedback">                
-                <tr>
-                    <td>Faccion elegida:</td>
-                    <td><select path="name" items="${opciones}"></td>
-                </tr>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10"></div>
-                     <button class="btn btn-default" type="submit" >Elegir</button>
-                </div>
-            </div>
-        </form:form>
-
+                    <input type="hidden" name="id" value="${faccionType.id}"/>
+                    <div class="form-group has-feedback">                
+                        <tr>
+                            <td>Faccion apoyada:</td>
+                                <c:forEach items="${opciones}" var="opcion">
+                                    <td>${opcion.name}<td>
+                                    <input type="radio" name="name" value="${opcion.name}"/>
+                                </c:forEach>
+                        </tr>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10"></div>
+                            <button class="btn btn-default" type="submit">Votar</button>
+                        </div>
+                    </div>
+                </form:form>
+            </c:if>
+        </div>
+        
     </div>
    
 </petclinic:lo2>
