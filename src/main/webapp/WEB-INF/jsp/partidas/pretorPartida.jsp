@@ -42,7 +42,10 @@
                         <td>
                             <div>
                                 <c:out value="${voto.faccion.getName()}"/> - 
-                                <button class="btn btn-default" href="/partidas/jugar/pretor/edit/${partida.id}/${voto.id}" type="submit">Editar</button>
+                                <a href="/partidas/jugar/pretor/edit/${partida.id}/${voto.id}"> 
+                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                </a>
+                                <button class="btn btn-default" href="/partidas/jugar/pretor/edit/${partida.id}/${voto.id}">Editar</button>
                             </div>
                         </td>
                     </tr>

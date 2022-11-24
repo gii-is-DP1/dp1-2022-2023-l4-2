@@ -43,6 +43,7 @@ public class PartidaController {
     public static final String EDIL_JUGAR = "partidas/edilPartida";
     public static final String CONSUL_JUGAR = "partidas/consulPartida";
     public static final String PRETOR_JUGAR = "partidas/pretorPartida";
+    public static final String PRETOR_EDIT = "partidas/pretorEdit";
 
 
     private PartidaService partidaService;
@@ -264,18 +265,34 @@ public class PartidaController {
         result.addObject("votos", votos);
         return result;
     }
+    @GetMapping("/jugar/pretor/edit/{partidaId}/{votoId}")
+    public ModelAndView pretorEditVoto(@PathVariable("partidaId") Long partidaId, @PathVariable("votoId") Long votoId,
+                                HttpServletResponse response, Principal principal){
+        ModelAndView res =new ModelAndView(PRETOR_EDIT);
+        //response.addHeader("Refresh", "10");
+        Partida p = partidaService.getPartidaById(partidaId).get();
+        Jugador j = jugadorService.getJugadorByUsername(principal.getName());
+        Voto v = votoService.getVotoById(votoId).get();
+        res.addObject(CONSUL_JUGAR, v);
+        res.addObject("jugadorLog", j);
+        res.addObject("partida", p);
+        res.addObject("principal", principal);
+        return res;
+
+    }
 
     @PostMapping("/jugar/pretor/edit/{partidaId}/{votoId}")
     public String partidaPretor(@PathVariable("partidaId") Long partidaId,@PathVariable("votoId") Long votoId,
-                                    HttpServletResponse response, Principal principal){
+                                    @Valid Voto voto,HttpServletResponse response, Principal principal){
         response.addHeader("Refresh", "10");
         Partida p = partidaService.getPartidaById(partidaId).get();
-        Voto voto = votoService.getVotoById(votoId).get();
-        Voto votoCambiado = cambiarVoto(voto);
-        votoService.saveVoto(votoCambiado);
+        Voto votoToUpdate = votoService.getVotoById(votoId).get();
+        votoToUpdate.setFaccion(voto.getFaccion());
+        //Voto votoCambiado = cambiarVoto(voto);
+        votoService.saveVoto(votoToUpdate);
         List<Voto> votos = votoService.getVotosRondaTurno(p);
         for(Voto v: votos){
-            Participacion participacion = voto.getJugador().getParticipacionEnPartida(p);
+            Participacion participacion = v.getJugador().getParticipacionEnPartida(p);
 
             if(v.getFaccion().getName().equals("Traidor")){
                 p.setVotosContraCesar(p.getVotosContraCesar()+1);
