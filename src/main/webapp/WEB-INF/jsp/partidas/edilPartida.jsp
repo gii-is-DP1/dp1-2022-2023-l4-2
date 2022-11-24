@@ -46,17 +46,17 @@
             <div class="form-group has-feedback">                
                 <tr>
                     <td>Voto:</td>
-                    <td>
-                        <select name = "name">
-                            <option>Leal</option>
-                            <option>Traidor</option>
-                        </select>
-                    </td>
+                    
+                            <td>Leal</td>
+                            <input type="radio" name="name" value="Leal"/>
+                            <td>Traidor</td>
+                            <input type="radio" name="name" value="Traidor"/>
+                    
                 </tr>
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10"></div>
-                     <button class="btn btn-default" type="submit" href="/jugadr/edil/{partida.id}">Votar</button>
+                     <button class="btn btn-default" type="submit">Votar</button>
                 </div>
             </div>
         </form:form>
@@ -79,7 +79,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10"></div>
-                     <button class="btn btn-default" type="submit" href="/jugadr/edil/{partida.id}">Votar</button>
+                     <button class="btn btn-default" type="submit">Votar</button>
                 </div>
             </div>
         </form:form>
