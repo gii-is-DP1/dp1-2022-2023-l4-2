@@ -201,6 +201,7 @@ public class PartidaController {
         ModelAndView result = new ModelAndView(PARTIDAS_JUGAR);
         response.addHeader("Refresh", "20");
         Partida p = partidaService.getPartidaById(id).get();
+        List<FaccionType> faccionesApoyadas = p.getParticipaciones().stream().map(x->x.getFaccionApoyada()).collect(Collectors.toList());
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
         FaccionType faccionApoyada = j.getParticipacionEnPartida(p).getFaccionApoyada();
         Integer numVotos = votoService.getVotosTurnoJugador(p, j).size();
@@ -340,9 +341,17 @@ public class PartidaController {
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
         FaccionType faccion = partidaService.getFaccionesTypeByName(ft.getName());
         Partida p = partidaService.getPartidaById(id).get();
+        List<FaccionType> faccionesApoyadas = p.getParticipaciones().stream().map(x->x.getFaccionApoyada()).collect(Collectors.toList());
         Participacion participacion = j.getParticipacionEnPartida(p);
         participacion.setFaccionApoyada(faccion);
-        p.setFase(p.getFase()+1);
+        p.setFase(0);
+        if(faccion!=null){
+            p.setTurno(p.getTurno()+1);
+            reparteRoles(p);
+        }else if(!faccionesApoyadas.contains(null)){
+            p.setRonda(p.getRonda()+1);
+            p.setTurno(1);
+        }
         participacionService.save(participacion);
         ModelAndView res = new ModelAndView("redirect:/partidas/jugar/{id}");
         return res;
