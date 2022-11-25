@@ -39,7 +39,7 @@
         </div>
 
         <div>
-            <c:if test= "${partida.fase == 0}">
+            <c:if test= "${partida.fase == 1}">
                 <form:form modelAttribute="faccionType"
                    class="form-horizontal">
                    <input type="hidden" name="id" value="${faccionType.id}"/>
