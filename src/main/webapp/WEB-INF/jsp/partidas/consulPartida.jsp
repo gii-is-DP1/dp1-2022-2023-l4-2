@@ -38,6 +38,7 @@
             </div>
         </div>
 
+
         <div>
             <c:if test= "${partida.fase == 1}">
                 <form:form modelAttribute="faccionType"
