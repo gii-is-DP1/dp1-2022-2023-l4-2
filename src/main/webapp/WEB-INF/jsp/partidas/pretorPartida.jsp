@@ -35,6 +35,41 @@
                         </td>
                     </tr>
                 </c:forEach>
+                <div style="height:100px; width: 100px;">
+
+                </div>
+                <div style="text-align:left">
+                    Tus opciones: 
+                    <div>
+                        <c:forEach items="${elegir}" var="opcion">
+                            <tr style = "text-align: left; ";>
+                                <td>
+                                    <div>
+                                        <c:out value="${opcion.getName()}"/> 
+                                    </div>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </div>
+                </div>
+                <div style="height:100px; width: 100px;">
+        
+                </div>
+                
+                <c:if test ="${faccionApoyada != null}">
+                    <div style="text-align:left">
+                        Tu faccion Apoyada
+                        <div>
+                                <tr style = "text-align: left; ";>
+                                    <td>
+                                        <div>
+                                            <c:out value="${faccionApoyada.getName()}"/> 
+                                        </div>
+                                    </td>
+                                </tr>
+                        </div>
+                    </div>
+                </c:if>
             </div>
         </div>
         <c:forEach items="${votos}" var="voto">
