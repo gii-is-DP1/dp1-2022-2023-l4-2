@@ -49,6 +49,12 @@
         <c:if test="${jugadorLog.rol.getName() == 'Pretor'}">
             <a class="btn btn-default" href="/partidas/jugar/pretor/${partida.id}">Siguiente</a>
         </c:if>
+
+        <div style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 20px;text-align: right;">
+            <button>
+                <a class="btn btn-default" href="/chat/partida/${partida.id}" target="_blank">Chat</a></th>
+            </button>
+        </div>
         
     </div>
    

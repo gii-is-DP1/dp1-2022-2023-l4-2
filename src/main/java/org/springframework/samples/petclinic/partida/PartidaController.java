@@ -88,6 +88,31 @@ public class PartidaController {
         return result;
     }
 
+    @PostMapping("/new")
+    public ModelAndView saveNewPartida(@Valid Partida partida, BindingResult br, Principal principal){
+        if(br.hasErrors()){
+            return new ModelAndView(PARTIDAS_CREAR,br.getModel());
+        }
+        Jugador j = jugadorService.getJugadorByUsername(principal.getName());
+        List<Jugador> ls = List.of(j);
+        partida.setRonda(0);
+        partida.setTurno(0);
+        partida.setTiempo(0);
+        partida.setVotosContraCesar(0);
+        partida.setVotosFavorCesar(0);
+        partida.setFaccionGanadora(null);
+        partida.setParticipaciones(new ArrayList<>());
+        partida.setJugadores(ls);
+        partida.setAnfitrion(j.getUser().getUsername());
+        partida.setLimite(calculaLimite(partida.getNumJugadores()));
+        partida.setActiva(true);
+        partida.setFase(0);
+        partidaService.save(partida);
+        ModelAndView result =new ModelAndView("redirect:/partidas/join/"+partida.getId());
+        //result.addObject("message", "Ha habido un error creando la partida.");
+        return result;
+    }
+
     @GetMapping("/join/{id}")
     public ModelAndView joinPartida(@PathVariable("id") Long id, Principal principal, HttpServletResponse response){
         response.addHeader("Refresh", "4");
@@ -345,31 +370,6 @@ public class PartidaController {
             }
             jugadorService.save2(j);
         }
-    }
-
-    @PostMapping("/new")
-    public ModelAndView saveNewPartida(@Valid Partida partida, BindingResult br, Principal principal){
-        if(br.hasErrors()){
-            return new ModelAndView(PARTIDAS_CREAR,br.getModel());
-        }
-        Jugador j = jugadorService.getJugadorByUsername(principal.getName());
-        List<Jugador> ls = List.of(j);
-        partida.setRonda(0);
-        partida.setTurno(0);
-        partida.setTiempo(0);
-        partida.setVotosContraCesar(0);
-        partida.setVotosFavorCesar(0);
-        partida.setFaccionGanadora(null);
-        partida.setParticipaciones(new ArrayList<>());
-        partida.setJugadores(ls);
-        partida.setAnfitrion(j.getUser().getUsername());
-        partida.setLimite(calculaLimite(partida.getNumJugadores()));
-        partida.setActiva(true);
-        partida.setFase(0);
-        partidaService.save(partida);
-        ModelAndView result =new ModelAndView("redirect:/partidas/join/"+partida.getId());
-        //result.addObject("message", "Ha habido un error creando la partida.");
-        return result;
     }
 
     private Long calculaLimite(Long nJugadores){

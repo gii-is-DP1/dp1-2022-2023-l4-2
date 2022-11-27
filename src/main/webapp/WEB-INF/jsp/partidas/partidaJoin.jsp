@@ -37,5 +37,8 @@
         </tbody>
     </table>
     <div style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 20px;text-align: center;">
+        <button>
+            <a class="btn btn-default" href="/partidas/iniciar/${partida.id}">COMENZAR</a></th>
+        </button>
     </div>
 </petclinic:lo2>

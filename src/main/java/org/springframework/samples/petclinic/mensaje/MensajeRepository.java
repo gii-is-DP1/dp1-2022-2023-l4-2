@@ -13,5 +13,8 @@ public interface MensajeRepository  extends CrudRepository<Mensaje, Integer>{
 
     @Query("SELECT m FROM Mensaje m WHERE m.jugador.id = :id")
     List<Mensaje> findByJugadorId(@Param("id") Integer id);
+
+    @Query("SELECT m FROM Mensaje m WHERE m.partida.id = :id")
+    List<Mensaje> findByPartidaId(@Param("id") Long id);
     
 }

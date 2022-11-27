@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.jugador.Jugador;
+import org.springframework.samples.petclinic.partida.Partida;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,9 +24,14 @@ public class MensajeService {
         return mensajeRepo.findByJugadorId(j.getId());
     }
 
+    public List<Mensaje> getAllByPartidaId(Partida p){
+        return mensajeRepo.findByPartidaId(p.getId());
+    }
+
     @Transactional(readOnly = true)
     public List<Mensaje> getAll(){
-        return mensajeRepo.findAll();
+        List<Mensaje> m = mensajeRepo.findAll();
+        return m;
     }
 
     public void saveMensaje(Mensaje m) throws DataAccessException{
