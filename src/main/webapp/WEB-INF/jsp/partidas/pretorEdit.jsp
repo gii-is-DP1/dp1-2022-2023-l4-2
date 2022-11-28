@@ -75,11 +75,20 @@
 
 
 
-        <h2>Modificar voto</h2>
+        <span>Modificar voto</span><br>
+        <c:if test ="${voto.faccion.getName() == 'Leal'}">
+            <span>El voto es a favor del cesar</span>
+        </c:if>
+        <c:if test = "${voto.faccion.getName() == 'Traidor'}">
+            <sapn>El voto es en contra del cesar</sapn>
+        </c:if>
         <form:form modelAttribute="voto"
                    class="form-horizontal">
             <input type="hidden" name="id" value="${voto.id}"/>
             <div class="form-group has-feedback">                
+                
+                
+                
                 <tr>
                     <td>¿A quien quieres que se vote?</td>
                     <td>

@@ -72,13 +72,14 @@
                 </c:if>
             </div>
         </div>
+        <span> ¿El voto de quien quieres cambiar?</span>
         <c:forEach items="${votos}" var="voto">
                     <tr style = "text-align: left; ";>
                         <td>
                             <div>
-                                <c:out value="${voto.faccion.getName()}"/> - 
+                                <c:out value="${voto.jugador.user.username}"/> - 
                                 <a href="/partidas/jugar/pretor/edit/${partida.id}/${voto.id}"> 
-                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                    <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>
                                 </a>
                             </div>
                         </td>
