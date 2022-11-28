@@ -88,12 +88,26 @@ public class PartidaService {
     @Transactional
     public Map<Jugador,List<FaccionType>> jugadoresConOpcionesDePartida(Partida p){
         Map<Jugador,List<FaccionType>> res = new HashMap<Jugador,List<FaccionType>>();
+        Integer o = 0;
         List<Jugador> jugadores = p.getJugadores();
+        List<FaccionType> opcionesJugador = new ArrayList<FaccionType>();
+        List<FaccionType> facciones = getFaccionesType();
+        opcionesJugador.add(facciones.get(2));
+        opcionesJugador.add(facciones.get(2));
+        for(int i = 0; i<jugadores.size()-1;i++){
+            opcionesJugador.add(facciones.get(0));
+            opcionesJugador.add(facciones.get(1));
+        }
         for(Jugador j:jugadores){
             res.put(j, new ArrayList<FaccionType>());
-            List<FaccionType> opcionesJugador = getFaccionesType();
-            res.get(j).add(opcionesJugador.get(getRandomInt(3)));
-            res.get(j).add(opcionesJugador.get(getRandomInt(3)));
+            int random1 = getRandomInt(2*jugadores.size()-o);
+            res.get(j).add(opcionesJugador.get(random1));
+            opcionesJugador.remove(random1);
+            o++;
+            int random2 = getRandomInt(2*jugadores.size()-o);
+            res.get(j).add(opcionesJugador.get(random2));
+            opcionesJugador.remove(random2);
+            o++;
         }
         return res;
     }

@@ -166,7 +166,11 @@ public class PartidaController {
         if(j.getParticipacionEnPartida(p) == null){
             creaParticipacion(j, p);
         }
-        
+        Map<Jugador,List<FaccionType>> map = partidaService.jugadoresConOpcionesDePartida(p);
+        for(Jugador jugador:p.getJugadores()){
+            Participacion part = jugador.getParticipacionEnPartida(p);
+            part.setOpciones(map.get(jugador));
+        }
         
         if(p.getParticipaciones().size() == p.getNumJugadores()){
             reparteRoles(p);

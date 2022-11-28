@@ -53,7 +53,7 @@ public class JugadorService {
 
         userService.saveUser(j.getUser());
 
-        authoritiesService.saveAuthorities(j.getUser().getUsername(),"Jugador");
+        authoritiesService.saveAuthorities(j.getUser().getUsername(),"jugador");
     }
 
     @Transactional
