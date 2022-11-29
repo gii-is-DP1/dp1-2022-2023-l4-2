@@ -195,4 +195,25 @@ public class PartidaServiceTests {
 
     }
 
+    @Test
+    public void getFaccionesTypeTest(){
+        List<FaccionType> facciones = partidaService.getFaccionesType();
+        assertNotNull(facciones);
+        assertFalse(facciones.isEmpty());
+    }
+
+    @Test
+    public void getFaccionesTypeByNameTest(){
+        FaccionType faccion = partidaService.getFaccionesTypeByName("Leal");
+        assertNotNull(faccion);
+        assertEquals("Leal", faccion.toString());
+    }
+
+    @Test
+    public void getFaccionesTypeByNameFailTest(){
+        FaccionType faccion = partidaService.getFaccionesTypeByName("Leal");
+        assertNotNull(faccion);
+        assertNotEquals("Traidor", faccion.toString());
+    }
+
 }
