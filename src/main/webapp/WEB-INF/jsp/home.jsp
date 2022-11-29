@@ -7,7 +7,7 @@
 
 
 <petclinic:layout pageName="home">
-    <sec:authorize access="isAuthenticated()">   
+    <sec:authorize access='hasAuthority("jugador")'>   
         <div>
             <table style="text-align: right; position: relative; top: 30%; width: 100%;">
                 <tr>
