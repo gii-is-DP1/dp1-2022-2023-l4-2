@@ -11,14 +11,14 @@ import org.springframework.web.servlet.ModelAndView;
 public class WelcomeController {
 	
 	
-	  @GetMapping({"/","/welcome"})
+	  @GetMapping({"/welcome"})
 	  public String welcome(Map<String, Object> model) {	    
 
 	    return "welcome";
 	  }
 	  
 
-	  @GetMapping({"/home"})
+	  @GetMapping({"/","/home"})
 	  public ModelAndView home(Map<String, Object> model, Principal principal) {	    
 		ModelAndView mv = new ModelAndView("home");
 		if (principal != null){
