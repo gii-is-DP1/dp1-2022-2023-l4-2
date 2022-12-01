@@ -250,6 +250,13 @@ public class PartidaController {
         List<FaccionType> elegir = j.getParticipacionEnPartida(p).getOpciones();
         FaccionType faccionApoyada = j.getParticipacionEnPartida(p).getFaccionApoyada();
         result.addObject("faccionGanadora", p.getFaccionGanadora());
+        result.addObject("faccionApoyada", faccionApoyada);
+        result.addObject("elegir", elegir);
+        result.addObject("jugadorLog", j);
+        result.addObject("partida", p);
+        result.addObject("principal", principal);
+        result.addObject("numVotos", numVotos);
+        return result;
     }
 
     @GetMapping("/jugar/edil/{id}")

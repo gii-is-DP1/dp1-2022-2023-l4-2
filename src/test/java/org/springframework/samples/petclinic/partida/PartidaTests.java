@@ -21,9 +21,9 @@ public class PartidaTests {
         p.setVotosFavorCesar(5);
         p.setNumJugadores(5L);
         p.setLimite(p.calculaLimite(5L));
-        p.setFaccionGanadora(p.faccionGanadora2());
+        p.setFaccionGanadora(p.calculoFaccionGanadora());
 
-        assertEquals("Leal",p.faccionGanadora2().getName());
+        assertEquals("Leal",p.calculoFaccionGanadora().getName());
     }
 
     @Test
@@ -34,9 +34,9 @@ public class PartidaTests {
         p.setVotosFavorCesar(2);
         p.setNumJugadores(5L);
         p.setLimite(p.calculaLimite(5L));
-        p.setFaccionGanadora(p.faccionGanadora2());
+        p.setFaccionGanadora(p.calculoFaccionGanadora());
 
-        assertEquals("Traidor",p.faccionGanadora2().getName());
+        assertEquals("Traidor",p.calculoFaccionGanadora().getName());
     }
 
     @Test
@@ -47,10 +47,10 @@ public class PartidaTests {
         p.setVotosFavorCesar(5);
         p.setNumJugadores(5L);
         p.setLimite(p.calculaLimite(5L));
-        p.setFaccionGanadora(p.faccionGanadora2());
+        p.setFaccionGanadora(p.calculoFaccionGanadora());
 
 
-        assertEquals("Mercader",p.faccionGanadora2().getName());
+        assertEquals("Mercader",p.calculoFaccionGanadora().getName());
     }
     
 
@@ -70,9 +70,9 @@ public class PartidaTests {
         p.setNumJugadores(5);
         p.setLimite(p.calculaLimite(5L));
         p.setParticipaciones(aux);
-        p.setFaccionGanadora(p.faccionGanadora2());
+        p.setFaccionGanadora(p.calculoFaccionGanadora());
 
-        assertEquals("Traidor",p.faccionGanadora2().getName());
+        assertEquals("Traidor",p.calculoFaccionGanadora().getName());
     }
 
     @Test
@@ -91,9 +91,9 @@ public class PartidaTests {
         p.setNumJugadores(5);
         p.setLimite(p.calculaLimite(5L));
         p.setParticipaciones(aux);
-        p.setFaccionGanadora(p.faccionGanadora2());
+        p.setFaccionGanadora(p.calculoFaccionGanadora());
 
-        assertEquals("Leal",p.faccionGanadora2().getName());
+        assertEquals("Leal",p.calculoFaccionGanadora().getName());
     }
 
     @Test
@@ -105,10 +105,10 @@ public class PartidaTests {
         p.setNumJugadores(5);
         p.setLimite(p.calculaLimite(5L));
         p.setParticipaciones(List.of());
-        p.setFaccionGanadora(p.faccionGanadora2());
+        p.setFaccionGanadora(p.calculoFaccionGanadora());
 
 
-        assertEquals("Mercader",p.faccionGanadora2().getName());
+        assertEquals("Mercader",p.calculoFaccionGanadora().getName());
     }
 
     @Test
