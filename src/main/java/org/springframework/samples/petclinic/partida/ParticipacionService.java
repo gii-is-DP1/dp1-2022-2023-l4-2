@@ -23,13 +23,13 @@ public class ParticipacionService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<Participacion> getParticipacionById(long id) {
+    public Optional<Participacion> getParticipacionById(Integer id) {
         Optional<Participacion> result = particRepository.findById(id);
         return result;
     }
     
     @Transactional
-    public void deleteParticipacion(long id) {
+    public void deleteParticipacion(Integer id) {
         particRepository.deleteById(id);
     }
 
