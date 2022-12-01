@@ -25,4 +25,7 @@ public class Voto extends BaseEntity{
 
     @ManyToOne
     Partida partida;
+
+    private Boolean elegido;
+
 }

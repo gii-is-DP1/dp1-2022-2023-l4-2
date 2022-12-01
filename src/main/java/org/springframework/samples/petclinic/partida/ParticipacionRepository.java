@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 
 
 @Repository
-public interface ParticipacionRepository extends CrudRepository<Participacion,Long>{
+public interface ParticipacionRepository extends CrudRepository<Participacion,Integer>{
     
     List<Participacion> findAll();
 

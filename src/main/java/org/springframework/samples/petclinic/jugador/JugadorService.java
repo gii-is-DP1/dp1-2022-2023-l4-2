@@ -49,11 +49,14 @@ public class JugadorService {
 
     @Transactional
     public void saveJugador(Jugador j) throws DataAccessException{
+
+        j.setYaElegido(false);
+
         jugadorRepo.save(j);
 
         userService.saveUser(j.getUser());
 
-        authoritiesService.saveAuthorities(j.getUser().getUsername(),"Jugador");
+        authoritiesService.saveAuthorities(j.getUser().getUsername(),"jugador");
     }
 
     @Transactional

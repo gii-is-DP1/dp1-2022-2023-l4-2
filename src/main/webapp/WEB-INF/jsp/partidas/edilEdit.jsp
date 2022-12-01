@@ -72,28 +72,43 @@
                 </c:if>
             </div>
         </div>
-        <span> ¿El voto de quien quieres cambiar?</span>
-        <c:forEach items="${votos}" var="voto">
-                    <tr style = "text-align: left; ";>
-                        <td>
-                            <div>
-                                <c:out value="${voto.jugador.user.username}"/>
 
-                                <c:if test= "${partida.getRonda() == 1}">
-                                    <a href="/partidas/jugar/pretor/edit/${partida.id}/${voto.id}"> 
-                                        <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>
-                                    </a>
-                                </c:if>
-                                <c:if test = "${partida.getRonda() == 2}">
-                                    <a href="/partidas/jugar/pretor/edit2/${partida.id}/${voto.id}"> 
-                                        <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>
-                                    </a>
-                                </c:if>
 
-                            </div>
-                        </td>
-                    </tr>
-                </c:forEach>
+
+        <span>Modificar voto</span><br>
+        <c:if test ="${voto.faccion.getName() == 'Leal'}">
+            <span>El voto es a favor del cesar</span>
+        </c:if>
+        <c:if test = "${voto.faccion.getName() == 'Traidor'}">
+            <sapn>El voto es en contra del cesar</sapn>
+        </c:if>
+        <c:if test = "${voto.faccion.getName() == 'Mercader'}">
+            <sapn>El voto es neutro</sapn>
+        </c:if>
+        <form:form modelAttribute="voto"
+                   class="form-horizontal">
+            <input type="hidden" name="id" value="${voto.id}"/>
+            <div class="form-group has-feedback">                
+                
+                
+                
+                <tr>
+                    <td>¿A quien quieres que se vote?</td>
+                    <td>
+                        <select name = "faccion">
+                            <c:forEach items="${facciones}" var="faccion">
+                                <option value = "${faccion.id}"> <c:out value = "${faccion.getName()}"/> </option>
+                            </c:forEach>
+                        </select>
+                    </td>
+                </tr>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10"></div>
+                     <button class="btn btn-default" type="submit">Modificar voto</button>
+                </div>
+            </div>
+        </form:form> 
     </div>
    
 </petclinic:lo2>

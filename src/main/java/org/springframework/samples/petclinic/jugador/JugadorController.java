@@ -85,6 +85,7 @@ public String processCreationForm(@Valid Jugador j, BindingResult br){
     if(br.hasErrors()){
         return JUGADOR_CREATE;
     }else{
+        j.setRol(jugadorService.getRoles().get(3));
         this.jugadorService.saveJugador(j);
 
         return "home";
