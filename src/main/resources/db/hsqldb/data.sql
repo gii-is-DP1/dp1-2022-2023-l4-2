@@ -152,13 +152,13 @@ INSERT INTO authorities(id, username, authority) VALUES(15, 'Bufon', 'jugador');
 INSERT INTO users(username, password, enabled) VALUES('Colombiano', '1111', TRUE);
 INSERT INTO authorities(id, username, authority) VALUES(16, 'Colombiano', 'jugador');
 
-INSERT INTO jugador(id,first_name,last_name,username,rol_id,esta_en_partida)
-    VALUES(1,'Juan Jesús','Campos','Guaje',4,false),
-    (4,'Antonio','Carretero','Antaca',4,false),
-    (3,'David','Reyes','Davilillo',4,true),
-    (2,'Eduardo', 'Pizarro', 'Bufon', 4, false),
-    (5, 'Alejadro', 'Campano', 'Campanas', 4, false),
-    (6, 'Pablo', 'Mera', 'Colombiano', 4, false);
+INSERT INTO jugador(id,first_name,last_name,username,rol_id,esta_en_partida, ya_elegido)
+    VALUES(1,'Juan Jesús','Campos','Guaje',4,false, false),
+    (4,'Antonio','Carretero','Antaca',4,false, false),
+    (3,'David','Reyes','Davilillo',4,true, false),
+    (2,'Eduardo', 'Pizarro', 'Bufon', 4, false, false),
+    (5, 'Alejadro', 'Campano', 'Campanas', 4, false, false),
+    (6, 'Pablo', 'Mera', 'Colombiano', 4, false, false);
 
 INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
     VALUES(1,1,1,6,'Guaje',14,12,15,1,20);
