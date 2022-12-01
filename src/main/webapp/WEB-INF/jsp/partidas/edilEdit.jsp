@@ -97,7 +97,7 @@
                     <td>
                         <select name = "faccion">
                             <c:forEach items="${facciones}" var="faccion">
-                                <option value = "${faccion.id}"> <c:out value = "${faccion.getName}"/> </option>
+                                <option value = "${faccion.id}"> <c:out value = "${faccion.getName()}"/> </option>
                             </c:forEach>
                         </select>
                     </td>

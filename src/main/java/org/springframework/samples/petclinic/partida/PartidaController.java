@@ -650,6 +650,10 @@ public class PartidaController {
                 p.setRonda(3);
                 p.setTurno(1);
             }
+            for(int i = 0;i<p.getJugadores().size();i++){
+           
+                p.getJugadores().get(i).setYaElegido(false);
+            }
         }
         if(votoToUpdate.getElegido()){
             p.setFase(1);
@@ -660,7 +664,7 @@ public class PartidaController {
         return "redirect:/partidas/jugar/{partidaId}";
     }
     
-    @GetMapping("/partidas/jugar/edil/edit/{partidaId}/{votoId}")
+    @GetMapping("/jugar/edil/edit/{partidaId}/{votoId}")
     public ModelAndView edilEditVoto(@PathVariable("partidaId") Long partidaId, @PathVariable("votoId") Long votoId,
                                 HttpServletResponse response, Principal principal){
         ModelAndView res =new ModelAndView(EDIL_EDIT);
@@ -672,6 +676,7 @@ public class PartidaController {
         FaccionType faccionApoyada = j.getParticipacionEnPartida(p).getFaccionApoyada();
         List<FaccionType> facciones = partidaService.getFaccionesType().stream()
                                                     .filter(x->!x.getName().equals(v.getFaccion().getName()))
+                                                    .filter(x->!x.getName().equals("No decidido"))
                                                     .collect(Collectors.toList());
         res.addObject("faccionApoyada", faccionApoyada);
         res.addObject("elegir", elegir);
@@ -685,7 +690,7 @@ public class PartidaController {
     }
 
 
-    @PostMapping("/partidas/jugar/edil/edit/{partidaId}/{votoId}")
+    @PostMapping("/jugar/edil/edit/{partidaId}/{votoId}")
     public String partidaEditEditaVoto(@PathVariable("partidaId") Long partidaId,@PathVariable("votoId") Long votoId,
                                     @Valid Voto voto,HttpServletResponse response, Principal principal){
         response.addHeader("Refresh", "10");
@@ -708,13 +713,15 @@ public class PartidaController {
         }
         p.setTurno(p.getTurno()+1);
         preparaRolesRonda2(p);
+        for(int i = 0;i<p.getJugadores().size();i++){
+           
+            p.getJugadores().get(i).setYaElegido(false);
+        }
         if(p.getTurno()>p.getNumJugadores()){
             p.setRonda(3);
             p.setTurno(1);
         }
-        if(votoToUpdate.getElegido()){
-            p.setFase(1);
-        }
+        p.setFase(0);
         
         
         partidaService.save(p);
