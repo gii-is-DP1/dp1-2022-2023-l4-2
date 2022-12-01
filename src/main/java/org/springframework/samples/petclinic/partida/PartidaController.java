@@ -447,7 +447,7 @@ public class PartidaController {
 
     @GetMapping("/jugar/consul/eleccionE/{id}")
     public ModelAndView escogerEdil(@PathVariable("id") Long id, HttpServletResponse response, Principal principal){
-        ModelAndView res = new ModelAndView(ESCOGER_PRETOR);
+        ModelAndView res = new ModelAndView(ESCOGER_EDIL);
         Partida p = partidaService.getPartidaById(id).get();
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
         List<Jugador> jugadores = p.getJugadores();
@@ -489,15 +489,20 @@ public class PartidaController {
         Participacion participacion = j.getParticipacionEnPartida(p);
         participacion.setFaccionApoyada(faccion);
         p.setFase(0);
-        
         p.setTurno(p.getTurno()+1);
-        reparteRoles(p);
+        
+        if(p.getTurno()==2 && p.getRonda()==2){
+            preparaRolesRonda2(p);
+        }
+        if(p.getRonda()!=2){
+            reparteRoles(p);
+        }
         if(p.getTurno()>p.getNumJugadores()){
             p.setRonda(p.getRonda()+1);
             p.setTurno(1);
             preparaRolesRonda2(p);
         }
-        if(p.getTiempo() == 0 && p.getRonda() == 3){
+        if(p.getRonda() == 3){
             p.setFaccionGanadora(p.calculoFaccionGanadora());
             p.setTiempo(p.calculaTiempoFinal(p.getFechaInicio()));
         }
@@ -644,18 +649,29 @@ public class PartidaController {
              }
              participacionService.save(participacion);
             }
-            p.setTurno(p.getTurno()+1);
-            preparaRolesRonda2(p);
-            if(p.getTurno()>p.getNumJugadores()){
-                p.setRonda(3);
-                p.setTurno(1);
+            if(p.getTurno()!=1 && p.getRonda()==2){
+                p.setTurno(p.getTurno()+1);
+                preparaRolesRonda2(p);
+                if(p.getTurno()>p.getNumJugadores()){
+                    p.setRonda(p.getRonda()+1);
+                    p.setTurno(1);
+                }
             }
+
+            if(p.getRonda() == 3){
+                p.setFaccionGanadora(p.calculoFaccionGanadora());
+                p.setTiempo(p.calculaTiempoFinal(p.getFechaInicio()));
+            }
+            
             for(int i = 0;i<p.getJugadores().size();i++){
            
                 p.getJugadores().get(i).setYaElegido(false);
             }
         }
         if(votoToUpdate.getElegido()){
+            p.setFase(1);
+        }
+        if(p.getRonda() == 2 && p.getTurno() == 1){
             p.setFase(1);
         }
         
@@ -718,8 +734,12 @@ public class PartidaController {
             p.getJugadores().get(i).setYaElegido(false);
         }
         if(p.getTurno()>p.getNumJugadores()){
-            p.setRonda(3);
+            p.setRonda(p.getRonda()+1);
             p.setTurno(1);
+        }
+        if(p.getRonda() == 3){
+            p.setFaccionGanadora(p.calculoFaccionGanadora());
+            p.setTiempo(p.calculaTiempoFinal(p.getFechaInicio()));
         }
         p.setFase(0);
         

@@ -38,6 +38,7 @@
                 <div style="height:100px; width: 100px;">
 
                 </div>
+                <c:if test ="${faccionApoyada == null}">
                 <div style="text-align:left">
                     Tus opciones: 
                     <div>
@@ -52,6 +53,7 @@
                         </c:forEach>
                     </div>
                 </div>
+                </c:if>
                 <div style="height:100px; width: 100px;">
         
                 </div>
@@ -77,9 +79,14 @@
             <c:if test = "${faccionApoyada == null}">
                 <c:if test = "${partida.ronda == 1}">
                     <c:if test = "${partida.turno != 1}">
-                    <a class="btn btn-default" href="/partidas/jugar/consul/${partida.id}">Siguiente</a>
+                        <a class="btn btn-default" href="/partidas/jugar/consul/${partida.id}">Siguiente</a>
                     </c:if>
-                </c:if>    
+                </c:if> 
+                <c:if test = "${partida.ronda == 2 && partida.turno == 1}">
+                    <c:if test = "${partida.fase == 1}">
+                        <a class="btn btn-default" href="/partidas/jugar/consul/${partida.id}">Siguiente</a>
+                    </c:if>
+                </c:if>
             </c:if>
         </c:if>
         <c:if test="${jugadorLog.rol.getName() == 'Edil'}">
