@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.mensaje;
+package org.springframework.samples.petclinic.chat;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,16 +24,13 @@ public class MensajeService {
         return mensajeRepo.findByJugadorId(j.getId());
     }
 
-    public List<Mensaje> getAllByPartidaId(Partida p){
-        return mensajeRepo.findByPartidaId(p.getId());
-    }
-
     @Transactional(readOnly = true)
     public List<Mensaje> getAll(){
         List<Mensaje> m = mensajeRepo.findAll();
         return m;
     }
 
+    @Transactional
     public void saveMensaje(Mensaje m) throws DataAccessException{
         mensajeRepo.save(m);
     }

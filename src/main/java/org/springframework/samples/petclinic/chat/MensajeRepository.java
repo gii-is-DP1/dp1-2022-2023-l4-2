@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.mensaje;
+package org.springframework.samples.petclinic.chat;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.Query;
@@ -13,8 +13,5 @@ public interface MensajeRepository  extends CrudRepository<Mensaje, Integer>{
 
     @Query("SELECT m FROM Mensaje m WHERE m.jugador.id = :id")
     List<Mensaje> findByJugadorId(@Param("id") Integer id);
-
-    @Query("SELECT m FROM Mensaje m WHERE m.partida.id = :id")
-    List<Mensaje> findByPartidaId(@Param("id") Long id);
     
 }

@@ -1,8 +1,10 @@
-package org.springframework.samples.petclinic.mensaje;
+package org.springframework.samples.petclinic.chat;
 
 import java.net.PortUnreachableException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -32,7 +34,6 @@ public class ChatController {
 
     public static final String SHOW_CHAT = "partidas/chat";
     
-    @Autowired
     MensajeService mensajeService;
 
     @Autowired
@@ -40,6 +41,9 @@ public class ChatController {
 
     @Autowired
     JugadorService jugadorService;
+
+    @Autowired
+    ChatService chatService;
 
 
     @Autowired
@@ -57,56 +61,59 @@ public class ChatController {
         return result;
     }*/
 
-    @GetMapping("/partida/{id}")
+    @GetMapping("/creaChat/{id}")
+    public ModelAndView creaChat(@PathVariable("id") Long id){
+
+        if(chatService.getByPartidaId(id)==null){
+            Chat c = new Chat();
+            Partida partida = partidaService.getPartidaById(id).get();
+            c.setPartida(partida);
+            //Integer i = (int) (long) id;
+            //c.setId(i);
+            chatService.save(c);
+        }
+        ModelAndView result =new ModelAndView("redirect:/chat/{id}");
+        return result;
+    }
+
+    @GetMapping("/{id}")
     public ModelAndView chatDePartida(@PathVariable("id") Long id, Principal principal){
         Partida pActual = partidaService.getPartidaById(id).get();
-        Collection<Mensaje> chat = mensajeService.getAllByPartidaId(pActual);
+        Chat c = chatService.getByPartidaId(id);
         Jugador jActual = jugadorService.getJugadorByUsername(principal.getName());
         ModelAndView result = new ModelAndView(SHOW_CHAT);
         result.addObject("jActual", jActual);
         result.addObject("pActual", pActual);
-        result.addObject("chat", chat);
-        result.addObject("chat", chat);
+        result.addObject("chat", c);
         result.addObject("mensaje", new Mensaje());
         
         return result;
     }
 
-    @PostMapping("/partida/{id}")
+    @PostMapping("/{id}")
     public ModelAndView nuevoMensaje(@PathVariable("id") Long id, @Valid Mensaje mensaje, BindingResult br, Principal principal){
 
         if(br.hasErrors()){
             return new ModelAndView(SHOW_CHAT,br.getModel());
         }
         Jugador jActual = jugadorService.getJugadorByUsername(principal.getName());
-        Partida pActual = partidaService.getPartidaById(id).get();
+        List<Mensaje> todos = mensajeService.getAll();
+        Integer idMax;
+        if(todos.isEmpty()){
+            idMax=0;
+        }else{
+            idMax= todos.stream().max(Comparator.comparing(x -> x.getId())).map(x -> x.getId()).get();
+        }
+        Chat c = chatService.getByPartidaId(id);
+        mensaje.setId(idMax + 1);
         mensaje.setJugador(jActual);
-        mensaje.setPartida(pActual);
-        mensajeService.saveMensaje(mensaje);
-        Collection<Mensaje> chat = mensajeService.getAllByPartidaId(pActual);
-        ModelAndView result = new ModelAndView(SHOW_CHAT);
-        result.addObject("pActual", pActual);
-        result.addObject("jActual", jActual);
-        result.addObject("chat", chat);
-        
-        return new ModelAndView("redirect:/chat/partida/{id}");
+        mensaje.setChat(c);
+        List<Mensaje> m = c.getMensajes();
+        m.add(mensaje);
+        c.setMensajes(m);
+        chatService.edit(c);
+        ModelAndView result = new ModelAndView("redirect:/chat/{id}");
+        return result;
     }
 
-    /* 
-    @MessageMapping("/hello")
-    @SendTo("/chat/joined")
-    public MensajeBienvenida join(HelloMessage message) throws Exception {
-        simulatedDelay();
-        return new MensajeBienvenida("Hello " + message.getSender() + ", welcome to chat!");
-    }
-    @MessageMapping("/send/message")
-    @SendTo("/chat/new/message")
-    public Mensaje message(Mensaje mensaje) throws Exception {
-        simulatedDelay();
-        return new Mensaje(mensaje);
-    }
-    private void simulatedDelay() throws InterruptedException {
-        Thread.sleep(3000);
-    }
-    */
 }

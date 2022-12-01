@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.mensaje;
+package org.springframework.samples.petclinic.chat;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,26 +18,26 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Mensaje  {
+public class Mensaje{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @NotBlank
-    @Size(min=1, max=300)
+    @Size(min=1, max=100)
     private String contenido;
 
     @ManyToOne
-    Jugador jugador;
+    private Jugador jugador;
 
     @ManyToOne
-    Partida partida;
+    private Chat chat;
 
     public Mensaje() {
         this.contenido = "";
         this.jugador = null;
-        this.partida = null;
+        this.chat = null;
     }
     
 }

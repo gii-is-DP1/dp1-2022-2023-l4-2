@@ -10,6 +10,9 @@
 
         <div style="font-size: 35px">
             <c:out value="${principal.name}"/>
+            <div>
+                (Espectador)
+            </div>
         </div>
 
         <table class="table table-striped">
@@ -28,7 +31,7 @@
             <div>
                 <c:forEach items="${partida.jugadores}" var="jugador">
                     <tr style = "text-align: left; ";>
-                        <td>
+                        <td>    
                             <div>
                                 <c:out value="${jugador.user.username}"/> -  <c:out value="${jugador.rol}"/>
                             </div>
@@ -38,21 +41,9 @@
             </div>
         </div>
 
-        <c:if test="${jugadorLog.rol.getName() == 'Consul'}">
-            <a class="btn btn-default" href="/partidas/jugar/consul/${partida.id}">Siguiente</a>
-        </c:if>
-        <c:if test="${jugadorLog.rol.getName() == 'Edil'}">
-            <c:if test = "${numVotos == 0}">
-                <a class="btn btn-default" href="/partidas/jugar/edil/${partida.id}">Siguiente</a>
-            </c:if>
-        </c:if>
-        <c:if test="${jugadorLog.rol.getName() == 'Pretor'}">
-            <a class="btn btn-default" href="/partidas/jugar/pretor/${partida.id}">Siguiente</a>
-        </c:if>
-
         <div style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 20px;text-align: right;">
             <button>
-                <a class="btn btn-default" href="/chat/creaChat/${partida.id}" target="_blank">Chat</a></th>
+                <a class="btn btn-default" href="/home"> Inicio </a></th>
             </button>
         </div>
         
