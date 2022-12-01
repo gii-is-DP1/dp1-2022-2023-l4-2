@@ -50,6 +50,7 @@ public class PartidaController {
     public static final String PRETOR_EDIT = "partidas/pretorEdit";
     public static final String ESCOGER_PRETOR = "partidas/escogerPretor";
     public static final String ESCOGER_EDIL = "partidas/escogerEdil";
+    public static final String PRETOR_EDIT2 = "partidas/pretorEdit2";
 
 
     private PartidaService partidaService;
@@ -210,6 +211,7 @@ public class PartidaController {
         participacionService.save(part);
         ls.add(part);
         ls2.add(part);
+        j.setEstaEnPartida(true);
         j.setParticipaciones(ls);
         jugadorService.editJugador(j);
         p.setParticipaciones(ls2);
@@ -590,6 +592,66 @@ public class PartidaController {
         }
         return res; 
     }
+    @GetMapping("/jugar/pretor/edit2/{partidaId}/{votoId}")
+    public ModelAndView pretorEditVotoRonda2(@PathVariable("partidaId") Long partidaId, @PathVariable("votoId") Long votoId,
+                                HttpServletResponse response, Principal principal){
+        ModelAndView res =new ModelAndView(PRETOR_EDIT2);
+        //response.addHeader("Refresh", "10");
+        Partida p = partidaService.getPartidaById(partidaId).get();
+        Jugador j = jugadorService.getJugadorByUsername(principal.getName());
+        Voto v = votoService.getVotoById(votoId).get();
+        List<FaccionType> elegir = j.getParticipacionEnPartida(p).getOpciones();
+        FaccionType faccionApoyada = j.getParticipacionEnPartida(p).getFaccionApoyada();
+        res.addObject("faccionApoyada", faccionApoyada);
+        res.addObject("elegir", elegir);
+        res.addObject("voto", v);
+        res.addObject("jugadorLog", j);
+        res.addObject("partida", p);
+        res.addObject("principal", principal);
+        return res;
+
+    }
+
+    @PostMapping("/jugar/pretor/edit2/{partidaId}/{votoId}")
+    public String partidaPretorEditaVoto(@PathVariable("partidaId") Long partidaId,@PathVariable("votoId") Long votoId,
+                                    @Valid Voto voto,HttpServletResponse response, Principal principal){
+        response.addHeader("Refresh", "10");
+        Partida p = partidaService.getPartidaById(partidaId).get();
+        Voto votoToUpdate = votoService.getVotoById(votoId).get();
+        //votoToUpdate.setFaccion(voto.getFaccion());
+        //Voto votoCambiado = cambiarVoto(voto);
+        votoToUpdate.setElegido(voto.getElegido());
+        votoService.saveVoto(votoToUpdate);
+        List<Voto> votos = votoService.getVotosRondaTurno(p);
+        if(!votoToUpdate.getElegido()){
+            for(Voto v: votos){
+                Participacion participacion = v.getJugador().getParticipacionEnPartida(p);
+
+                if(v.getFaccion().getName().equals("Traidor")){
+                    p.setVotosContraCesar(p.getVotosContraCesar()+1);
+                    participacion.setVotosContraCesar(participacion.getVotosContraCesar()+1);
+                }else{
+                    p.setVotosFavorCesar(p.getVotosFavorCesar()+1);
+                    participacion.setVotosFavorCesar(participacion.getVotosFavorCesar()+1);
+             }
+             participacionService.save(participacion);
+            }
+            p.setTurno(p.getTurno()+1);
+            preparaRolesRonda2(p);
+            if(p.getTurno()>p.getNumJugadores()){
+                p.setRonda(3);
+                p.setTurno(1);
+            }
+        }
+        if(votoToUpdate.getElegido()){
+            p.setFase(1);
+        }
+        
+        
+        partidaService.save(p);
+        return "redirect:/partidas/jugar/{partidaId}";
+    }
+    
 
     @GetMapping("/delete/{id}")
     public ModelAndView deletePartida(@PathVariable("id") long id){
