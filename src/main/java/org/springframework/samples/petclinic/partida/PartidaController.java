@@ -2,6 +2,9 @@ package org.springframework.samples.petclinic.partida;
 
 import java.net.http.HttpResponse;
 import java.security.Principal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -40,6 +43,7 @@ public class PartidaController {
     public static final String PARTIDAS_DISPONIBLES = "partidas/partidasDisponibles";
     public static final String PARTIDAS_UNIR = "partidas/partidaJoin";
     public static final String PARTIDAS_JUGAR = "partidas/partida";
+    public static final String PARTIDAS_FINAL = "partidas/finalPartida";
     public static final String EDIL_JUGAR = "partidas/edilPartida";
     public static final String CONSUL_JUGAR = "partidas/consulPartida";
     public static final String PRETOR_JUGAR = "partidas/pretorPartida";
@@ -228,6 +232,27 @@ public class PartidaController {
         Integer numEdil = p.getJugadores().stream().filter(x -> x.getRol().getName().equals("Edil")).collect(Collectors.toList()).size();
         result.addObject("numEdil", numEdil);
         result.addObject("hayConsul", hayConsul);
+        result.addObject("faccionGanadora", p.getFaccionGanadora());
+        result.addObject("faccionApoyada", faccionApoyada);
+        result.addObject("elegir", elegir);
+        result.addObject("jugadorLog", j);
+        result.addObject("partida", p);
+        result.addObject("principal", principal);
+        result.addObject("numVotos", numVotos);
+        return result;
+    }
+
+    @GetMapping("/final/{id}")
+    public ModelAndView finalPartida(@PathVariable("id") Long id, HttpServletResponse response, Principal principal){
+        ModelAndView result = new ModelAndView(PARTIDAS_FINAL);
+        response.addHeader("Refresh", "20");
+        Partida p = partidaService.getPartidaById(id).get();
+        //List<FaccionType> faccionesApoyadas = p.getParticipaciones().stream().map(x->x.getFaccionApoyada()).collect(Collectors.toList());
+        Jugador j = jugadorService.getJugadorByUsername(principal.getName());
+        Integer numVotos = votoService.getVotosTurnoJugador(p, j).size();
+        List<FaccionType> elegir = j.getParticipacionEnPartida(p).getOpciones();
+        FaccionType faccionApoyada = j.getParticipacionEnPartida(p).getFaccionApoyada();
+        result.addObject("faccionGanadora", p.getFaccionGanadora());
         result.addObject("faccionApoyada", faccionApoyada);
         result.addObject("elegir", elegir);
         result.addObject("jugadorLog", j);
@@ -462,10 +487,15 @@ public class PartidaController {
             p.setTurno(1);
             preparaRolesRonda2(p);
         }
-        partidaService.save(p);
-        
-        participacionService.save(participacion);
+        if(p.getTiempo() == 0 && p.getRonda() == 3){
+            p.setFaccionGanadora(p.calculoFaccionGanadora());
+            p.setTiempo(p.calculaTiempoFinal(p.getFechaInicio()));
+        }
         ModelAndView res = new ModelAndView("redirect:/partidas/jugar/{id}");
+        partidaService.save(p);
+        participacionService.save(participacion);
+        
+        
         return res;
         
     }
@@ -530,6 +560,7 @@ public class PartidaController {
         partida.setRonda(0);
         partida.setTurno(0);
         partida.setTiempo(0);
+        partida.setFechaInicio(LocalDateTime.now());
         partida.setVotosContraCesar(0);
         partida.setVotosFavorCesar(0);
         partida.setFaccionGanadora(null);
