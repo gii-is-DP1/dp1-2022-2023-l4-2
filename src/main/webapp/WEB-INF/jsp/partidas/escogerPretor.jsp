@@ -73,34 +73,23 @@
             </div>
         </div>
 
-        <c:if test="${jugadorLog.rol.getName() == 'Consul'}">
-            <c:if test = "${faccionApoyada == null}">
-                <c:if test = "${partida.ronda == 1}">
-                    <c:if test = "${partida.turno != 1}">
-                    <a class="btn btn-default" href="/partidas/jugar/consul/${partida.id}">Siguiente</a>
-                    </c:if>
-                </c:if>    
-            </c:if>
-        </c:if>
-        <c:if test="${jugadorLog.rol.getName() == 'Edil'}">
-            <c:if test = "${numVotos == 0}">
-                <a class="btn btn-default" href="/partidas/jugar/edil/${partida.id}">Siguiente</a>
-            </c:if>
-        </c:if>
-        <c:if test="${jugadorLog.rol.getName() == 'Pretor'}">
-            <c:if test = "${partida.fase==0}">
-                <a class="btn btn-default" href="/partidas/jugar/pretor/${partida.id}">Siguiente</a>
-            </c:if>
-        </c:if>
 
-        <c:if test="${jugadorLog.rol.getName() == 'Consul'}">
-            <c:if test="${partida.getRonda() == 2}">
-                <c:if test="${!hayConsul}">
-                    <a class="btn btn-default" href="/partidas/jugar/consul/eleccionP/${partida.id}">Siguiente</a>
-                </c:if>
-            </c:if>
-        </c:if>
-        
+
+        <span>Quien quieres que sea el Pretor?</span><br>
+        <form:form modelAttribute="jugador"
+                   class="form-horizontal">
+            <div class="form-group has-feedback">                
+                <c:forEach items="${jugFilt}" var="jug">
+                    <td>${jug.user.username}<td>
+                    <input type="radio" name="id" value="${jug.id}"/>
+                 </c:forEach>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10"></div>
+                     <button class="btn btn-default" type="submit">Seleccionar Pretor</button>
+                </div>
+            </div>
+        </form:form> 
     </div>
    
 </petclinic:lo2>
