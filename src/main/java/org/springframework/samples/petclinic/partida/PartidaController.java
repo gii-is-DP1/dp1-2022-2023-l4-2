@@ -45,6 +45,7 @@ public class PartidaController {
     public static final String PRETOR_JUGAR = "partidas/pretorPartida";
     public static final String PRETOR_EDIT = "partidas/pretorEdit";
     public static final String ESCOGER_PRETOR = "partidas/escogerPretor";
+    public static final String ESCOGER_EDIL = "partidas/escogerEdil";
 
 
     private PartidaService partidaService;
@@ -223,7 +224,9 @@ public class PartidaController {
         List<FaccionType> elegir = j.getParticipacionEnPartida(p).getOpciones();
         FaccionType faccionApoyada = j.getParticipacionEnPartida(p).getFaccionApoyada();
         Boolean hayConsul = null;
-        hayConsul = p.getJugadores().stream().map(x->x.getRol().getName()).anyMatch(x-> x == "Consul");
+        hayConsul = p.getJugadores().stream().map(x->x.getRol().getName()).anyMatch(x-> x.equals("Pretor"));
+        Integer numEdil = p.getJugadores().stream().filter(x -> x.getRol().getName().equals("Edil")).collect(Collectors.toList()).size();
+        result.addObject("numEdil", numEdil);
         result.addObject("hayConsul", hayConsul);
         result.addObject("faccionApoyada", faccionApoyada);
         result.addObject("elegir", elegir);
@@ -383,7 +386,7 @@ public class PartidaController {
         Partida p = partidaService.getPartidaById(id).get();
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
         List<Jugador> jugadores = p.getJugadores();
-        List<Jugador> jugadoresFiltrado = jugadores.stream().filter(x-> x.getRol() != null).filter(x-> x.getRol().getName() != "Pretor").filter(x-> x.getRol().getName() != "Consul").filter(x-> x.getYaElegido() != true).collect(Collectors.toList());
+        List<Jugador> jugadoresFiltrado = jugadores.stream().filter(x-> x.getRol() != null).filter(x-> !x.getRol().getName().equals("Pretor")).filter(x-> !x.getRol().getName().equals("Consul")).filter(x-> x.getYaElegido() != true).collect(Collectors.toList());
         List<String> opciones = j.getParticipacionEnPartida(p).getOpciones().stream().map(x->x.getName()).collect(Collectors.toList());
         res.addObject("opciones", opciones);
         res.addObject("jugadorLog", j);
@@ -399,6 +402,41 @@ public class PartidaController {
         Jugador j = jugadorService.getJugadorById(jugador.getId()).get();
         RolType pretor= roles.stream().filter(x->x.getName().equals("Pretor")).findAny().get();
         j.setRol(pretor);
+        j.setYaElegido(true);
+        jugadorService.save2(j);
+
+        ModelAndView res = new ModelAndView("redirect:/partidas/jugar/{id}");
+        return res;
+        
+    }
+
+    @GetMapping("/jugar/consul/eleccionE/{id}")
+    public ModelAndView escogerEdil(@PathVariable("id") Long id, HttpServletResponse response, Principal principal){
+        ModelAndView res = new ModelAndView(ESCOGER_PRETOR);
+        Partida p = partidaService.getPartidaById(id).get();
+        Jugador j = jugadorService.getJugadorByUsername(principal.getName());
+        List<Jugador> jugadores = p.getJugadores();
+        List<Jugador> jugadoresFiltrado = List.of();
+        if (p.getNumJugadores() == 5) {
+            jugadoresFiltrado = jugadores.stream().filter(x-> x.getRol() != null).filter(x-> !x.getRol().getName().equals("Consul")).filter(x-> x.getYaElegido() != true).collect(Collectors.toList());
+        } else {
+            jugadoresFiltrado = jugadores.stream().filter(x-> x.getRol() != null).filter(x-> !x.getRol().getName().equals("Edil")).filter(x-> !x.getRol().getName().equals("Consul")).filter(x-> x.getYaElegido() != true).collect(Collectors.toList());
+        }
+        List<String> opciones = j.getParticipacionEnPartida(p).getOpciones().stream().map(x->x.getName()).collect(Collectors.toList());
+        res.addObject("opciones", opciones);
+        res.addObject("jugadorLog", j);
+        res.addObject("partida", p);
+        res.addObject("jugFilt", jugadoresFiltrado);
+        return res;
+    }
+
+    @PostMapping("/jugar/consul/eleccionE/{id}")
+    public ModelAndView seleccionarEdil(@PathVariable("id") Long id, @Valid Jugador jugador, BindingResult br, Principal principal){
+        List<RolType> roles = jugadorService.getRoles();
+        Partida p = partidaService.getPartidaById(id).get();
+        Jugador j = jugadorService.getJugadorById(jugador.getId()).get();
+        RolType edil= roles.stream().filter(x->x.getName().equals("Edil")).findAny().get();
+        j.setRol(edil);
         j.setYaElegido(true);
         jugadorService.save2(j);
 
