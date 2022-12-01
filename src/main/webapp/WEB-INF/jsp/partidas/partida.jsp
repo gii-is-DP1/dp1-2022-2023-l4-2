@@ -104,6 +104,12 @@
                 <a class="btn btn-default" href="/partidas/final/${partida.id}">Ver resultado</a>
             </div>
         </c:if>
+
+        <div style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 20px;text-align: right;">
+            <button>
+                <a class="btn btn-default" href="/chat/creaChat/${partida.id}" target="_blank">Chat</a></th>
+            </button>
+        </div>
         
         <c:if test="${jugadorLog.rol.getName() == 'Consul'}">
             <c:if test="${partida.getRonda() == 2}">

@@ -38,7 +38,7 @@ public static final String JUGADOR_LOGROS = "jugadores/logrosDelJugador";
 public static final String JUGADOR_EDITAR_PERFIL = "jugadores/editPerfil";
 public static final String JUGADOR_LISTA_AMIGOS = "jugadores/amigosList";
 public static final String JUGADOR_SEARCH = "jugadores/jugadorSearch";
-public static final String PARTIDOS_ESPECTEAR = "jugadores/listEspectear";
+public static final String PARTIDOS_ESPECTAR = "jugadores/listEspectar";
 public static final String JUGADOR_AUTO_COMPLETAR = "jugadores/searchFilter";
 
 
@@ -215,7 +215,7 @@ public ModelAndView getLogrosDelJugador(@PathVariable("username") String usernam
 
 @GetMapping("/espectar/{username}")
 public ModelAndView listaPartidasEspectear(@PathVariable("username") String username, Principal principal){
-    ModelAndView res = new ModelAndView(PARTIDOS_ESPECTEAR);
+    ModelAndView res = new ModelAndView(PARTIDOS_ESPECTAR);
     Jugador j = jugadorService.getJugadorByUsername(principal.getName());
     List<Partida> aux = jugadorService.getPartidasActivasAmigos(j);
     res.addObject("nombreUsuario",principal.getName());

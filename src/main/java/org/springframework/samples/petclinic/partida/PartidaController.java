@@ -21,6 +21,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.samples.petclinic.chat.Chat;
+import org.springframework.samples.petclinic.chat.ChatRepository;
+import org.springframework.samples.petclinic.chat.ChatService;
 import org.springframework.samples.petclinic.jugador.Jugador;
 import org.springframework.samples.petclinic.jugador.JugadorService;
 import org.springframework.samples.petclinic.jugador.RolType;
@@ -43,6 +46,7 @@ public class PartidaController {
     public static final String PARTIDAS_DISPONIBLES = "partidas/partidasDisponibles";
     public static final String PARTIDAS_UNIR = "partidas/partidaJoin";
     public static final String PARTIDAS_JUGAR = "partidas/partida";
+    public static final String PARTIDAS_ESPECTAR = "partidas/partidaEspectar";
     public static final String PARTIDAS_FINAL = "partidas/finalPartida";
     public static final String EDIL_JUGAR = "partidas/edilPartida";
     public static final String CONSUL_JUGAR = "partidas/consulPartida";
@@ -55,6 +59,8 @@ public class PartidaController {
 
 
     private PartidaService partidaService;
+
+    private ChatService chatService;
 
     @Autowired
     public PartidaController(PartidaService partidaService){
@@ -269,6 +275,16 @@ public class PartidaController {
         result.addObject("partida", p);
         result.addObject("principal", principal);
         result.addObject("numVotos", numVotos);
+        return result;
+    }
+
+    @GetMapping("/espectar/{id}")
+    public ModelAndView espectarPartida(@PathVariable("id") Long id, HttpServletResponse response, Principal principal){
+        ModelAndView result = new ModelAndView(PARTIDAS_ESPECTAR);
+        response.addHeader("Refresh", "20");
+        Partida p = partidaService.getPartidaById(id).get();
+        result.addObject("partida", p);
+        result.addObject("principal", principal);
         return result;
     }
 
@@ -581,7 +597,6 @@ public class PartidaController {
         partida.setActiva(true);
         partida.setFase(0);
         partidaService.save(partida);
-        
         ModelAndView result =new ModelAndView("redirect:/partidas/join/"+partida.getId());
         //result.addObject("message", "Ha habido un error creando la partida.");
         return result;
