@@ -2,6 +2,8 @@ package org.springframework.samples.petclinic.partida;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -43,4 +45,12 @@ public class VotoService {
         return votoRepository.findById(votoId.intValue());
     }
     
+    @Transactional(readOnly = true)
+    public List<Voto> getVotosElegidosRondaTurno(Partida p, Jugador j){
+        return votoRepository.findVotosTurnoJugador(j, p.getTurno(), p.getRonda())
+                            .stream()
+                            .filter(x->x.getElegido()!=null)
+                            .filter(x->x.getElegido())
+                            .collect(Collectors.toList());
+    }
 }

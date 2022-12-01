@@ -73,54 +73,42 @@
             </div>
         </div>
 
-        
-        <c:if test="${partida.ronda == 1}">
-            <form:form modelAttribute="faccionType"
+
+
+        <span>Modificar voto</span><br>
+        <c:if test ="${voto.faccion.getName() == 'Leal'}">
+            <span>El voto es a favor del cesar</span>
+        </c:if>
+        <c:if test = "${voto.faccion.getName() == 'Traidor'}">
+            <sapn>El voto es en contra del cesar</sapn>
+        </c:if>
+        <c:if test = "${voto.faccion.getName() == 'Mercader'}">
+            <sapn>El voto es neutro</sapn>
+        </c:if>
+        <form:form modelAttribute="voto"
                    class="form-horizontal">
-            <input type="hidden" name="id" value="${faccionType.id}"/>
+            <input type="hidden" name="id" value="${voto.id}"/>
             <div class="form-group has-feedback">                
+                
+                
+                
                 <tr>
-                    <td>Voto:</td>
-                    
-                            <td>Leal</td>
-                            <input type="radio" name="name" value="Leal" checked/>
-                            <td>Traidor</td>
-                            <input type="radio" name="name" value="Traidor"/>
-                    
+                    <td>¿A quien quieres que se vote?</td>
+                    <td>
+                        <select name = "faccion">
+                            <c:forEach items="${facciones}" var="faccion">
+                                <option value = "${faccion.id}"> <c:out value = "${faccion.getName}"/> </option>
+                            </c:forEach>
+                        </select>
+                    </td>
                 </tr>
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10"></div>
-                     <button class="btn btn-default" type="submit">Votar</button>
+                     <button class="btn btn-default" type="submit">Modificar voto</button>
                 </div>
             </div>
-        </form:form>
-        </c:if>
-        <c:if test="${partida.ronda == 2}">
-            <form:form modelAttribute="faccionType"
-                   class="form-horizontal">
-            <input type="hidden" name="id" value="${faccionType.id}"/>
-            <div class="form-group has-feedback">                
-                <tr>
-                    <td>Voto:</td>
-                    
-                            <td>Leal</td>
-                            <input type="radio" name="name" value="Leal" checked/>
-                            <td>Traidor</td>
-                            <input type="radio" name="name" value="Traidor"/>
-                            <td>Mercader</td>
-                            <input type="radio" name="name" value="Mercader"/>
-                    
-                </tr>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10"></div>
-                     <button class="btn btn-default" type="submit">Votar</button>
-                </div>
-            </div>
-        </form:form>
-        </c:if>
-        
+        </form:form> 
     </div>
    
 </petclinic:lo2>
