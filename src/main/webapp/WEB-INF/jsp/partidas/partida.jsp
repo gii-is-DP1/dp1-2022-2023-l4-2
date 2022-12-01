@@ -112,6 +112,16 @@
                 </c:if>
             </c:if>
         </c:if>
+
+        <c:if test="${jugadorLog.rol.getName() == 'Edil'}">
+            <c:if test="${partida.getRonda() == 2}">
+                <c:if test="${!votosCambio.isEmpty()}">
+                    <c:if test="${voto != null}">
+                        <a class="btn btn-default" href="/partidas/jugar/edil/edit/${partida.id}/${voto.id}">Cambiar voto</a>
+                    </c:if>
+                </c:if>
+            </c:if>
+        </c:if>
     </div>
    
 </petclinic:lo2>
