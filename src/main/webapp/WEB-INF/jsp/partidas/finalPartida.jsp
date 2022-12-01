@@ -78,6 +78,15 @@
                         </tr>
                 </div>
             </div>
+            <div>
+                <tr style = "text-align: center; ";>
+                    <td>
+                        <div>
+                            <a class="btn btn-default" href="/home">VOLVER AL INICIO</a>
+                        </div>
+                    </td>
+                </tr>
+            </div>
         </c:if>
         
     </div>

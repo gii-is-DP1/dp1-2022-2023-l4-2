@@ -40,7 +40,7 @@
 
 
         <div>
-            <c:if test= "${partida.fase == 1}">
+            <c:if test= "${partida.fase == 1 || (partida.ronda == 2 && partida.turno == 1)}">
                 <form:form modelAttribute="faccionType"
                    class="form-horizontal">
                    <input type="hidden" name="id" value="${faccionType.id}"/>

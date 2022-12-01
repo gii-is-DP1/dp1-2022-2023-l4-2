@@ -38,6 +38,7 @@
                 <div style="height:100px; width: 100px;">
 
                 </div>
+                <c:if test ="${faccionApoyada == null}">
                 <div style="text-align:left">
                     Tus opciones: 
                     <div>
@@ -52,6 +53,7 @@
                         </c:forEach>
                     </div>
                 </div>
+                </c:if>
                 <div style="height:100px; width: 100px;">
         
                 </div>
