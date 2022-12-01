@@ -72,28 +72,39 @@
                 </c:if>
             </div>
         </div>
-        <span> ¿El voto de quien quieres cambiar?</span>
-        <c:forEach items="${votos}" var="voto">
-                    <tr style = "text-align: left; ";>
-                        <td>
-                            <div>
-                                <c:out value="${voto.jugador.user.username}"/>
 
-                                <c:if test= "${partida.getRonda() == 1}">
-                                    <a href="/partidas/jugar/pretor/edit/${partida.id}/${voto.id}"> 
-                                        <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>
-                                    </a>
-                                </c:if>
-                                <c:if test = "${partida.getRonda() == 2}">
-                                    <a href="/partidas/jugar/pretor/edit2/${partida.id}/${voto.id}"> 
-                                        <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>
-                                    </a>
-                                </c:if>
 
-                            </div>
-                        </td>
-                    </tr>
-                </c:forEach>
+
+
+        <c:if test ="${voto.faccion.getName() == 'Leal'}">
+            <span>El voto es a favor del cesar</span>
+        </c:if>
+        <c:if test = "${voto.faccion.getName() == 'Traidor'}">
+            <sapn>El voto es en contra del cesar</sapn>
+        </c:if>
+        <form:form modelAttribute="voto"
+                   class="form-horizontal">
+            <input type="hidden" name="id" value="${voto.id}"/>
+            <div class="form-group has-feedback">                
+                
+                
+                
+                <tr>
+                    <td>¿Quieres que el edil cambie este voto?</td>
+                    <td>
+                        <select name = "elegido">
+                            <option value="true">Cambiar</option>
+                            <option value="false">Mantener</option>
+                        </select>
+                    </td>
+                </tr>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10"></div>
+                     <button class="btn btn-default" type="submit">Enviar</button>
+                </div>
+            </div>
+        </form:form> 
     </div>
    
 </petclinic:lo2>

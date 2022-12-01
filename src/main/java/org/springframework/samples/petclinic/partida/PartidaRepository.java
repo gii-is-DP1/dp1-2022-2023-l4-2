@@ -22,5 +22,5 @@ public interface PartidaRepository extends CrudRepository<Partida, Long>{
     List<FaccionType> findAllFaccionType();
 
     @Query("SELECT f FROM FaccionType f WHERE f.name = :name")
-    List<FaccionType> findFaccionTypeByName(@Param("name") String name);
+    FaccionType findFaccionTypeByName(@Param("name") String name);
 }

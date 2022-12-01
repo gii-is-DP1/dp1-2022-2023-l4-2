@@ -72,28 +72,24 @@
                 </c:if>
             </div>
         </div>
-        <span> ¿El voto de quien quieres cambiar?</span>
-        <c:forEach items="${votos}" var="voto">
-                    <tr style = "text-align: left; ";>
-                        <td>
-                            <div>
-                                <c:out value="${voto.jugador.user.username}"/>
 
-                                <c:if test= "${partida.getRonda() == 1}">
-                                    <a href="/partidas/jugar/pretor/edit/${partida.id}/${voto.id}"> 
-                                        <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>
-                                    </a>
-                                </c:if>
-                                <c:if test = "${partida.getRonda() == 2}">
-                                    <a href="/partidas/jugar/pretor/edit2/${partida.id}/${voto.id}"> 
-                                        <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>
-                                    </a>
-                                </c:if>
 
-                            </div>
-                        </td>
-                    </tr>
-                </c:forEach>
+
+        <span>Quien quieres que sea el Pretor?</span><br>
+        <form:form modelAttribute="jugador"
+                   class="form-horizontal">
+            <div class="form-group has-feedback">                
+                <c:forEach items="${jugFilt}" var="jug">
+                    <td>${jug.user.username}<td>
+                    <input type="radio" name="id" value="${jug.id}"/>
+                 </c:forEach>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10"></div>
+                     <button class="btn btn-default" type="submit">Seleccionar Pretor</button>
+                </div>
+            </div>
+        </form:form> 
     </div>
    
 </petclinic:lo2>

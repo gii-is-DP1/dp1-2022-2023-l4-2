@@ -35,6 +35,41 @@
                         </td>
                     </tr>
                 </c:forEach>
+                <div style="height:100px; width: 100px;">
+
+                </div>
+                <div style="text-align:left">
+                    Tus opciones: 
+                    <div>
+                        <c:forEach items="${elegir}" var="opcion">
+                            <tr style = "text-align: left; ";>
+                                <td>
+                                    <div>
+                                        <c:out value="${opcion.getName()}"/> 
+                                    </div>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </div>
+                </div>
+                <div style="height:100px; width: 100px;">
+        
+                </div>
+                
+                <c:if test ="${faccionApoyada != null}">
+                    <div style="text-align:left">
+                        Tu faccion Apoyada
+                        <div>
+                                <tr style = "text-align: left; ";>
+                                    <td>
+                                        <div>
+                                            <c:out value="${faccionApoyada.getName()}"/> 
+                                        </div>
+                                    </td>
+                                </tr>
+                        </div>
+                    </div>
+                </c:if>
             </div>
         </div>
 
@@ -48,7 +83,7 @@
                     <td>Voto:</td>
                     
                             <td>Leal</td>
-                            <input type="radio" name="name" value="Leal"/>
+                            <input type="radio" name="name" value="Leal" checked/>
                             <td>Traidor</td>
                             <input type="radio" name="name" value="Traidor"/>
                     
@@ -61,20 +96,21 @@
             </div>
         </form:form>
         </c:if>
-        <c:if test="${partida.ronda > 1}">
+        <c:if test="${partida.ronda == 2}">
             <form:form modelAttribute="faccionType"
                    class="form-horizontal">
             <input type="hidden" name="id" value="${faccionType.id}"/>
             <div class="form-group has-feedback">                
                 <tr>
                     <td>Voto:</td>
-                    <td>
-                        <select name = "name">
-                            <option>Leal</option>
-                            <option>Traidor</option>
-                            <option>Mercader</option>
-                        </select>
-                    </td>
+                    
+                            <td>Leal</td>
+                            <input type="radio" name="name" value="Leal" checked/>
+                            <td>Traidor</td>
+                            <input type="radio" name="name" value="Traidor"/>
+                            <td>Mercader</td>
+                            <input type="radio" name="name" value="Mercader"/>
+                    
                 </tr>
             </div>
             <div class="form-group">

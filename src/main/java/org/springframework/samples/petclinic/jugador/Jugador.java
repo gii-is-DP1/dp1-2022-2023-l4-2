@@ -42,6 +42,9 @@ public class Jugador extends Person{
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     public List<Jugador> amigoDe;
 
+    
+    public Boolean yaElegido; 
+
     public Integer getPartidasJugadas() {
         return getPartidas().size();
     }
