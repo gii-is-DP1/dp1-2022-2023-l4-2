@@ -83,7 +83,7 @@
                     <td>Voto:</td>
                     
                             <td>Leal</td>
-                            <input type="radio" name="name" value="Leal"/>
+                            <input type="radio" name="name" value="Leal" checked/>
                             <td>Traidor</td>
                             <input type="radio" name="name" value="Traidor"/>
                     
@@ -105,7 +105,7 @@
                     <td>Voto:</td>
                     
                             <td>Leal</td>
-                            <input type="radio" name="name" value="Leal"/>
+                            <input type="radio" name="name" value="Leal" checked/>
                             <td>Traidor</td>
                             <input type="radio" name="name" value="Traidor"/>
                     

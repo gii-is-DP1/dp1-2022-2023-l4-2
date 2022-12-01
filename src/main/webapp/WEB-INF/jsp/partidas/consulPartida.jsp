@@ -49,7 +49,7 @@
                             <td>Faccion apoyada:</td>
                                 <c:forEach items="${opciones}" var="opcion">
                                     <td>${opcion}<td>
-                                    <input type="radio" name="name" value="${opcion}"/>
+                                    <input type="radio" name="name" value="${opcion}" checked/>
                                 </c:forEach>
                         </tr>
                     </div>
