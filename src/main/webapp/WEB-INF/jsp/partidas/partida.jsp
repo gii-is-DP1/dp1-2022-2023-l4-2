@@ -92,6 +92,11 @@
                 <a class="btn btn-default" href="/partidas/jugar/pretor/${partida.id}">Siguiente</a>
             </c:if>
         </c:if>
+        <c:if test="${partida.ronda == 3}">
+            <div style="text-align:center">
+                <a class="btn btn-default" href="/partidas/final/${partida.id}">Ver resultado</a>
+            </div>
+        </c:if>
         
     </div>
    

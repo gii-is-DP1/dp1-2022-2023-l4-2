@@ -96,20 +96,19 @@
             </div>
         </form:form>
         </c:if>
-        <c:if test="${partida.ronda > 1}">
+        <c:if test="${partida.ronda == 2}">
             <form:form modelAttribute="faccionType"
                    class="form-horizontal">
             <input type="hidden" name="id" value="${faccionType.id}"/>
             <div class="form-group has-feedback">                
                 <tr>
                     <td>Voto:</td>
-                    <td>
-                        <select name = "name">
-                            <option>Leal</option>
-                            <option>Traidor</option>
-                            <option>Mercader</option>
-                        </select>
-                    </td>
+                    
+                            <td>Leal</td>
+                            <input type="radio" name="name" value="Leal"/>
+                            <td>Traidor</td>
+                            <input type="radio" name="name" value="Traidor"/>
+                    
                 </tr>
             </div>
             <div class="form-group">

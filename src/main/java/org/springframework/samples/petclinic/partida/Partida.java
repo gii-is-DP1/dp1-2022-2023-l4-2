@@ -1,6 +1,9 @@
 package org.springframework.samples.petclinic.partida;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -42,6 +45,8 @@ public class Partida implements Serializable{
     private long votosFavorCesar;
     private long votosContraCesar;
     private long limite;
+    private LocalDateTime fechaInicio;
+
 
 
     @ManyToOne
@@ -63,7 +68,7 @@ public class Partida implements Serializable{
     
     @ManyToOne
 	@JoinColumn
-    public FaccionType faccionGanadora2(){
+    public FaccionType calculoFaccionGanadora(){
         FaccionType res = new FaccionType();
         res.setId(4);
         res.setName("No decidido");
@@ -122,6 +127,15 @@ public class Partida implements Serializable{
             res = 20l;
         }
         return res; 
+    }
+
+    public Integer calculaTiempoFinal(LocalDateTime fechaInicial){
+
+        Integer minutos = (LocalTime.now().getMinute() - fechaInicial.getMinute());
+        Integer segundos = (LocalTime.now().getSecond() - fechaInicial.getSecond());
+        
+        return minutos + segundos/60;
+
     }
     
 }
