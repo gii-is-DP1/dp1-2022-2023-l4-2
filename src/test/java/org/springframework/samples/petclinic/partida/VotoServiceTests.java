@@ -159,8 +159,10 @@ public class VotoServiceTests {
         Voto voto2 = votoService.getVotoById((long) numVotos).orElse(null);
         
         //Cuando lo lanzas a la primera no funciona, cuando lo lanzas la segunda vez si, preguntar porque
-        //assertNotNull(voto2); 
-        //assertEquals(voto, voto2);
+
+        assertNotNull(voto2); 
+        assertEquals(voto, voto2);
+
     }
 
     @Test

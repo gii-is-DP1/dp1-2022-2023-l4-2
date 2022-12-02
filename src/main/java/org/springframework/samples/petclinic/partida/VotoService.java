@@ -39,9 +39,11 @@ public class VotoService {
     @Transactional(readOnly = true)
     public List<Voto> getVotosTurnoJugador(Partida p, Jugador j) throws Exception{
         if (p.getJugadores().contains(j)){
-            return votoRepository.findVotosTurnoJugador(j, p.getTurno(), p.getRonda(), p);
-        } else {
-            throw new Exception("El jugador " + j.getUser().getUsername() + " no esta en la partida");
+
+            return votoRepository.findVotosTurnoJugador(j, p.getTurno(), p.getRonda(),p);
+        }
+        else {
+            throw new Exception("El usuario" + j.getUser().getUsername() + " no ha jugado la partida");
         }
     }
 
