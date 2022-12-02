@@ -227,7 +227,7 @@ public class PartidaController {
 
 
     @GetMapping("/jugar/{id}")
-    public ModelAndView jugarPartida(@PathVariable("id") Long id, HttpServletResponse response, Principal principal){
+    public ModelAndView jugarPartida(@PathVariable("id") Long id, HttpServletResponse response, Principal principal) throws Exception{
         ModelAndView result = new ModelAndView(PARTIDAS_JUGAR);
         response.addHeader("Refresh", "20");
         Partida p = partidaService.getPartidaById(id).get();
@@ -269,7 +269,7 @@ public class PartidaController {
 
 
     @GetMapping("/final/{id}")
-    public ModelAndView finalPartida(@PathVariable("id") Long id, HttpServletResponse response, Principal principal){
+    public ModelAndView finalPartida(@PathVariable("id") Long id, HttpServletResponse response, Principal principal) throws Exception{
         ModelAndView result = new ModelAndView(PARTIDAS_FINAL);
         response.addHeader("Refresh", "20");
         Partida p = partidaService.getPartidaById(id).get();
