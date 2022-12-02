@@ -98,18 +98,22 @@
         
         <c:if test="${jugadorLog.rol.getName() == 'Edil'}">
             <c:if test = "${numVotos == 0}">
-                <a class="btn btn-default" href="/partidas/jugar/edil/${partida.id}">Siguiente</a>
+                <c:if test="${partida.getRonda() == 1}">
+                    <a class="btn btn-default" href="/partidas/jugar/edil/${partida.id}">Siguiente</a>
+                </c:if>
             </c:if>
         </c:if>
         <c:if test="${jugadorLog.rol.getName() == 'Pretor'}">
             <c:if test="${votoRT > 1}">
                 <c:if test = "${partida.fase==0}">
+                    <c:if test="${partida.getRonda() == 1">
                     <a class="btn btn-default" href="/partidas/jugar/pretor/${partida.id}">Siguiente</a>
+                    </c:if>
                 </c:if>
             </c:if>
         </c:if>
         <c:if test="${jugadorLog.rol.getName() == 'Consul'}">
-            <c:if test="${partida.getRonda() == 2}">
+            <c:if test="${partida.getRonda() == 2 && partida.fase !=2}">
                 <c:if test="${!hayConsul}">
                     <a class="btn btn-default" href="/partidas/jugar/consul/eleccionP/${partida.id}">Escoger Pretor</a>
                 </c:if>
@@ -128,7 +132,7 @@
         </div>
         
         <c:if test="${jugadorLog.rol.getName() == 'Consul'}">
-            <c:if test="${partida.getRonda() == 2}">
+            <c:if test="${partida.getRonda() == 2 && partida.fase !=2}">
                 <c:if test="${2 > numEdil}">
                     <a class="btn btn-default" href="/partidas/jugar/consul/eleccionE/${partida.id}">Escoger Edil</a>
                 </c:if>
@@ -138,8 +142,24 @@
         <c:if test="${jugadorLog.rol.getName() == 'Edil'}">
             <c:if test="${partida.getRonda() == 2}">
                 <c:if test="${!votosCambio.isEmpty()}">
-                    <c:if test="${voto != null}">
+                    <c:if test="${voto != null && partida.fase !=2}">
                         <a class="btn btn-default" href="/partidas/jugar/edil/edit/${partida.id}/${voto.id}">Cambiar voto</a>
+                    </c:if>
+                </c:if>
+            </c:if>
+        </c:if>
+        <c:if test="${jugadorLog.rol.getName() == 'Edil'}">
+            <c:if test = "${numVotos == 0}">
+                <c:if test="${partida.getRonda() == 2 && yaE}">
+                    <a class="btn btn-default" href="/partidas/jugar/edil/${partida.id}">Siguiente</a>
+                </c:if>
+            </c:if>
+        </c:if>
+        <c:if test="${jugadorLog.rol.getName() == 'Pretor'}">
+            <c:if test="${votoRT > 1}">
+                <c:if test = "${partida.fase==0}">
+                    <c:if test="${partida.getRonda() == 2 && yaE">
+                    <a class="btn btn-default" href="/partidas/jugar/pretor/${partida.id}">Siguiente</a>
                     </c:if>
                 </c:if>
             </c:if>
