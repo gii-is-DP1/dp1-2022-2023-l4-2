@@ -536,41 +536,6 @@ public class PartidaController {
         
     }
 
-    @GetMapping("/jugar/consul/eleccionE/{id}")
-    public ModelAndView escogerEdil(@PathVariable("id") Long id, HttpServletResponse response, Principal principal){
-        ModelAndView res = new ModelAndView(ESCOGER_PRETOR);
-        Partida p = partidaService.getPartidaById(id).get();
-        Jugador j = jugadorService.getJugadorByUsername(principal.getName());
-        List<Jugador> jugadores = p.getJugadores();
-        List<Jugador> jugadoresFiltrado = List.of();
-        if (p.getNumJugadores() == 5) {
-            jugadoresFiltrado = jugadores.stream().filter(x-> x.getRol() != null).filter(x-> !x.getRol().getName().equals("Consul")).filter(x-> x.getYaElegido() != true).collect(Collectors.toList());
-        } else {
-            jugadoresFiltrado = jugadores.stream().filter(x-> x.getRol() != null).filter(x-> !x.getRol().getName().equals("Edil")).filter(x-> !x.getRol().getName().equals("Consul")).filter(x-> x.getYaElegido() != true).collect(Collectors.toList());
-        }
-        List<String> opciones = j.getParticipacionEnPartida(p).getOpciones().stream().map(x->x.getName()).collect(Collectors.toList());
-        res.addObject("opciones", opciones);
-        res.addObject("jugadorLog", j);
-        res.addObject("partida", p);
-        res.addObject("jugFilt", jugadoresFiltrado);
-        return res;
-    }
-
-    @PostMapping("/jugar/consul/eleccionE/{id}")
-    public ModelAndView seleccionarEdil(@PathVariable("id") Long id, @Valid Jugador jugador, BindingResult br, Principal principal){
-        List<RolType> roles = jugadorService.getRoles();
-        Partida p = partidaService.getPartidaById(id).get();
-        Jugador j = jugadorService.getJugadorById(jugador.getId()).get();
-        RolType edil= roles.stream().filter(x->x.getName().equals("Edil")).findAny().get();
-        j.setRol(edil);
-        j.setYaElegido(true);
-        jugadorService.save2(j);
-
-        ModelAndView res = new ModelAndView("redirect:/partidas/jugar/{id}");
-        return res;
-        
-    }
-
 
     @PostMapping("/jugar/consul/{id}")
     public ModelAndView guardarFaccion(@PathVariable("id") Long id, @Valid FaccionType ft, BindingResult br, Principal principal){
