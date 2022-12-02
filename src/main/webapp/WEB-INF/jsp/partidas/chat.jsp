@@ -17,7 +17,7 @@
                             <c:otherwise>
                                 <div style="text-align: left;">
                                     
-                                    <c:out value="${m.contenido}"/> 
+                                    ${m.jugador.user.username}:<c:out value="${m.contenido}"/> 
                                 </div>
                             </c:otherwise>
                         </c:choose> 
