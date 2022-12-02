@@ -129,11 +129,16 @@ public class Partida implements Serializable{
         return res; 
     }
 
-    public Integer calculaTiempoFinal(LocalDateTime fechaInicial){
+    public Integer calculaTiempoFinal(LocalDateTime fechaInicial, LocalDateTime fechaFinal){
 
-        Integer minutos = (LocalTime.now().getMinute() - fechaInicial.getMinute());
-        Integer segundos = (LocalTime.now().getSecond() - fechaInicial.getSecond());
-        
+        Integer minutos = (fechaFinal.getMinute() - fechaInicial.getMinute());
+        if(minutos < 0){
+            minutos = minutos + 60;
+        }
+        Integer segundos = (fechaFinal.getSecond() - fechaInicial.getSecond());
+        if(segundos < 0){
+            segundos = segundos + 60;
+        }
         return minutos + segundos/60;
 
     }

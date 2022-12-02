@@ -557,8 +557,9 @@ public class PartidaController {
             preparaRolesRonda2(p);
         }
         if(p.getRonda() == 3){
+            LocalDateTime fechaFinal = LocalDateTime.of(LocalDate.now(), LocalTime.now());
             p.setFaccionGanadora(p.calculoFaccionGanadora());
-            p.setTiempo(p.calculaTiempoFinal(p.getFechaInicio()));
+            p.setTiempo(p.calculaTiempoFinal(p.getFechaInicio(), fechaFinal));
         }
         if(p.getTurno()==2 && p.getRonda()==2){
             //preparaRolesRonda2(p);
@@ -739,9 +740,17 @@ public class PartidaController {
                 }
             }
 
+            if(p.getRonda() == 2 && p.getTurno()>=2){
+                if(p.getVotosContraCesar()> p.getLimite() || p.getVotosFavorCesar() >p.getLimite()){
+                    p.setRonda(3);
+                    p.setTurno(1);
+                }
+            }
+
             if(p.getRonda() == 3){
+                LocalDateTime fechaFinal = LocalDateTime.of(LocalDate.now(), LocalTime.now());
                 p.setFaccionGanadora(p.calculoFaccionGanadora());
-                p.setTiempo(p.calculaTiempoFinal(p.getFechaInicio()));
+                p.setTiempo(p.calculaTiempoFinal(p.getFechaInicio(), fechaFinal));
             }
             
             for(int i = 0;i<p.getJugadores().size();i++){
@@ -841,9 +850,18 @@ public class PartidaController {
             p.setRonda(p.getRonda()+1);
             p.setTurno(1);
         }
+
+        if(p.getRonda() == 2 && p.getTurno()>=2){
+            if(p.getVotosContraCesar()> p.getLimite() || p.getVotosFavorCesar() >p.getLimite()){
+                p.setRonda(3);
+                p.setTurno(1);
+            }
+        }
+
         if(p.getRonda() == 3){
+            LocalDateTime fechaFinal = LocalDateTime.of(LocalDate.now(), LocalTime.now());
             p.setFaccionGanadora(p.calculoFaccionGanadora());
-            p.setTiempo(p.calculaTiempoFinal(p.getFechaInicio()));
+            p.setTiempo(p.calculaTiempoFinal(p.getFechaInicio(), fechaFinal));
         }
         
         
