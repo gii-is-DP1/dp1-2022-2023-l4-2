@@ -237,8 +237,8 @@ public class PartidaController {
         List<FaccionType> elegir = j.getParticipacionEnPartida(p).getOpciones();
         FaccionType faccionApoyada = j.getParticipacionEnPartida(p).getFaccionApoyada();
         Boolean hayConsul = null;
-        hayConsul = p.getJugadores().stream().map(x->x.getRol().getName()).anyMatch(x-> x.equals("Pretor"));
-        Integer numEdil = p.getJugadores().stream().filter(x -> x.getRol().getName().equals("Edil")).collect(Collectors.toList()).size();
+        hayConsul = p.getJugadores().stream().filter(x->x.getYaElegido()).map(x->x.getRol().getName()).anyMatch(x-> x.equals("Pretor"));
+        Integer numEdil = p.getJugadores().stream().filter(x->x.getYaElegido()).filter(x -> x.getRol().getName().equals("Edil")).collect(Collectors.toList()).size();
         List<Voto> votosACambiar = votoService.getVotosElegidosRondaTurno(p, j);
         Voto v = null;
         if(!votosACambiar.isEmpty()){
@@ -246,6 +246,11 @@ public class PartidaController {
         }
         Voto votoMercaderE = votoService.getVotoMercaderElegidoRondaTurno(p);
         Integer votosRT = votoService.getVotosRondaTurno(p).size();
+        Boolean yaE = j.getYaElegido();
+        if(yaE ==null){
+            yaE = false;
+        }
+        result.addObject("yaE", yaE);
         result.addObject("votoMercaderE", votoMercaderE);
         result.addObject("numEdil", numEdil);
         result.addObject("hayConsul", hayConsul);
@@ -460,6 +465,20 @@ public class PartidaController {
         j.setRol(pretor);
         j.setYaElegido(true);
         jugadorService.save2(j);
+        RolType sinRol = roles.stream().filter(x->x.getName().equals("Sin rol")).findAny().get();
+        Integer numElegidos = p.getJugadores().stream().mapToInt(x->x.getYaElegido()?1:0).sum();
+        if(numElegidos == 3){
+            for(int i = 0;i<p.getJugadores().size();i++){
+                Jugador jug = p.getJugadores().get(i);
+                if(p.getRonda()==2&&p.getTurno() == 1){
+                    if(j.getRol().getName().equals("Consul")){
+                        j.setRol(consul);
+                    }
+                }else if(!jug.getYaElegido()){
+                    j.setRol(sinRol);
+                }
+            }
+        }
 
         ModelAndView res = new ModelAndView("redirect:/partidas/jugar/{id}");
         return res;
@@ -495,6 +514,22 @@ public class PartidaController {
         j.setRol(edil);
         j.setYaElegido(true);
         jugadorService.save2(j);
+        RolType sinRol = roles.stream().filter(x->x.getName().equals("Sin rol")).findAny().get();
+        RolType consul = roles.stream().filter(x->x.getName().equals("Consul")).findAny().get();
+        Integer numElegidos = p.getJugadores().stream().mapToInt(x->x.getYaElegido()?1:0).sum();
+        if(numElegidos == 3){
+            for(int i = 0;i<p.getJugadores().size();i++){
+                Jugador jug = p.getJugadores().get(i);
+                if(p.getRonda()==2&&p.getTurno() == 1){
+                    if(j.getRol().getName().equals("Consul")){
+                        jug.setRol(consul);
+                    }
+                }else if(!jug.getYaElegido()){
+                    jug.setRol(sinRol);
+                }
+                jugadorService.save2(jug);
+            }
+        }
 
         ModelAndView res = new ModelAndView("redirect:/partidas/jugar/{id}");
         return res;
@@ -512,9 +547,7 @@ public class PartidaController {
         p.setFase(0);
         p.setTurno(p.getTurno()+1);
         
-        if(p.getTurno()==2 && p.getRonda()==2){
-            preparaRolesRonda2(p);
-        }
+        
         if(p.getRonda()!=2){
             reparteRoles(p);
         }
@@ -526,6 +559,20 @@ public class PartidaController {
         if(p.getRonda() == 3){
             p.setFaccionGanadora(p.calculoFaccionGanadora());
             p.setTiempo(p.calculaTiempoFinal(p.getFechaInicio()));
+        }
+        if(p.getTurno()==2 && p.getRonda()==2){
+            //preparaRolesRonda2(p);
+            List<RolType> roles = jugadorService.getRoles();
+                for(int i=0;i<p.getJugadores().size();i++){
+                    RolType consul = roles.stream().filter(x->x.getName().equals("Consul")).findAny().get();
+                    Jugador jug = p.getJugadores().get(i);
+                    RolType sr = roles.stream().filter(x->x.getName().equals("Sin rol")).findAny().get();
+                    if(jug.getParticipacionEnPartida(p).getNumConsul() == p.getTurno()){
+                        jug.setRol(consul);
+                    }else if(jug.getRol().getName().equals("Consul")){
+                        jug.setRol(sr);
+                    }
+                }
         }
 
         ModelAndView res = new ModelAndView("redirect:/partidas/jugar/{id}");
@@ -678,9 +725,12 @@ public class PartidaController {
                 List<RolType> roles = jugadorService.getRoles();
                 for(int i=0;i<p.getJugadores().size();i++){
                     RolType consul = roles.stream().filter(x->x.getName().equals("Consul")).findAny().get();
+                    RolType sr = roles.stream().filter(x->x.getName().equals("Sin rol")).findAny().get();
                     Jugador jug = p.getJugadores().get(i);
                     if(jug.getParticipacionEnPartida(p).getNumConsul() == p.getTurno()){
                         jug.setRol(consul);
+                    }else if(jug.getRol().getName().equals("Consul")){
+                        jug.setRol(sr);
                     }
                 }
                 if(p.getTurno()>p.getNumJugadores()){
@@ -770,9 +820,17 @@ public class PartidaController {
         List<RolType> roles = jugadorService.getRoles();
                 for(int i=0;i<p.getJugadores().size();i++){
                     RolType consul = roles.stream().filter(x->x.getName().equals("Consul")).findAny().get();
+                    RolType sr = roles.stream().filter(x->x.getName().equals("Sin rol")).findAny().get();
                     Jugador jug = p.getJugadores().get(i);
-                    if(jug.getParticipacionEnPartida(p).getNumConsul() == p.getTurno()){
-                        jug.setRol(consul);
+                    if(p.getRonda()==2&&p.getTurno()!=1){
+                        if(jug.getRol().getName().equals("Consul")){
+                            jug.setRol(sr);
+                        }
+                        if(jug.getParticipacionEnPartida(p).getNumConsul() == p.getTurno()){
+                            jug.setRol(consul);
+                        }else if(jug.getRol().getName().equals("Consul")){
+                            jug.setRol(sr);
+                        }
                     }
                 }
         for(int i = 0;i<p.getJugadores().size();i++){
