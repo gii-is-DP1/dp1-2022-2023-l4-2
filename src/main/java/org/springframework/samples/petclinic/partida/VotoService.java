@@ -28,7 +28,7 @@ public class VotoService {
 
     @Transactional(readOnly = true)
     public List<Voto> getVotosRondaTurno(Partida p){
-        return votoRepository.findVotosRondaTurno(p.getRonda(), p.getTurno());
+        return votoRepository.findVotosRondaTurno(p.getRonda(), p.getTurno(),p);
     }
 
     @Transactional
@@ -38,7 +38,7 @@ public class VotoService {
     
     @Transactional(readOnly = true)
     public List<Voto> getVotosTurnoJugador(Partida p, Jugador j){
-        return votoRepository.findVotosTurnoJugador(j, p.getTurno(), p.getRonda());
+        return votoRepository.findVotosTurnoJugador(j, p.getTurno(), p.getRonda(),p);
     }
 
     public Optional<Voto> getVotoById(Long votoId) {
@@ -47,10 +47,20 @@ public class VotoService {
     
     @Transactional(readOnly = true)
     public List<Voto> getVotosElegidosRondaTurno(Partida p, Jugador j){
-        return votoRepository.findVotosTurnoJugador(j, p.getTurno(), p.getRonda())
+        return votoRepository.findVotosTurnoJugador(j, p.getTurno(), p.getRonda(),p)
                             .stream()
                             .filter(x->x.getElegido()!=null)
                             .filter(x->x.getElegido())
                             .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public Voto getVotoMercaderElegidoRondaTurno(Partida p){
+        Voto v = null;
+        v = votoRepository.findVotosRondaTurno(p.getRonda(), p.getTurno(),p).stream()
+                    .filter(x->x.getFaccion().getName().equals("Mercader"))
+                    .filter(x->x.getElegido()!=null && x.getElegido())
+                    .findFirst().orElse(null);
+        return v;
     }
 }
