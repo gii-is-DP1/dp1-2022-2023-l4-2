@@ -2,6 +2,8 @@ package org.springframework.samples.petclinic.partida;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -26,7 +28,7 @@ public class VotoService {
 
     @Transactional(readOnly = true)
     public List<Voto> getVotosRondaTurno(Partida p){
-        return votoRepository.findVotosRondaTurno(p.getRonda(), p.getTurno());
+        return votoRepository.findVotosRondaTurno(p.getRonda(), p.getTurno(),p);
     }
 
     @Transactional
@@ -41,7 +43,6 @@ public class VotoService {
         } else {
             throw new Exception("El jugador " + j.getUser().getUsername() + " no esta en la partida");
         }
-        
     }
 
     @Transactional(readOnly = true)
@@ -49,4 +50,22 @@ public class VotoService {
         return votoRepository.findById(votoId.intValue());
     }
     
+    @Transactional(readOnly = true)
+    public List<Voto> getVotosElegidosRondaTurno(Partida p, Jugador j){
+        return votoRepository.findVotosTurnoJugador(j, p.getTurno(), p.getRonda(),p)
+                            .stream()
+                            .filter(x->x.getElegido()!=null)
+                            .filter(x->x.getElegido())
+                            .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public Voto getVotoMercaderElegidoRondaTurno(Partida p){
+        Voto v = null;
+        v = votoRepository.findVotosRondaTurno(p.getRonda(), p.getTurno(),p).stream()
+                    .filter(x->x.getFaccion().getName().equals("Mercader"))
+                    .filter(x->x.getElegido()!=null && x.getElegido())
+                    .findFirst().orElse(null);
+        return v;
+    }
 }

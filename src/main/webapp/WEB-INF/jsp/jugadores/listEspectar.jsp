@@ -5,7 +5,7 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 
-<petclinic:layout pageName="listaPartidasEspectear">
+<petclinic:layout pageName="listaPartidasEspectar">
 
     <button>
         <a class="btn btn-default" href="/partidas/join"> Volver</a></th>
@@ -34,7 +34,7 @@
                     <c:out value ="${jugador.user.username} "/>
                 </td>
                 <td>
-                <a class="btn btn-default" href="#">Espectar partida</a></th>
+                <a class="btn btn-default" href="/partidas/espectar/${partida.id}">Espectar partida</a></th>
                 </td>
             </tr>
         </c:forEach>

@@ -10,6 +10,9 @@
 
         <div style="font-size: 35px">
             <c:out value="${principal.name}"/>
+            <div>
+                (Espectador)
+            </div>
         </div>
 
         <table class="table table-striped">
@@ -28,7 +31,7 @@
             <div>
                 <c:forEach items="${partida.jugadores}" var="jugador">
                     <tr style = "text-align: left; ";>
-                        <td>
+                        <td>    
                             <div>
                                 <c:out value="${jugador.user.username}"/> -  <c:out value="${jugador.rol}"/>
                             </div>
@@ -38,28 +41,10 @@
             </div>
         </div>
 
-
-        <div>
-            <c:if test= "${partida.fase == 1 || (partida.ronda == 2 && partida.turno == 1)}">
-                <form:form modelAttribute="faccionType"
-                   class="form-horizontal">
-                   <input type="hidden" name="id" value="${faccionType.id}"/>
-                    <div class="form-group has-feedback">                
-                        <tr>
-                            <td>Faccion apoyada:</td>
-                                <c:forEach items="${opciones}" var="opcion">
-                                    <td>${opcion}<td>
-                                    <input type="radio" name="name" value="${opcion}" checked/>
-                                </c:forEach>
-                        </tr>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10"></div>
-                            <button class="btn btn-default" type="submit">Apoyar</button>
-                        </div>
-                    </div>
-                </form:form>
-            </c:if>
+        <div style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 20px;text-align: right;">
+            <button>
+                <a class="btn btn-default" href="/home"> Inicio </a></th>
+            </button>
         </div>
         
     </div>

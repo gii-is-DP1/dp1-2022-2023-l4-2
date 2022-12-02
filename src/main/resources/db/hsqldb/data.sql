@@ -232,4 +232,3 @@ INSERT INTO participacion_opciones(participacion_id,opciones_id)
     (6,1),(6,2);
 
 
-

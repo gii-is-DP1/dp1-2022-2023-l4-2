@@ -1,7 +1,11 @@
 package org.springframework.samples.petclinic.partida;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -137,5 +141,27 @@ public class PartidaTests {
         Partida p = new Partida();
         p.setLimite(p.calculaLimite(8L));
         assertEquals(20L, p.getLimite());
+    }
+
+    @Test
+    public void comprobarTiempoFinalTest(){
+        Partida p = new Partida();
+        p.setFechaInicio(LocalDateTime.of(LocalDate.now(), LocalTime.of(13, 8, 30)));
+        LocalDateTime fechaFinal = LocalDateTime.of(LocalDate.now(), LocalTime.of(13, 58, 20));
+        p.setTiempo(p.calculaTiempoFinal(p.getFechaInicio(), fechaFinal));
+        assertFalse(p.getTiempo() < 0);
+        assertEquals(50, p.getTiempo());
+
+    }
+
+    @Test
+    public void comprobarTiempoFinalTest2(){
+        Partida p = new Partida();
+        p.setFechaInicio(LocalDateTime.of(LocalDate.now(), LocalTime.of(12, 55, 30)));
+        LocalDateTime fechaFinal = LocalDateTime.of(LocalDate.now(), LocalTime.of(13, 18, 20));
+        p.setTiempo(p.calculaTiempoFinal(p.getFechaInicio(), fechaFinal));
+        assertFalse(p.getTiempo() < 0);
+        assertEquals(23, p.getTiempo());
+
     }
 }

@@ -36,6 +36,4 @@
         </c:forEach>
         </tbody>
     </table>
-    <div style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 20px;text-align: center;">
-    </div>
 </petclinic:lo2>

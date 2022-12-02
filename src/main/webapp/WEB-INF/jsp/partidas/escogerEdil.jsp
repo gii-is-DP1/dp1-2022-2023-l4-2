@@ -81,7 +81,9 @@
             <div class="form-group has-feedback">                
                 <c:forEach items="${jugFilt}" var="jug">
                     <td>${jug.user.username}<td>
-                    <input type="radio" name="id" value="${jug.id}"/>
+
+                    <input type="radio" name="id" value="${jug.id}"checked/>
+
                  </c:forEach>
             </div>
             <div class="form-group">

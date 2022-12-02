@@ -38,6 +38,7 @@
                 <div style="height:100px; width: 100px;">
 
                 </div>
+                <c:if test ="${faccionApoyada == null}">
                 <div style="text-align:left">
                     Tus opciones: 
                     <div>
@@ -52,6 +53,7 @@
                         </c:forEach>
                     </div>
                 </div>
+                </c:if>
                 <div style="height:100px; width: 100px;">
         
                 </div>
@@ -77,10 +79,19 @@
                     <tr style = "text-align: left; ";>
                         <td>
                             <div>
-                                <c:out value="${voto.jugador.user.username}"/> - 
-                                <a href="/partidas/jugar/pretor/edit/${partida.id}/${voto.id}"> 
-                                    <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>
-                                </a>
+                                <c:out value="${voto.jugador.user.username}"/>
+
+                                <c:if test= "${partida.getRonda() == 1}">
+                                    <a href="/partidas/jugar/pretor/edit/${partida.id}/${voto.id}"> 
+                                        <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>
+                                    </a>
+                                </c:if>
+                                <c:if test = "${partida.getRonda() == 2}">
+                                    <a href="/partidas/jugar/pretor/edit2/${partida.id}/${voto.id}"> 
+                                        <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>
+                                    </a>
+                                </c:if>
+
                             </div>
                         </td>
                     </tr>

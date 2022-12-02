@@ -21,6 +21,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.samples.petclinic.chat.Chat;
+import org.springframework.samples.petclinic.chat.ChatRepository;
+import org.springframework.samples.petclinic.chat.ChatService;
 import org.springframework.samples.petclinic.jugador.Jugador;
 import org.springframework.samples.petclinic.jugador.JugadorService;
 import org.springframework.samples.petclinic.jugador.RolType;
@@ -43,6 +46,7 @@ public class PartidaController {
     public static final String PARTIDAS_DISPONIBLES = "partidas/partidasDisponibles";
     public static final String PARTIDAS_UNIR = "partidas/partidaJoin";
     public static final String PARTIDAS_JUGAR = "partidas/partida";
+    public static final String PARTIDAS_ESPECTAR = "partidas/partidaEspectar";
     public static final String PARTIDAS_FINAL = "partidas/finalPartida";
     public static final String EDIL_JUGAR = "partidas/edilPartida";
     public static final String CONSUL_JUGAR = "partidas/consulPartida";
@@ -50,9 +54,13 @@ public class PartidaController {
     public static final String PRETOR_EDIT = "partidas/pretorEdit";
     public static final String ESCOGER_PRETOR = "partidas/escogerPretor";
     public static final String ESCOGER_EDIL = "partidas/escogerEdil";
+    public static final String PRETOR_EDIT2 = "partidas/pretorEdit2";
+    public static final String EDIL_EDIT = "partidas/edilEdit";
 
 
     private PartidaService partidaService;
+
+    private ChatService chatService;
 
     @Autowired
     public PartidaController(PartidaService partidaService){
@@ -210,6 +218,7 @@ public class PartidaController {
         participacionService.save(part);
         ls.add(part);
         ls2.add(part);
+        j.setEstaEnPartida(true);
         j.setParticipaciones(ls);
         jugadorService.editJugador(j);
         p.setParticipaciones(ls2);
@@ -228,19 +237,36 @@ public class PartidaController {
         List<FaccionType> elegir = j.getParticipacionEnPartida(p).getOpciones();
         FaccionType faccionApoyada = j.getParticipacionEnPartida(p).getFaccionApoyada();
         Boolean hayConsul = null;
-        hayConsul = p.getJugadores().stream().map(x->x.getRol().getName()).anyMatch(x-> x.equals("Pretor"));
-        Integer numEdil = p.getJugadores().stream().filter(x -> x.getRol().getName().equals("Edil")).collect(Collectors.toList()).size();
+        hayConsul = p.getJugadores().stream().filter(x->x.getYaElegido()).map(x->x.getRol().getName()).anyMatch(x-> x.equals("Pretor"));
+        Integer numEdil = p.getJugadores().stream().filter(x->x.getYaElegido()).filter(x -> x.getRol().getName().equals("Edil")).collect(Collectors.toList()).size();
+        List<Voto> votosACambiar = votoService.getVotosElegidosRondaTurno(p, j);
+        Voto v = null;
+        if(!votosACambiar.isEmpty()){
+            v = votoService.getVotosElegidosRondaTurno(p, j).get(0);
+        }
+        Voto votoMercaderE = votoService.getVotoMercaderElegidoRondaTurno(p);
+        Integer votosRT = votoService.getVotosRondaTurno(p).size();
+        Boolean yaE = j.getYaElegido();
+        if(yaE ==null){
+            yaE = false;
+        }
+        result.addObject("yaE", yaE);
+        result.addObject("votoMercaderE", votoMercaderE);
         result.addObject("numEdil", numEdil);
         result.addObject("hayConsul", hayConsul);
         result.addObject("faccionGanadora", p.getFaccionGanadora());
         result.addObject("faccionApoyada", faccionApoyada);
+        result.addObject("votoRT",votosRT);
         result.addObject("elegir", elegir);
         result.addObject("jugadorLog", j);
         result.addObject("partida", p);
         result.addObject("principal", principal);
         result.addObject("numVotos", numVotos);
+        result.addObject("votosCambio", votosACambiar);
+        result.addObject("voto", v);
         return result;
     }
+
 
     @GetMapping("/final/{id}")
     public ModelAndView finalPartida(@PathVariable("id") Long id, HttpServletResponse response, Principal principal) throws Exception{
@@ -259,6 +285,16 @@ public class PartidaController {
         result.addObject("partida", p);
         result.addObject("principal", principal);
         result.addObject("numVotos", numVotos);
+        return result;
+    }
+
+    @GetMapping("/espectar/{id}")
+    public ModelAndView espectarPartida(@PathVariable("id") Long id, HttpServletResponse response, Principal principal){
+        ModelAndView result = new ModelAndView(PARTIDAS_ESPECTAR);
+        response.addHeader("Refresh", "20");
+        Partida p = partidaService.getPartidaById(id).get();
+        result.addObject("partida", p);
+        result.addObject("principal", principal);
         return result;
     }
 
@@ -429,6 +465,71 @@ public class PartidaController {
         j.setRol(pretor);
         j.setYaElegido(true);
         jugadorService.save2(j);
+        RolType sinRol = roles.stream().filter(x->x.getName().equals("Sin rol")).findAny().get();
+        Integer numElegidos = p.getJugadores().stream().mapToInt(x->x.getYaElegido()?1:0).sum();
+        if(numElegidos == 3){
+            for(int i = 0;i<p.getJugadores().size();i++){
+                Jugador jug = p.getJugadores().get(i);
+                if(p.getRonda()==2&&p.getTurno() == 1){
+                    if(j.getRol().getName().equals("Consul")){
+                        j.setRol(consul);
+                    }
+                }else if(!jug.getYaElegido()){
+                    j.setRol(sinRol);
+                }
+            }
+        }
+
+        ModelAndView res = new ModelAndView("redirect:/partidas/jugar/{id}");
+        return res;
+        
+    }
+
+    @GetMapping("/jugar/consul/eleccionE/{id}")
+    public ModelAndView escogerEdil(@PathVariable("id") Long id, HttpServletResponse response, Principal principal){
+        ModelAndView res = new ModelAndView(ESCOGER_EDIL);
+        Partida p = partidaService.getPartidaById(id).get();
+        Jugador j = jugadorService.getJugadorByUsername(principal.getName());
+        List<Jugador> jugadores = p.getJugadores();
+        List<Jugador> jugadoresFiltrado = List.of();
+        if (p.getNumJugadores() == 5) {
+            jugadoresFiltrado = jugadores.stream().filter(x-> x.getRol() != null).filter(x-> !x.getRol().getName().equals("Consul")).filter(x-> x.getYaElegido() != true).collect(Collectors.toList());
+        } else {
+            jugadoresFiltrado = jugadores.stream().filter(x-> x.getRol() != null).filter(x-> !x.getRol().getName().equals("Edil")).filter(x-> !x.getRol().getName().equals("Consul")).filter(x-> x.getYaElegido() != true).collect(Collectors.toList());
+        }
+        List<String> opciones = j.getParticipacionEnPartida(p).getOpciones().stream().map(x->x.getName()).collect(Collectors.toList());
+        res.addObject("opciones", opciones);
+        res.addObject("jugadorLog", j);
+        res.addObject("partida", p);
+        res.addObject("jugFilt", jugadoresFiltrado);
+        return res;
+    }
+
+    @PostMapping("/jugar/consul/eleccionE/{id}")
+    public ModelAndView seleccionarEdil(@PathVariable("id") Long id, @Valid Jugador jugador, BindingResult br, Principal principal){
+        List<RolType> roles = jugadorService.getRoles();
+        Partida p = partidaService.getPartidaById(id).get();
+        Jugador j = jugadorService.getJugadorById(jugador.getId()).get();
+        RolType edil= roles.stream().filter(x->x.getName().equals("Edil")).findAny().get();
+        j.setRol(edil);
+        j.setYaElegido(true);
+        jugadorService.save2(j);
+        RolType sinRol = roles.stream().filter(x->x.getName().equals("Sin rol")).findAny().get();
+        RolType consul = roles.stream().filter(x->x.getName().equals("Consul")).findAny().get();
+        Integer numElegidos = p.getJugadores().stream().mapToInt(x->x.getYaElegido()?1:0).sum();
+        if(numElegidos == 3){
+            for(int i = 0;i<p.getJugadores().size();i++){
+                Jugador jug = p.getJugadores().get(i);
+                if(p.getRonda()==2&&p.getTurno() == 1){
+                    if(j.getRol().getName().equals("Consul")){
+                        jug.setRol(consul);
+                    }
+                }else if(!jug.getYaElegido()){
+                    jug.setRol(sinRol);
+                }
+                jugadorService.save2(jug);
+            }
+        }
 
         ModelAndView res = new ModelAndView("redirect:/partidas/jugar/{id}");
         return res;
@@ -479,18 +580,37 @@ public class PartidaController {
         Participacion participacion = j.getParticipacionEnPartida(p);
         participacion.setFaccionApoyada(faccion);
         p.setFase(0);
-        
         p.setTurno(p.getTurno()+1);
-        reparteRoles(p);
+        
+        
+        if(p.getRonda()!=2){
+            reparteRoles(p);
+        }
         if(p.getTurno()>p.getNumJugadores()){
             p.setRonda(p.getRonda()+1);
             p.setTurno(1);
             preparaRolesRonda2(p);
         }
-        if(p.getTiempo() == 0 && p.getRonda() == 3){
+        if(p.getRonda() == 3){
+            LocalDateTime fechaFinal = LocalDateTime.of(LocalDate.now(), LocalTime.now());
             p.setFaccionGanadora(p.calculoFaccionGanadora());
-            p.setTiempo(p.calculaTiempoFinal(p.getFechaInicio()));
+            p.setTiempo(p.calculaTiempoFinal(p.getFechaInicio(), fechaFinal));
         }
+        if(p.getTurno()==2 && p.getRonda()==2){
+            //preparaRolesRonda2(p);
+            List<RolType> roles = jugadorService.getRoles();
+                for(int i=0;i<p.getJugadores().size();i++){
+                    RolType consul = roles.stream().filter(x->x.getName().equals("Consul")).findAny().get();
+                    Jugador jug = p.getJugadores().get(i);
+                    RolType sr = roles.stream().filter(x->x.getName().equals("Sin rol")).findAny().get();
+                    if(jug.getParticipacionEnPartida(p).getNumConsul() == p.getTurno()){
+                        jug.setRol(consul);
+                    }else if(jug.getRol().getName().equals("Consul")){
+                        jug.setRol(sr);
+                    }
+                }
+        }
+
         ModelAndView res = new ModelAndView("redirect:/partidas/jugar/{id}");
         partidaService.save(p);
         participacionService.save(participacion);
@@ -571,7 +691,6 @@ public class PartidaController {
         partida.setActiva(true);
         partida.setFase(0);
         partidaService.save(partida);
-        
         ModelAndView result =new ModelAndView("redirect:/partidas/join/"+partida.getId());
         //result.addObject("message", "Ha habido un error creando la partida.");
         return result;
@@ -589,6 +708,200 @@ public class PartidaController {
             res = 20l;
         }
         return res; 
+    }
+    @GetMapping("/jugar/pretor/edit2/{partidaId}/{votoId}")
+    public ModelAndView pretorEditVotoRonda2(@PathVariable("partidaId") Long partidaId, @PathVariable("votoId") Long votoId,
+                                HttpServletResponse response, Principal principal){
+        ModelAndView res =new ModelAndView(PRETOR_EDIT2);
+        //response.addHeader("Refresh", "10");
+        Partida p = partidaService.getPartidaById(partidaId).get();
+        Jugador j = jugadorService.getJugadorByUsername(principal.getName());
+        Voto v = votoService.getVotoById(votoId).get();
+        List<FaccionType> elegir = j.getParticipacionEnPartida(p).getOpciones();
+        FaccionType faccionApoyada = j.getParticipacionEnPartida(p).getFaccionApoyada();
+        res.addObject("faccionApoyada", faccionApoyada);
+        res.addObject("elegir", elegir);
+        res.addObject("voto", v);
+        res.addObject("jugadorLog", j);
+        res.addObject("partida", p);
+        res.addObject("principal", principal);
+        return res;
+
+    }
+
+    @PostMapping("/jugar/pretor/edit2/{partidaId}/{votoId}")
+    public String partidaPretorEditaVoto(@PathVariable("partidaId") Long partidaId,@PathVariable("votoId") Long votoId,
+                                    @Valid Voto voto,HttpServletResponse response, Principal principal){
+        response.addHeader("Refresh", "10");
+        Partida p = partidaService.getPartidaById(partidaId).get();
+        Voto votoToUpdate = votoService.getVotoById(votoId).get();
+        //votoToUpdate.setFaccion(voto.getFaccion());
+        //Voto votoCambiado = cambiarVoto(voto);
+        votoToUpdate.setElegido(voto.getElegido());
+        votoService.saveVoto(votoToUpdate);
+        List<Voto> votos = votoService.getVotosRondaTurno(p);
+        if(!votoToUpdate.getElegido()){
+            for(Voto v: votos){
+                Participacion participacion = v.getJugador().getParticipacionEnPartida(p);
+
+                if(v.getFaccion().getName().equals("Traidor")){
+                    p.setVotosContraCesar(p.getVotosContraCesar()+1);
+                    participacion.setVotosContraCesar(participacion.getVotosContraCesar()+1);
+                }else if(v.getFaccion().getName().equals("Leal")){
+                    p.setVotosFavorCesar(p.getVotosFavorCesar()+1);
+                    participacion.setVotosFavorCesar(participacion.getVotosFavorCesar()+1);
+                }else{
+                    participacion.setVotosNeutros(participacion.getVotosNeutros()+1);
+                }
+                participacionService.save(participacion);
+            }
+            if(p.getTurno()!=1 && p.getRonda()==2){
+                p.setTurno(p.getTurno()+1);
+                //preparaRolesRonda2(p);
+                List<RolType> roles = jugadorService.getRoles();
+                for(int i=0;i<p.getJugadores().size();i++){
+                    RolType consul = roles.stream().filter(x->x.getName().equals("Consul")).findAny().get();
+                    RolType sr = roles.stream().filter(x->x.getName().equals("Sin rol")).findAny().get();
+                    Jugador jug = p.getJugadores().get(i);
+                    if(jug.getParticipacionEnPartida(p).getNumConsul() == p.getTurno()){
+                        jug.setRol(consul);
+                    }else if(jug.getRol().getName().equals("Consul")){
+                        jug.setRol(sr);
+                    }
+                }
+                if(p.getTurno()>p.getNumJugadores()){
+                    p.setRonda(p.getRonda()+1);
+                    p.setTurno(1);
+                }
+            }
+
+            if(p.getRonda() == 2 && p.getTurno()>=2){
+                if(p.getVotosContraCesar()> p.getLimite() || p.getVotosFavorCesar() >p.getLimite()){
+                    p.setRonda(3);
+                    p.setTurno(1);
+                }
+            }
+
+            if(p.getRonda() == 3){
+                LocalDateTime fechaFinal = LocalDateTime.of(LocalDate.now(), LocalTime.now());
+                p.setFaccionGanadora(p.calculoFaccionGanadora());
+                p.setTiempo(p.calculaTiempoFinal(p.getFechaInicio(), fechaFinal));
+            }
+            
+            for(int i = 0;i<p.getJugadores().size();i++){
+           
+                p.getJugadores().get(i).setYaElegido(false);
+            }
+        }
+        if(votoToUpdate.getElegido()){
+            p.setFase(1);
+        }
+        else if(p.getRonda() == 2 && p.getTurno() == 1){
+            p.setFase(2);
+        }
+        
+        
+        partidaService.save(p);
+        return "redirect:/partidas/jugar/{partidaId}";
+    }
+    
+    @GetMapping("/jugar/edil/edit/{partidaId}/{votoId}")
+    public ModelAndView edilEditVoto(@PathVariable("partidaId") Long partidaId, @PathVariable("votoId") Long votoId,
+                                HttpServletResponse response, Principal principal){
+        ModelAndView res =new ModelAndView(EDIL_EDIT);
+        //response.addHeader("Refresh", "10");
+        Partida p = partidaService.getPartidaById(partidaId).get();
+        Jugador j = jugadorService.getJugadorByUsername(principal.getName());
+        Voto v = votoService.getVotoById(votoId).get();
+        List<FaccionType> elegir = j.getParticipacionEnPartida(p).getOpciones();
+        FaccionType faccionApoyada = j.getParticipacionEnPartida(p).getFaccionApoyada();
+        List<FaccionType> facciones = partidaService.getFaccionesType().stream()
+                                                    .filter(x->!x.getName().equals(v.getFaccion().getName()))
+                                                    .filter(x->!x.getName().equals("No decidido"))
+                                                    .collect(Collectors.toList());
+        res.addObject("faccionApoyada", faccionApoyada);
+        res.addObject("elegir", elegir);
+        res.addObject("voto", v);
+        res.addObject("jugadorLog", j);
+        res.addObject("partida", p);
+        res.addObject("principal", principal);
+        res.addObject("facciones", facciones);
+        return res;
+
+    }
+
+
+    @PostMapping("/jugar/edil/edit/{partidaId}/{votoId}")
+    public String partidaEditEditaVoto(@PathVariable("partidaId") Long partidaId,@PathVariable("votoId") Long votoId,
+                                    @Valid Voto voto,HttpServletResponse response, Principal principal){
+        response.addHeader("Refresh", "10");
+        Partida p = partidaService.getPartidaById(partidaId).get();
+        Voto votoToUpdate = votoService.getVotoById(votoId).get();
+        votoToUpdate.setFaccion(voto.getFaccion());
+        votoService.saveVoto(votoToUpdate);
+        List<Voto> votos = votoService.getVotosRondaTurno(p);
+        for(Voto v: votos){
+            Participacion participacion = v.getJugador().getParticipacionEnPartida(p);
+
+            if(v.getFaccion().getName().equals("Traidor")){
+                p.setVotosContraCesar(p.getVotosContraCesar()+1);
+                participacion.setVotosContraCesar(participacion.getVotosContraCesar()+1);
+            }else if(v.getFaccion().getName().equals("Leal")){
+                p.setVotosFavorCesar(p.getVotosFavorCesar()+1);
+                participacion.setVotosFavorCesar(participacion.getVotosFavorCesar()+1);
+            }else{
+                participacion.setVotosNeutros(participacion.getVotosNeutros()+1);
+            }
+            participacionService.save(participacion);
+        }
+        if(p.getRonda()==2 && p.getTurno()==1){
+            p.setFase(2);
+        }else{
+            p.setTurno(p.getTurno()+1);
+            p.setFase(0);
+        }
+        //preparaRolesRonda2(p);
+        List<RolType> roles = jugadorService.getRoles();
+                for(int i=0;i<p.getJugadores().size();i++){
+                    RolType consul = roles.stream().filter(x->x.getName().equals("Consul")).findAny().get();
+                    RolType sr = roles.stream().filter(x->x.getName().equals("Sin rol")).findAny().get();
+                    Jugador jug = p.getJugadores().get(i);
+                    if(p.getRonda()==2&&p.getTurno()!=1){
+                        if(jug.getRol().getName().equals("Consul")){
+                            jug.setRol(sr);
+                        }
+                        if(jug.getParticipacionEnPartida(p).getNumConsul() == p.getTurno()){
+                            jug.setRol(consul);
+                        }else if(jug.getRol().getName().equals("Consul")){
+                            jug.setRol(sr);
+                        }
+                    }
+                }
+        for(int i = 0;i<p.getJugadores().size();i++){
+           
+            p.getJugadores().get(i).setYaElegido(false);
+        }
+        if(p.getTurno()>p.getNumJugadores()){
+            p.setRonda(p.getRonda()+1);
+            p.setTurno(1);
+        }
+
+        if(p.getRonda() == 2 && p.getTurno()>=2){
+            if(p.getVotosContraCesar()> p.getLimite() || p.getVotosFavorCesar() >p.getLimite()){
+                p.setRonda(3);
+                p.setTurno(1);
+            }
+        }
+
+        if(p.getRonda() == 3){
+            LocalDateTime fechaFinal = LocalDateTime.of(LocalDate.now(), LocalTime.now());
+            p.setFaccionGanadora(p.calculoFaccionGanadora());
+            p.setTiempo(p.calculaTiempoFinal(p.getFechaInicio(), fechaFinal));
+        }
+        
+        
+        partidaService.save(p);
+        return "redirect:/partidas/jugar/{partidaId}";
     }
 
     @GetMapping("/delete/{id}")

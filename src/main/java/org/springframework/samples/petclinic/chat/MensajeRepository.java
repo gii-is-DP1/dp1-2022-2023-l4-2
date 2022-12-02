@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.mensaje;
+package org.springframework.samples.petclinic.chat;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.Query;
