@@ -20,6 +20,12 @@
             </tr>
         </table>
 
+        <c:if test = "${votoMercaderE!=null}">
+            <div style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 20px;color: yellow; background-color: black;">
+                <c:out value="${votoMercaderE.getJugador().getUser().getUsername()}"/><span>, ha realizado un voto neutro</span>
+            </div>
+        </c:if>
+
         <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 20px;">Ronda:  <c:out value="${partida.ronda}"/></h2>
         <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 20px;">Turno:  <c:out value="${partida.turno}"/></h2>
 
@@ -83,20 +89,23 @@
                     </c:if>
                 </c:if> 
                 <c:if test = "${partida.ronda == 2 && partida.turno == 1}">
-                    <c:if test = "${partida.fase == 1}">
+                    <c:if test = "${partida.fase == 2}">
                         <a class="btn btn-default" href="/partidas/jugar/consul/${partida.id}">Siguiente</a>
                     </c:if>
                 </c:if>
             </c:if>
         </c:if>
+        
         <c:if test="${jugadorLog.rol.getName() == 'Edil'}">
             <c:if test = "${numVotos == 0}">
                 <a class="btn btn-default" href="/partidas/jugar/edil/${partida.id}">Siguiente</a>
             </c:if>
         </c:if>
         <c:if test="${jugadorLog.rol.getName() == 'Pretor'}">
-            <c:if test = "${partida.fase==0}">
-                <a class="btn btn-default" href="/partidas/jugar/pretor/${partida.id}">Siguiente</a>
+            <c:if test="${votoRT > 1}">
+                <c:if test = "${partida.fase==0}">
+                    <a class="btn btn-default" href="/partidas/jugar/pretor/${partida.id}">Siguiente</a>
+                </c:if>
             </c:if>
         </c:if>
         <c:if test="${jugadorLog.rol.getName() == 'Consul'}">
