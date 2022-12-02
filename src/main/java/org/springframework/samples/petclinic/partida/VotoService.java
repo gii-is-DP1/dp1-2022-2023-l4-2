@@ -37,10 +37,15 @@ public class VotoService {
     }
     
     @Transactional(readOnly = true)
-    public List<Voto> getVotosTurnoJugador(Partida p, Jugador j){
-        return votoRepository.findVotosTurnoJugador(j, p.getTurno(), p.getRonda(),p);
+    public List<Voto> getVotosTurnoJugador(Partida p, Jugador j) throws Exception{
+        if (p.getJugadores().contains(j)){
+            return votoRepository.findVotosTurnoJugador(j, p.getTurno(), p.getRonda());
+        } else {
+            throw new Exception("El jugador " + j.getUser().getUsername() + " no esta en la partida");
+        }
     }
 
+    @Transactional(readOnly = true)
     public Optional<Voto> getVotoById(Long votoId) {
         return votoRepository.findById(votoId.intValue());
     }

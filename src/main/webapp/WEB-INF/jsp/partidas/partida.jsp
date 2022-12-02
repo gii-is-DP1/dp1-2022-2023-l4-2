@@ -132,7 +132,9 @@
         </div>
         
         <c:if test="${jugadorLog.rol.getName() == 'Consul'}">
+
             <c:if test="${partida.getRonda() == 2 && partida.fase !=2}">
+
                 <c:if test="${2 > numEdil}">
                     <a class="btn btn-default" href="/partidas/jugar/consul/eleccionE/${partida.id}">Escoger Edil</a>
                 </c:if>
