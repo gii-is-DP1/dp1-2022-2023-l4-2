@@ -72,7 +72,7 @@ public class VotoRepositoryTests {
         votoService.saveVoto(voto);
 
         //Test
-        List<Voto> votos = votoRepository.findVotosRondaTurno(partida1.getRonda(), partida1.getTurno());
+        List<Voto> votos = votoRepository.findVotosRondaTurno(partida1.getRonda(), partida1.getTurno(), partida1);
         assertFalse(votos.isEmpty());
         assertNotNull(votos);
     }
@@ -90,7 +90,7 @@ public class VotoRepositoryTests {
         votoService.saveVoto(voto);
 
         //Test
-        List<Voto> votos = votoRepository.findVotosRondaTurno(partida1.getRonda(), partida1.getTurno());
+        List<Voto> votos = votoRepository.findVotosRondaTurno(partida1.getRonda(), partida1.getTurno(), partida1);
         assertTrue(votos.isEmpty());
     }
 
@@ -109,7 +109,7 @@ public class VotoRepositoryTests {
         votoService.saveVoto(voto);
 
         //Test
-        List<Voto> votos = votoRepository.findVotosTurnoJugador(jugador, partida1.getRonda(), partida1.getTurno());
+        List<Voto> votos = votoRepository.findVotosTurnoJugador(jugador, partida1.getRonda(), partida1.getTurno(), partida1);
         assertFalse(votos.isEmpty());
         assertNotNull(votos);
     }
@@ -129,7 +129,7 @@ public class VotoRepositoryTests {
         votoService.saveVoto(voto);
 
         //Test buscando un jugador que no está
-        List<Voto> votos = votoRepository.findVotosTurnoJugador(jugador, partida1.getRonda(), partida1.getTurno());
+        List<Voto> votos = votoRepository.findVotosTurnoJugador(jugador, partida1.getRonda(), partida1.getTurno(), partida1);
         assertTrue(votos.isEmpty());
 
         //Voto con ronda que no existe
@@ -140,7 +140,7 @@ public class VotoRepositoryTests {
         votoService.saveVoto(voto);
 
         //Test buscando una ronda que no esta en la partida
-        List<Voto> votos2 = votoRepository.findVotosTurnoJugador(jugador2, partida1.getRonda(), partida1.getTurno());
+        List<Voto> votos2 = votoRepository.findVotosTurnoJugador(jugador2, partida1.getRonda(), partida1.getTurno(), partida1);
         assertTrue(votos2.isEmpty());
     }
 
