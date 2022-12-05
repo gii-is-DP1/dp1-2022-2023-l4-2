@@ -48,18 +48,29 @@
             <th><c:out value="${faccionPerdedora}"/></th>
         </tr>
         </thead>
-        <tbody>
-            
-        </tbody>
     </table>
 
-    <h2>Top 5 jugadores con más vicotiras</h2>
-    <table class="table table-striped">
+    <h2>Top 5 jugadores con mas victorias</h2>
+    <table id="jugadoresMasVictoriasTable" class="table table-striped">
+        <thead>
         <c:forEach items="${topJugadoresConVictoria.entrySet()}" var="top">
             <tr>
                 <th><c:out value="${top.getKey()}"/></th>
                 <th><c:out value="${top.getValue()}"/></th>
             </tr>
         </c:forEach>
+        </thead>
+    </table>
+
+    <h2>Top 5 jugadores con mas partidas</h2>
+    <table id="jugadoresMasPartidasTable" class="table table-striped">
+        <thead>
+        <c:forEach items="${topJugadoresConPartida}" var="top">
+            <tr>
+                <th><c:out value="${top.getUser().getUsername()}"/></th>
+                <th><c:out value="${top.getPartidasJugadas()}"/></th>
+            </tr>
+        </c:forEach>
+        </thead>
     </table>
 </petclinic:layout>

@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.estadistica;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -55,6 +56,7 @@ public class EstadisticaGeneralController {
         result.addObject("maxDiferenciaDeVotos", getMaxDifVotos(partidas));
         result.addObject("faccionPerdedora", getFaccionPerdedora(partidas));
         result.addObject("topJugadoresConVictoria", getTopJugadoresConVictorias(partidas));
+        result.addObject("topJugadoresConPartida", getTopJugadoresConPartidas(partidas));
 		return result;
     }
 
@@ -67,6 +69,12 @@ public class EstadisticaGeneralController {
             Integer ganadas = j.getPartidasGanadas();
             res.put(j.getUser().getUsername(), ganadas);
         }
+        return res;
+    }
+
+    private List<Jugador> getTopJugadoresConPartidas(List<Partida> partidas) {
+        List<Jugador> jugadores = jugadorService.getJugadores();
+        List<Jugador> res = jugadores.stream().sorted(Comparator.comparing(x-> x.getPartidasJugadas(), Comparator.reverseOrder())).limit(5).collect(Collectors.toList());
         return res;
     }
    
