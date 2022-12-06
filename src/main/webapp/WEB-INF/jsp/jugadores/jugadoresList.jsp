@@ -12,7 +12,7 @@
         <thead>
         <tr>
             <th>Nombre de usuario</th>
-            <th>Esta en partida?</th>
+            <th>&#191;Est&#225; en partida?</th>
             <th>Eliminar</th>
         </tr>
         </thead>

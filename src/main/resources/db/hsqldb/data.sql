@@ -153,7 +153,7 @@ INSERT INTO users(username, password, enabled) VALUES('Colombiano', '1111', TRUE
 INSERT INTO authorities(id, username, authority) VALUES(16, 'Colombiano', 'jugador');
 
 INSERT INTO jugador(id,first_name,last_name,username,rol_id,esta_en_partida, ya_elegido)
-    VALUES(1,'Juan Jesús','Campos','Guaje',4,false, false),
+    VALUES(1,'Juan Jesus','Campos','Guaje',4,false, false),
     (4,'Antonio','Carretero','Antaca',4,false, false),
     (3,'David','Reyes','Davilillo',4,true, false),
     (2,'Eduardo', 'Pizarro', 'Bufon', 4, false, false),

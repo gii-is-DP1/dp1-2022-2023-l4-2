@@ -13,9 +13,9 @@
         <thead>
         <tr>
             <th>Nombre</th>
-            <th>Descripcion</th>
+            <th>Descripci&#243;n</th>
             <th>Tipo</th>
-            <th>Limite</th>
+            <th>L&#205;mite</th>
             <th>Dificultad</th>
         </tr>
         </thead>
