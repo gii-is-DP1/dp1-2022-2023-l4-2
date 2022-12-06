@@ -11,12 +11,12 @@
         <a class="btn btn-default" href="/partidas/join"> Volver</a></th>
     </button>
 
-    <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>Partidas a espectear de ${nombreUsuario}</h2>
+    <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>Partidas a espectar de ${nombreUsuario}</h2>
 
     <table id="listaPartidasEspectear" class="table table-striped">
         <thead>
         <tr>
-            <th>Anfitrion</th>
+            <th>Anfitri&#243;n</th>
             <th>Jugadores en la sala</th>
             <th>Unirse</th>
         </tr>

@@ -14,9 +14,9 @@
 
         <table class="table table-striped">
             <tr>
-                <td style="background: #e2861e">Votos a favor del cesar:  <c:out value="${partida.votosFavorCesar}"/></td>
-                <td style="background: #cecbc8 ">Votos contra el cesar:  <c:out value="${partida.votosContraCesar}"/></td>
-                <td style="background: #e2861e">Limite de votos:  <c:out value="${partida.limite}"/></td>
+                <td style="background: #e2861e">Votos a favor del C&#233;sar:  <c:out value="${partida.votosFavorCesar}"/></td>
+                <td style="background: #cecbc8 ">Votos contra el C&#233;sar:  <c:out value="${partida.votosContraCesar}"/></td>
+                <td style="background: #e2861e">L&#237;mite de votos:  <c:out value="${partida.limite}"/></td>
             </tr>
         </table>
 
@@ -46,7 +46,7 @@
                    <input type="hidden" name="id" value="${faccionType.id}"/>
                     <div class="form-group has-feedback">                
                         <tr>
-                            <td>Faccion apoyada:</td>
+                            <td>Facci&#243;n apoyada:</td>
                                 <c:forEach items="${opciones}" var="opcion">
                                     <td>${opcion}<td>
                                     <input type="radio" name="name" value="${opcion}" checked/>

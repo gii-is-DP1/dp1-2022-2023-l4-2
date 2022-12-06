@@ -78,7 +78,7 @@
             <th><c:out value = "${tiempoJugado}"/></th>
         </tr>
         <tr>
-            <th>Faccion favorita</th>
+            <th>Facci&#243;n favorita</th>
             <th><c:out value = "${faccionFavorita}"/></th>
         </tr>
     </table>

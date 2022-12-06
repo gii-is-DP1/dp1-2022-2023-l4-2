@@ -14,9 +14,9 @@
 
         <table class="table table-striped">
             <tr>
-                <td style="background: #e2861e">Votos a favor del cesar:  <c:out value="${partida.votosFavorCesar}"/></td>
-                <td style="background: #cecbc8 ">Votos contra el cesar:  <c:out value="${partida.votosContraCesar}"/></td>
-                <td style="background: #e2861e">Limite de votos:  <c:out value="${partida.limite}"/></td>
+                <td style="background: #e2861e">Votos a favor del C&#233;sar:  <c:out value="${partida.votosFavorCesar}"/></td>
+                <td style="background: #cecbc8 ">Votos contra el C&#233;sar:  <c:out value="${partida.votosContraCesar}"/></td>
+                <td style="background: #e2861e">L&#237;mite de votos:  <c:out value="${partida.limite}"/></td>
             </tr>
         </table>
 
@@ -58,7 +58,7 @@
                 
                 <c:if test ="${faccionApoyada != null}">
                     <div style="text-align:left">
-                        Tu faccion Apoyada
+                        Tu facci&#243;n Apoyada
                         <div>
                                 <tr style = "text-align: left; ";>
                                     <td>
@@ -75,7 +75,7 @@
 
 
 
-        <span>Quien quieres que sea el Edil?</span><br>
+        <span>&#191;Qui&#233;n quieres que sea el Edil?</span><br>
         <form:form modelAttribute="jugador"
                    class="form-horizontal">
             <div class="form-group has-feedback">                

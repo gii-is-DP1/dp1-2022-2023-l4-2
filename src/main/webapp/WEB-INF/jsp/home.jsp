@@ -58,13 +58,13 @@
         <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; color: #ecb660;";>IDUS MARTII</h2>
         <div>
             <spring:url value="/instrucciones" htmlEscape="true" var="como"/>
-            <a class="btn btn-default"  href="${como}">COMO JUGAR</a>
+            <a class="btn btn-default"  href="${como}">C&#211;MO JUGAR</a>
 
             <spring:url value="partidas/seleccionar" htmlEscape="true" var="como"/>
             <a class="btn btn-default"  href="${como}">JUGAR</a>
 
             <spring:url value="/estadisticas" htmlEscape="true" var="como"/>
-            <a class="btn btn-default"  href="${como}">ESTADISTICAS</a>
+            <a class="btn btn-default"  href="${como}">ESTAD&#205;STICAS</a>
         </div>
     </div>
 </petclinic:layout>

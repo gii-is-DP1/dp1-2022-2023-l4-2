@@ -14,11 +14,11 @@
             <th>Ronda</th>
             <th>Turno</th>
             <th>Num. jugadores</th>
-            <th>Anfitrion</th>
-            <th>Votos a favor del Cesar</th>
-            <th>Votos en contra del Cesar</th>
-            <th>Limite</th>
-            <th>Faccion ganadora</th>
+            <th>Anfitri&#243;n</th>
+            <th>Votos a favor del C&#233;sar</th>
+            <th>Votos en contra del C&#233;sar</th>
+            <th>L&#237;mite</th>
+            <th>Facci&#243;n ganadora</th>
             <th>Tiempo</th>
             <th>Jugadores</th>
 
@@ -68,7 +68,7 @@
     </table>
     <table>
         <tr>   
-            <td>Paginas:</td>
+            <td>P&#225;ginas:</td>
             
             <c:forEach begin="0" step="1" end="${num}" var="variable">
                 <td>

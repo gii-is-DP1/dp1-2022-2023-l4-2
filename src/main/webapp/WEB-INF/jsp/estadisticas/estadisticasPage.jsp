@@ -6,12 +6,12 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="estadisticas">
-    <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>Estadisticas generales</h2>
+    <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>Estad&#237;sticas generales</h2>
 
     <table id="estadisticasGeneralesTable" class="table table-striped">
         <thead>
         <tr>
-            <th>Numero de partidas</th>
+            <th>N&#250;mero de partidas</th>
             <th><c:out value="${numPartidas}"/></th>
 
         </tr>
@@ -32,25 +32,25 @@
             <th><c:out value="${mediaMinutosPartida}"/></th>
         </tr>
         <tr>
-            <th>Maximo votos a favor Cesar</th>
+            <th>M&#225;ximo votos a favor C&#233;sar</th>
             <th><c:out value="${maxVotosAFavorCesar}"/></th>
         </tr>
         <tr>
-            <th>Maximo votos en contra Cesar</th>
+            <th>M&#225;ximo votos en contra C&#233;sar</th>
             <th><c:out value="${maxVotosEnContraCesar}"/></th>
         </tr>
         <tr>
-            <th>Maxima diferencia de votos en una partida</th>
+            <th>M&#225;xima diferencia de votos en una partida</th>
             <th><c:out value="${maxDiferenciaDeVotos}"/></th>
         </tr>
         <tr>
-            <th>Faccion que ha ganado el menor numero de veces</th>
+            <th>Facci&#243;n que ha ganado el menor n&#250;mero de veces</th>
             <th><c:out value="${faccionPerdedora}"/></th>
         </tr>
         </thead>
     </table>
 
-    <h2>Top 5 jugadores con mas victorias</h2>
+    <h2>Top 5 jugadores con m&#225;s victorias</h2>
     <table id="jugadoresMasVictoriasTable" class="table table-striped">
         <thead>
         <c:forEach items="${topJugadoresConVictoria.entrySet()}" var="top">
@@ -62,7 +62,7 @@
         </thead>
     </table>
 
-    <h2>Top 5 jugadores con mas partidas</h2>
+    <h2>Top 5 jugadores con m&#225;s partidas</h2>
     <table id="jugadoresMasPartidasTable" class="table table-striped">
         <thead>
         <c:forEach items="${topJugadoresConPartida}" var="top">
