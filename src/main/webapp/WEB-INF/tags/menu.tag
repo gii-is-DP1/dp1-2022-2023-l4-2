@@ -51,7 +51,7 @@
 					<petclinic:menuItem active="${name eq 'estadisticas'}" url="/estadisticas"
 						title="estadisticas">
 						<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-						<span>Estadisticas</span>
+						<span>Estad&#237;sticas</span>
 					</petclinic:menuItem>
 			</ul>
 
