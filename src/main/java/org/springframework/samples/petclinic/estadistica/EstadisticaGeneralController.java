@@ -78,7 +78,8 @@ public class EstadisticaGeneralController {
 
     private List<Jugador> getTopJugadoresConPartidas(List<Partida> partidas) {
         List<Jugador> jugadores = jugadorService.getJugadores();
-        List<Jugador> res = jugadores.stream().sorted(Comparator.comparing(x-> x.getPartidasJugadas(), Comparator.reverseOrder())).limit(5).collect(Collectors.toList());
+        List<Jugador> res = jugadores.stream()
+                            .sorted(Comparator.comparing(x-> x.getPartidasJugadas(), Comparator.reverseOrder())).limit(5).collect(Collectors.toList());
         return res;
     }
    
