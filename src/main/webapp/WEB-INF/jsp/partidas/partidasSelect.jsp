@@ -8,12 +8,12 @@
 
 <petclinic:layout pageName="partidas">
 
-    <a class="btn btn-default" href="/home">VOLVER AL MENU PRINCIPAL</a>
+    <a class="btn btn-default" href="/home">VOLVER AL MEN&#218; PRINCIPAL</a>
 
     <table style="width: 100%; text-align: center; position: relative; top: 30%;">
         <tr>
             <td>
-                <h2 style="font-family: 'Dalek Pinpoint', sans-serif; color: #ecb660;" ;>Que prefiere</h2>
+                <h2 style="font-family: 'Dalek Pinpoint', sans-serif; color: #ecb660;" ;>&#191;Qu&#233; prefiere?</h2>
             </td>
         </tr>
         <tr>

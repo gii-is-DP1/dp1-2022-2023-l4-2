@@ -37,16 +37,16 @@
                     <td>Dificultad:</td>
                     <td>
                         <select name = "dificultad">
-                            <option value="1">Facil</option>
+                            <option value="1">F&#225;cil</option>
                             <option value="2">Normal</option>
-                            <option value="3">Dificil</option>
+                            <option value="3">Dif&#205;cil</option>
                         </select>
                     </td>
                 </tr>
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10"></div>
-                     <button class="btn btn-default" type="submit">Actualiza Logro</button>
+                     <button class="btn btn-default" type="submit">Actualizar Logro</button>
                 </div>
             </div>
         </form:form>        

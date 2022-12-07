@@ -22,7 +22,7 @@
             <input type="hidden" name="id" value="${partida.id}"/>
             <div class="form-group has-feedback">                
                 <tr>
-                    <td>Numero de jugadores:</td>
+                    <td>N&#250;mero de jugadores:</td>
                     <td>
                         <select name = "numJugadores">
                             <option>5</option>
@@ -37,7 +37,7 @@
                 <div class="col-sm-offset-2 col-sm-10"></div>
                      <button class="btn btn-default" type="submit" href="/partidas/new">Crear partida</button>
                 </div>
-                <a class="btn btn-default" href="/partidas/seleccionar">VOLVER AL MENU DE OPCIONES DE PARTIDA</a>
+                <a class="btn btn-default" href="/partidas/seleccionar">VOLVER AL MEN&#218; DE OPCIONES DE PARTIDA</a>
             </div>
         </form:form>        
     </jsp:body>

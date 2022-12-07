@@ -155,10 +155,8 @@ public class VotoServiceTests {
         voto.setTurno(1);
         votoService.saveVoto(voto);
 
-        Integer numVotos = votoService.getVotos().size();
-        Voto voto2 = votoService.getVotoById((long) numVotos).orElse(null);
+        Voto voto2 = votoService.getVotoById((long) voto.getId()).orElse(null);
         
-        //Cuando lo lanzas a la primera no funciona, cuando lo lanzas la segunda vez si, preguntar porque
         assertNotNull(voto2); 
         assertEquals(voto, voto2);
     }

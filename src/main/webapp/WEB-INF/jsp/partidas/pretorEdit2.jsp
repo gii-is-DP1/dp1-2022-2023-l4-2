@@ -14,9 +14,9 @@
 
         <table class="table table-striped">
             <tr>
-                <td style="background: #e2861e">Votos a favor del cesar:  <c:out value="${partida.votosFavorCesar}"/></td>
-                <td style="background: #cecbc8 ">Votos contra el cesar:  <c:out value="${partida.votosContraCesar}"/></td>
-                <td style="background: #e2861e">Limite de votos:  <c:out value="${partida.limite}"/></td>
+                <td style="background: #e2861e">Votos a favor del C&#233;sar:  <c:out value="${partida.votosFavorCesar}"/></td>
+                <td style="background: #cecbc8 ">Votos contra el C&#233;sar:  <c:out value="${partida.votosContraCesar}"/></td>
+                <td style="background: #e2861e">L&#237;mite de votos:  <c:out value="${partida.limite}"/></td>
             </tr>
         </table>
 
@@ -60,7 +60,7 @@
                 
                 <c:if test ="${faccionApoyada != null}">
                     <div style="text-align:left">
-                        Tu faccion Apoyada
+                        Tu facci&#243;n Apoyada
                         <div>
                                 <tr style = "text-align: left; ";>
                                     <td>
@@ -79,10 +79,10 @@
 
 
         <c:if test ="${voto.faccion.getName() == 'Leal'}">
-            <span>El voto es a favor del cesar</span>
+            <span>El voto es a favor del C&#233;sar</span>
         </c:if>
         <c:if test = "${voto.faccion.getName() == 'Traidor'}">
-            <sapn>El voto es en contra del cesar</sapn>
+            <sapn>El voto es en contra del C&#233;sar</sapn>
         </c:if>
         <form:form modelAttribute="voto"
                    class="form-horizontal">
@@ -92,7 +92,7 @@
                 
                 
                 <tr>
-                    <td>¿Quieres que el edil cambie este voto?</td>
+                    <td>&#191;Quieres que el edil cambie este voto?</td>
                     <td>
                         <select name = "elegido">
                             <option value="true">Cambiar</option>

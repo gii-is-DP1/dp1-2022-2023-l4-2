@@ -9,7 +9,7 @@
 <petclinic:layout pageName="instrucciones">
     <table style="width: 100%; text-align: center; position: relative; top: 30%;">
         <tr>
-            <td><h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>COMO JUGAR</h2></td>
+            <td><h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>C&#211;MO JUGAR</h2></td>
         </tr>
         <tr>
             <td>

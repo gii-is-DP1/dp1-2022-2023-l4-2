@@ -25,7 +25,7 @@
                     <thead>
                     <tr>
                         <th>Jugadores</th>
-                        <th>Anfitrion</th>
+                        <th>Anfitri&#243;n</th>
                         <th>Participantes</th>
                         <th>Unirse</th>
                         
@@ -61,6 +61,6 @@
             </c:otherwise>
         </c:choose>
 
-    <a class="btn btn-default" href="/partidas/seleccionar">VOLVER AL MENU DE OPCIONES DE PARTIDA</a>
+    <a class="btn btn-default" href="/partidas/seleccionar">VOLVER AL MEN&#218; DE OPCIONES DE PARTIDA</a>
 
 </petclinic:layout>

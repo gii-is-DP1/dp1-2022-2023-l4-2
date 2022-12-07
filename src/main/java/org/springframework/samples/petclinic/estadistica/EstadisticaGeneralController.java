@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.estadistica;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -46,15 +47,18 @@ public class EstadisticaGeneralController {
         List<Partida> partidas = partidaService.getPartidasNoActivas();
         ModelAndView result = new ModelAndView(ESTADISTICAS_PAGE);
 		result.addObject("numPartidas", getNumPartidas(partidas));
-        result.addObject("victoriasLeal",getVictoriasLeal(partidas));
-        result.addObject("victoriasTraidor",getVictoriasTraidor(partidas));
-        result.addObject("victoriasMercader",getVictoriasMercader(partidas));
-        result.addObject("mediaMinutosPartida",getMediaMinutosPartida(partidas));
-        result.addObject("maxVotosAFavorCesar",getMaxVotosAFavorCesar(partidas));
-        result.addObject("maxVotosEnContraCesar",getMaxVotosEnContraCesar(partidas));
-        result.addObject("maxDiferenciaDeVotos",getMaxDifVotos(partidas));
-        result.addObject("faccionPerdedora",getFaccionPerdedora(partidas));
-        result.addObject("topJugadoresConVictoria",getTopJugadoresConVictorias(partidas));
+
+        result.addObject("victoriasLeal", getVictoriasLeal(partidas));
+        result.addObject("victoriasTraidor", getVictoriasTraidor(partidas));
+        result.addObject("victoriasMercader", getVictoriasMercader(partidas));
+        result.addObject("mediaMinutosPartida", getMediaMinutosPartida(partidas));
+        result.addObject("maxVotosAFavorCesar", getMaxVotosAFavorCesar(partidas));
+        result.addObject("maxVotosEnContraCesar", getMaxVotosEnContraCesar(partidas));
+        result.addObject("maxDiferenciaDeVotos", getMaxDifVotos(partidas));
+        result.addObject("faccionPerdedora", getFaccionPerdedora(partidas));
+        result.addObject("topJugadoresConVictoria", getTopJugadoresConVictorias(partidas));
+        result.addObject("topJugadoresConPartida", getTopJugadoresConPartidas(partidas));
+
 		return result;
 
     }
@@ -69,6 +73,12 @@ public class EstadisticaGeneralController {
             Integer ganadas = j.getPartidasGanadas();
             res.put(j.getUser().getUsername(), ganadas);
         }
+        return res;
+    }
+
+    private List<Jugador> getTopJugadoresConPartidas(List<Partida> partidas) {
+        List<Jugador> jugadores = jugadorService.getJugadores();
+        List<Jugador> res = jugadores.stream().sorted(Comparator.comparing(x-> x.getPartidasJugadas(), Comparator.reverseOrder())).limit(5).collect(Collectors.toList());
         return res;
     }
    

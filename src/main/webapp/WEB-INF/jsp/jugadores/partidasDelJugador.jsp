@@ -21,11 +21,11 @@
             <th>Ronda</th>
             <th>Turno</th>
             <th>Num. jugadores</th>
-            <th>Anfitrion</th>
-            <th>Votos a favor del Cesar</th>
-            <th>Votos en contra del Cesar</th>
-            <th>Limite</th>
-            <th>Faccion ganadora</th>
+            <th>Anfitri&#243;n</th>
+            <th>Votos a favor del C&#233;sar</th>
+            <th>Votos en contra del C&#233;sar</th>
+            <th>L&#237;mite</th>
+            <th>Facci&#243;n ganadora</th>
             <th>Tiempo</th>
             <th>Jugadores de la partida</th>
 
