@@ -84,7 +84,10 @@ public class PartidaService {
     public List<Partida> getPartidasActivas(){
         return this.partidaRepo.findPartidasActivas();
     }
-    
+    @Transactional(readOnly = true)
+    public List<Partida> getPartidasNoActivas(){
+        return this.partidaRepo.findPartidasNoActivas();
+    }
     @Transactional
     public Map<Jugador,List<FaccionType>> jugadoresConOpcionesDePartida(Partida p){
         Map<Jugador,List<FaccionType>> res = new HashMap<Jugador,List<FaccionType>>();

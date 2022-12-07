@@ -18,6 +18,9 @@ public interface PartidaRepository extends CrudRepository<Partida, Long>{
     @Query("SELECT p FROM Partida p WHERE p.activa =TRUE")
     List<Partida> findPartidasActivas();
 
+    @Query("SELECT p FROM Partida p WHERE p.activa =FALSE")
+    List<Partida> findPartidasNoActivas();
+
     @Query("SELECT f FROM FaccionType f")
     List<FaccionType> findAllFaccionType();
 

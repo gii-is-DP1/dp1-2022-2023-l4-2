@@ -55,7 +55,9 @@ public class Jugador extends Person{
         List<Participacion> participaciones = getParticipaciones();
         for (Partida partida : partidas) {
             for (Participacion participacion : participaciones) {
-                if (partida.getParticipaciones().contains(participacion)
+                if (participacion.getFaccionApoyada() !=null
+                        &&partida.getParticipaciones().contains(participacion)
+                        && partida.getFaccionGanadora()!=null
                         && partida.getFaccionGanadora().equals(participacion.getFaccionApoyada())) {
                     res++;
                 }
@@ -71,6 +73,8 @@ public class Jugador extends Person{
         for (Partida partida : partidas) {
             for (Participacion participacion : participaciones) {
                 if (partida.getParticipaciones().contains(participacion)
+                        && participacion.getFaccionApoyada()!=null
+                        && partida.getFaccionGanadora()!=null
                         && participacion.getFaccionApoyada().getName().equals("Leal")
                         && partida.getFaccionGanadora().equals(participacion.getFaccionApoyada())) {
                     res++;
@@ -87,6 +91,8 @@ public class Jugador extends Person{
         for (Partida partida : partidas) {
             for (Participacion participacion : participaciones) {
                 if (partida.getParticipaciones().contains(participacion)
+                        && participacion.getFaccionApoyada()!=null
+                        && partida.getFaccionGanadora()!=null
                         && participacion.getFaccionApoyada().getName().equals("Traidor")
                         && partida.getFaccionGanadora().equals(participacion.getFaccionApoyada())) {
                     res++;
@@ -103,6 +109,8 @@ public class Jugador extends Person{
         for (Partida partida : partidas) {
             for (Participacion participacion : participaciones) {
                 if (partida.getParticipaciones().contains(participacion)
+                        && participacion.getFaccionApoyada()!=null
+                        && partida.getFaccionGanadora()!=null
                         && participacion.getFaccionApoyada().getName().equals("Mercader")
                         && partida.getFaccionGanadora().equals(participacion.getFaccionApoyada())) {
                     res++;
@@ -116,7 +124,9 @@ public class Jugador extends Person{
         Long res = 0L;
         List<Partida> partidas = getPartidas();
         for (Partida partida : partidas) {
-            res += partida.getTiempo();
+            if(Long.valueOf(partida.getTiempo())!=null){
+                res += partida.getTiempo();
+            }
         }
         return res;
     }
@@ -129,12 +139,14 @@ public class Jugador extends Person{
         List<Participacion> participaciones = getParticipaciones();
         if(!participaciones.isEmpty()){
             for (Participacion participacion : participaciones) {
-                if (participacion.getFaccionApoyada().getName().equals("Leal")) {
-                    leal++;
-                } else if (participacion.getFaccionApoyada().getName().equals("Traidor")) {
-                    traidor++;
-                } else {
-                    mercader++;
+                if(participacion.getFaccionApoyada()!=null){
+                    if (participacion.getFaccionApoyada().getName().equals("Leal")) {
+                        leal++;
+                    } else if (participacion.getFaccionApoyada().getName().equals("Traidor")) {
+                        traidor++;
+                    } else {
+                        mercader++;
+                    }
                 }
             }
             Integer max = Math.max(leal, traidor);
