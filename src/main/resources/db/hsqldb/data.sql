@@ -160,20 +160,20 @@ INSERT INTO jugador(id,first_name,last_name,username,rol_id,esta_en_partida, ya_
     (5, 'Alejadro', 'Campano', 'Campanas', 4, false, false),
     (6, 'Pablo', 'Mera', 'Colombiano', 4, false, false);
 
-INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
-    VALUES(1,1,1,6,'Guaje',14,12,15,1,20);
-INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
-    VALUES(2,1,1,6,'Jose',10,14,15,2,29);
-INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
-    VALUES(3,4,1,8,'Juan',19,12,20,1,30);
-INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
-    VALUES(4,1,1,6,'Jose',14,14,15,3,26);
-INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
-    VALUES(5,2,1,5,'Pablo',8,10,15,2,26);
-INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
-    VALUES(6,2,2,5,'Pablo',10,10,15,3,26);
-INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo)
-    VALUES(7,2,3,5,'Pablo',11,10,15,1,26);
+INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo,activa)
+    VALUES(1,1,1,6,'Guaje',14,12,15,1,20,false);
+INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo,activa)
+    VALUES(2,1,1,6,'Jose',10,14,15,2,29,false);
+INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo,activa)
+    VALUES(3,4,1,8,'Juan',19,12,20,1,30,false);
+INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo,activa)
+    VALUES(4,1,1,6,'Jose',14,14,15,3,26,false);
+INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo,activa)
+    VALUES(5,2,1,5,'Pablo',8,10,15,2,26,false);
+INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo,activa)
+    VALUES(6,2,2,5,'Pablo',10,10,15,3,26,false);
+INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo,activa)
+    VALUES(7,2,3,5,'Pablo',11,10,15,1,26,false);
 INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo,activa)
     VALUES(8,0,0,5,'Davilillo',0,0,15,1,0,true);
 INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo,activa)

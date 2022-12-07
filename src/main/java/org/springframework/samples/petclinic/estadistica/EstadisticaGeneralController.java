@@ -43,22 +43,24 @@ public class EstadisticaGeneralController {
 
     @GetMapping()
     public ModelAndView getEstadisticas(){
-        List<Partida> partidas = partidaService.getPartidas();
+        List<Partida> partidas = partidaService.getPartidasNoActivas();
         ModelAndView result = new ModelAndView(ESTADISTICAS_PAGE);
 		result.addObject("numPartidas", getNumPartidas(partidas));
-        result.addObject("victoriasLeal", getVictoriasLeal(partidas));
-        result.addObject("victoriasTraidor", getVictoriasTraidor(partidas));
-        result.addObject("victoriasMercader", getVictoriasMercader(partidas));
-        result.addObject("mediaMinutosPartida", getMediaMinutosPartida(partidas));
-        result.addObject("maxVotosAFavorCesar", getMaxVotosAFavorCesar(partidas));
-        result.addObject("maxVotosEnContraCesar", getMaxVotosEnContraCesar(partidas));
-        result.addObject("maxDiferenciaDeVotos", getMaxDifVotos(partidas));
-        result.addObject("faccionPerdedora", getFaccionPerdedora(partidas));
-        result.addObject("topJugadoresConVictoria", getTopJugadoresConVictorias(partidas));
+        result.addObject("victoriasLeal",getVictoriasLeal(partidas));
+        result.addObject("victoriasTraidor",getVictoriasTraidor(partidas));
+        result.addObject("victoriasMercader",getVictoriasMercader(partidas));
+        result.addObject("mediaMinutosPartida",getMediaMinutosPartida(partidas));
+        result.addObject("maxVotosAFavorCesar",getMaxVotosAFavorCesar(partidas));
+        result.addObject("maxVotosEnContraCesar",getMaxVotosEnContraCesar(partidas));
+        result.addObject("maxDiferenciaDeVotos",getMaxDifVotos(partidas));
+        result.addObject("faccionPerdedora",getFaccionPerdedora(partidas));
+        result.addObject("topJugadoresConVictoria",getTopJugadoresConVictorias(partidas));
 		return result;
+
     }
 
     private Map<String, Integer> getTopJugadoresConVictorias(List<Partida> partidas) {
+        partidas = partidas.stream().filter(x->!x.getParticipaciones().isEmpty()).filter(x->!x.getActiva()).collect(Collectors.toList());
         List<Jugador> jugadores = jugadorService.getJugadores();
         jugadores.stream().sorted(Comparator.comparing(x -> x.getPartidasGanadas()));
         Map<String, Integer> res = new HashMap<String,Integer>();
@@ -71,31 +73,40 @@ public class EstadisticaGeneralController {
     }
    
     private Long getMaxVotosEnContraCesar(List<Partida> partidas) {
+        partidas = partidas.stream().filter(x->!x.getParticipaciones().isEmpty()).filter(x->!x.getActiva()).collect(Collectors.toList());
         Long result = 0L;
         for(Partida partida: partidas){
-            if(partida.getVotosContraCesar() > result){
-                result = partida.getVotosContraCesar();
+            if(Long.valueOf(partida.getVotosContraCesar())!=null){
+                if(partida.getVotosContraCesar() > result){
+                    result = partida.getVotosContraCesar();
+                }
             }
         }
         return result;
     }
 
     private Long getMaxVotosAFavorCesar(List<Partida> partidas) {
+        partidas = partidas.stream().filter(x->!x.getParticipaciones().isEmpty()).filter(x->!x.getActiva()).collect(Collectors.toList());
         Long result = 0L;
         for(Partida partida: partidas){
-            if(partida.getVotosFavorCesar() > result){
-                result = partida.getVotosFavorCesar();
+            if(Long.valueOf(partida.getVotosFavorCesar())!=null){
+                if(partida.getVotosFavorCesar() > result){
+                    result = partida.getVotosFavorCesar();
+                }
             }
         }
         return result;
     }
 
     private Float getMediaMinutosPartida(List<Partida> partidas) {
+        partidas = partidas.stream().filter(x->!x.getParticipaciones().isEmpty()).filter(x->!x.getActiva()).collect(Collectors.toList());
         Float result = 0f;
         Float tiempoPartidas = 0f;
         for(Partida partida: partidas){
-            if(partida.getTiempo() > 0){
-                tiempoPartidas += partida.getTiempo();
+            if(Long.valueOf(partida.getTiempo())!=null){
+                if(partida.getTiempo() > 0){
+                    tiempoPartidas += partida.getTiempo();
+                }
             }
         }
         result = Float.valueOf(Math.round(tiempoPartidas/partidas.size()));
@@ -103,52 +114,56 @@ public class EstadisticaGeneralController {
     }
 
     private Long getVictoriasLeal(List<Partida> partidas) {
+        partidas = partidas.stream().filter(x->!x.getParticipaciones().isEmpty()).filter(x->!x.getActiva()).collect(Collectors.toList());
         Long result = 0L;
         for(Partida partida: partidas){
             if(partida.getFaccionGanadora()!=null){
-            if (partida.getFaccionGanadora().getName().equals("Leal")){
-                result++;
+                if (partida.getFaccionGanadora().getName().equals("Leal")){
+                    result++;
+                }
             }
-        }
         }
         return result;
     }
 
     private Long getVictoriasTraidor(List<Partida> partidas) {
+        partidas = partidas.stream().filter(x->!x.getParticipaciones().isEmpty()).filter(x->!x.getActiva()).collect(Collectors.toList());
         Long result = 0L;
         for(Partida partida: partidas){
             if(partida.getFaccionGanadora()!=null){
-            if (partida.getFaccionGanadora().getName().equals("Traidor")){
-                result++;
+                if (partida.getFaccionGanadora().getName().equals("Traidor")){
+                    result++;
+                }
             }
-        }
         }
         return result;
     }
 
     private Long getVictoriasMercader(List<Partida> partidas) {
+        partidas = partidas.stream().filter(x->!x.getParticipaciones().isEmpty()).filter(x->!x.getActiva()).collect(Collectors.toList());
         Long result = 0L;
         for(Partida partida: partidas){
             if(partida.getFaccionGanadora()!=null){
-            if (partida.getFaccionGanadora().getName().equals("Mercader")){
-                result++;
+                if (partida.getFaccionGanadora().getName().equals("Mercader")){
+                    result++;
+                }
             }
-        }
         }
         return result;
     }
 
     private String getFaccionPerdedora(List<Partida> partidas) {
+        partidas = partidas.stream().filter(x->!x.getParticipaciones().isEmpty()).filter(x->!x.getActiva()).collect(Collectors.toList());
         String res = "Hay facciones empatadas en numero de victorias";
         Map<FaccionType,Integer> aux = new HashMap<FaccionType, Integer>();
         for(Partida partida: partidas){
             if(partida.getFaccionGanadora()!=null){
-            if (aux.containsKey(partida.getFaccionGanadora())){
-                aux.put(partida.getFaccionGanadora(), aux.get(partida.getFaccionGanadora()) + 1);
-            }else{
-                aux.put(partida.getFaccionGanadora(),  1);
+                if (aux.containsKey(partida.getFaccionGanadora())){
+                    aux.put(partida.getFaccionGanadora(), aux.get(partida.getFaccionGanadora()) + 1);
+                }else{
+                    aux.put(partida.getFaccionGanadora(),  1);
+                }
             }
-        }
         }
         String res1 = aux.entrySet().stream().min(Comparator.comparing(x->x.getValue())).get().getKey().getName();
         if(res1 != null){
@@ -159,19 +174,25 @@ public class EstadisticaGeneralController {
     }
 
     private Long getMaxDifVotos(List<Partida> partidas) {
+        partidas = partidas.stream().filter(x->!x.getParticipaciones().isEmpty()).filter(x->!x.getActiva()).collect(Collectors.toList());
         Long result = 0L;
+        Long res = 0L;
         for(Partida partida: partidas){
-            if(partida.getVotosFavorCesar()>0 || partida.getVotosContraCesar()>0){
-            Long res = Math.abs(partida.getVotosFavorCesar() - partida.getVotosContraCesar());
-            if( res > result){
-                result = res;
+            if(Long.valueOf(partida.getVotosContraCesar())!=null && Long.valueOf(partida.getVotosFavorCesar())!=null){
+                if(partida.getVotosFavorCesar()>0 || partida.getVotosContraCesar()>0){
+                    res = Math.abs(partida.getVotosFavorCesar() - partida.getVotosContraCesar());
+                }
+                if( res > result){
+                    result = res;
+                }
             }
-        }
+
         }
         return result;
     }
 
     private static Long getNumPartidas(List<Partida> partidas){
+        partidas = partidas.stream().filter(x->!x.getParticipaciones().isEmpty()).filter(x->!x.getActiva()).collect(Collectors.toList());
         return Long.valueOf(partidas.size());
     }
 

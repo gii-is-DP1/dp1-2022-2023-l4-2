@@ -110,6 +110,7 @@ public class PartidaController {
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
         Partida p = partidaService.getPartidaById(id).get();
         List<Jugador> jugadores = p.getJugadores();
+        p.setActiva(true);
 
 
         //if(p.getRonda()!=0 && p.getActiva()){
