@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.jugador;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -46,7 +47,8 @@ public class Jugador extends Person{
     public Boolean yaElegido; 
 
     public Integer getPartidasJugadas() {
-        return getPartidas().size();
+        List<Partida> partidasJugadas = getPartidas().stream().filter(x->!x.getParticipaciones().isEmpty()).filter(x->x.getActiva() ==false).collect(Collectors.toList());
+        return partidasJugadas.size();
     }
     
     public Integer getPartidasGanadas() {
