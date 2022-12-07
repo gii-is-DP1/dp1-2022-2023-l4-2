@@ -56,27 +56,20 @@ public class EstadisticaGeneralController {
         result.addObject("maxVotosEnContraCesar", getMaxVotosEnContraCesar(partidas));
         result.addObject("maxDiferenciaDeVotos", getMaxDifVotos(partidas));
         result.addObject("faccionPerdedora", getFaccionPerdedora(partidas));
-        result.addObject("topJugadoresConVictoria", getTopJugadoresConVictorias(partidas));
-        result.addObject("topJugadoresConPartida", getTopJugadoresConPartidas(partidas));
+        result.addObject("topJugadoresConVictoria", getTopJugadoresConVictorias());
+        result.addObject("topJugadoresConPartida", getTopJugadoresConPartidas());
 
 		return result;
 
     }
 
-    private Map<String, Integer> getTopJugadoresConVictorias(List<Partida> partidas) {
-        partidas = partidas.stream().filter(x->!x.getParticipaciones().isEmpty()).filter(x->!x.getActiva()).collect(Collectors.toList());
+    private List<Jugador> getTopJugadoresConVictorias() {
         List<Jugador> jugadores = jugadorService.getJugadores();
-        jugadores.stream().sorted(Comparator.comparing(x -> x.getPartidasGanadas()));
-        Map<String, Integer> res = new HashMap<String,Integer>();
-        for(int i = 0; i<jugadores.size() && i<5 ; i++){
-            Jugador j = jugadores.get(i);
-            Integer ganadas = j.getPartidasGanadas();
-            res.put(j.getUser().getUsername(), ganadas);
-        }
+        List<Jugador> res = jugadores.stream().sorted(Comparator.comparing(x-> x.getPartidasGanadas(), Comparator.reverseOrder())).limit(5).collect(Collectors.toList());
         return res;
     }
 
-    private List<Jugador> getTopJugadoresConPartidas(List<Partida> partidas) {
+    private List<Jugador> getTopJugadoresConPartidas() {
         List<Jugador> jugadores = jugadorService.getJugadores();
         List<Jugador> res = jugadores.stream().sorted(Comparator.comparing(x-> x.getPartidasJugadas(), Comparator.reverseOrder())).limit(5).collect(Collectors.toList());
         return res;

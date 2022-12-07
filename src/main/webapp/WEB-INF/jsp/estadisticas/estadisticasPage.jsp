@@ -53,10 +53,10 @@
     <h2>Top 5 jugadores con m&#225;s victorias</h2>
     <table id="jugadoresMasVictoriasTable" class="table table-striped">
         <thead>
-        <c:forEach items="${topJugadoresConVictoria.entrySet()}" var="top">
+        <c:forEach items="${topJugadoresConVictoria}" var="top">
             <tr>
-                <th><c:out value="${top.getKey()}"/></th>
-                <th><c:out value="${top.getValue()}"/></th>
+                <th><c:out value="${top.getUser().getUsername()}"/></th>
+                <th><c:out value="${top.getPartidasGanadas()}"/></th>
             </tr>
         </c:forEach>
         </thead>

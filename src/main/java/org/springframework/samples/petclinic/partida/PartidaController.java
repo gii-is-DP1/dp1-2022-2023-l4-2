@@ -187,7 +187,8 @@ public class PartidaController {
             part.setOpciones(map.get(jugador));
         }
         
-        if(p.getParticipaciones().size() == p.getNumJugadores()){
+        if(p.getParticipaciones().size() == p.getNumJugadores() && p.getParticipaciones().stream().mapToInt(x->x.getNumConsul()).sum() == 0){
+            participacionService.ordenaNumConsul(p);
             reparteRoles(p);
         }
         return "redirect:/partidas/jugar/{id}";
@@ -197,10 +198,12 @@ public class PartidaController {
         Integer idp = participacionService.getParticipaciones().stream().map(x->x.getId()).max(Comparator.comparing(x->x)).orElse(1);
         part.setId(idp+1);
         if(p.getParticipaciones().isEmpty()){
-            part.setNumConsul(1);
+            //part.setNumConsul(1);
+            part.setNumConsul(0);
         }else{
             Integer maxNumConsul = p.participaciones.stream().map(x->x.getNumConsul()).max(Comparator.comparing(x->x)).orElse(1);
-            part.setNumConsul(maxNumConsul+1);
+            //part.setNumConsul(maxNumConsul+1);
+            part.setNumConsul(0);
         }
         if(p.getAnfitrion() == j.getUser().getUsername()){
         part.setEsAnfitrion(true);
@@ -704,6 +707,9 @@ public class PartidaController {
         //votoToUpdate.setFaccion(voto.getFaccion());
         //Voto votoCambiado = cambiarVoto(voto);
         votoToUpdate.setElegido(voto.getElegido());
+        if(votoToUpdate.getFaccion().getName().equals("Mercader")){
+            votoToUpdate.setElegido(true);
+        }
         votoService.saveVoto(votoToUpdate);
         List<Voto> votos = votoService.getVotosRondaTurno(p);
         if(!votoToUpdate.getElegido()){
@@ -804,6 +810,7 @@ public class PartidaController {
         Partida p = partidaService.getPartidaById(partidaId).get();
         Voto votoToUpdate = votoService.getVotoById(votoId).get();
         votoToUpdate.setFaccion(voto.getFaccion());
+        votoToUpdate.setElegido(false);
         votoService.saveVoto(votoToUpdate);
         List<Voto> votos = votoService.getVotosRondaTurno(p);
         for(Voto v: votos){
