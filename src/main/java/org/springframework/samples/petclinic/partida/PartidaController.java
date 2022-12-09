@@ -232,14 +232,13 @@ public class PartidaController {
 
     @GetMapping("/jugar/{id}")
     public ModelAndView jugarPartida(@PathVariable("id") Long id, HttpServletResponse response, Principal principal) throws Exception{
-        ModelAndView result = new ModelAndView(PARTIDAS_JUGAR);
         response.addHeader("Refresh", "20");
         Partida p = partidaService.getPartidaById(id).get();
         //List<FaccionType> faccionesApoyadas = p.getParticipaciones().stream().map(x->x.getFaccionApoyada()).collect(Collectors.toList());
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
         Integer numVotos = votoService.getVotosTurnoJugador(p, j).size();
         List<FaccionType> elegir = j.getParticipacionEnPartida(p).getOpciones();
-        FaccionType faccionApoyada = j.getParticipacionEnPartida(p).getFaccionApoyada();
+        ModelAndView result = pasarPropiedadesComunes(PARTIDAS_JUGAR, principal, p, j);
         Boolean hayConsul = null;
         hayConsul = p.getJugadores().stream().filter(x->x.getYaElegido()).map(x->x.getRol().getName()).anyMatch(x-> x.equals("Pretor"));
         Integer numEdil = p.getJugadores().stream().filter(x->x.getYaElegido()).filter(x -> x.getRol().getName().equals("Edil")).collect(Collectors.toList()).size();
@@ -259,12 +258,8 @@ public class PartidaController {
         result.addObject("numEdil", numEdil);
         result.addObject("hayConsul", hayConsul);
         result.addObject("faccionGanadora", p.getFaccionGanadora());
-        result.addObject("faccionApoyada", faccionApoyada);
         result.addObject("votoRT",votosRT);
         result.addObject("elegir", elegir);
-        result.addObject("jugadorLog", j);
-        result.addObject("partida", p);
-        result.addObject("principal", principal);
         result.addObject("numVotos", numVotos);
         result.addObject("votosCambio", votosACambiar);
         result.addObject("voto", v);
@@ -274,20 +269,15 @@ public class PartidaController {
 
     @GetMapping("/final/{id}")
     public ModelAndView finalPartida(@PathVariable("id") Long id, HttpServletResponse response, Principal principal) throws Exception{
-        ModelAndView result = new ModelAndView(PARTIDAS_FINAL);
         response.addHeader("Refresh", "20");
         Partida p = partidaService.getPartidaById(id).get();
         //List<FaccionType> faccionesApoyadas = p.getParticipaciones().stream().map(x->x.getFaccionApoyada()).collect(Collectors.toList());
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
         Integer numVotos = votoService.getVotosTurnoJugador(p, j).size();
         List<FaccionType> elegir = j.getParticipacionEnPartida(p).getOpciones();
-        FaccionType faccionApoyada = j.getParticipacionEnPartida(p).getFaccionApoyada();
+        ModelAndView result = pasarPropiedadesComunes(PARTIDAS_FINAL, principal, p, j);
         result.addObject("faccionGanadora", p.getFaccionGanadora());
-        result.addObject("faccionApoyada", faccionApoyada);
         result.addObject("elegir", elegir);
-        result.addObject("jugadorLog", j);
-        result.addObject("partida", p);
-        result.addObject("principal", principal);
         result.addObject("numVotos", numVotos);
         return result;
     }
@@ -304,7 +294,6 @@ public class PartidaController {
 
     @GetMapping("/jugar/edil/{id}")
     public ModelAndView partidaEdil(@PathVariable("id") Long id, HttpServletResponse response, Principal principal){
-        ModelAndView result = new ModelAndView(EDIL_JUGAR);
         //response.addHeader("Refresh", "2");
         Partida p = partidaService.getPartidaById(id).get();
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
@@ -312,13 +301,9 @@ public class PartidaController {
         Integer maxid = partidaService.getFaccionesType().stream().map(x->x.getId()).max(Comparator.comparing(x->x)).orElse(1);
         ft.setId(maxid+1);
         List<FaccionType> elegir = j.getParticipacionEnPartida(p).getOpciones();
-        FaccionType faccionApoyada = j.getParticipacionEnPartida(p).getFaccionApoyada();
-        result.addObject("faccionApoyada", faccionApoyada);
+        ModelAndView result = pasarPropiedadesComunes(EDIL_JUGAR, principal, p, j);
         result.addObject("elegir", elegir);
         result.addObject("faccionType", ft);
-        result.addObject("jugadorLog", j);
-        result.addObject("partida", p);
-        result.addObject("principal", principal);
         return result;
     }
 
@@ -348,37 +333,28 @@ public class PartidaController {
 
     @GetMapping("/jugar/pretor/{id}")
     public ModelAndView partidaPretor(@PathVariable("id") Long id, HttpServletResponse response, Principal principal){
-        ModelAndView result = new ModelAndView(PRETOR_JUGAR);
         response.addHeader("Refresh", "10");
         Partida p = partidaService.getPartidaById(id).get();
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
         List<Voto> votos = votoService.getVotosRondaTurno(p);
         List<FaccionType> elegir = j.getParticipacionEnPartida(p).getOpciones();
-        FaccionType faccionApoyada = j.getParticipacionEnPartida(p).getFaccionApoyada();
-        result.addObject("faccionApoyada", faccionApoyada);
+        ModelAndView result = pasarPropiedadesComunes(PRETOR_JUGAR, principal, p, j);
         result.addObject("elegir", elegir);
-        result.addObject("jugadorLog", j);
-        result.addObject("partida", p);
-        result.addObject("principal", principal);
         result.addObject("votos", votos);
         return result;
     }
+
     @GetMapping("/jugar/pretor/edit/{partidaId}/{votoId}")
     public ModelAndView pretorEditVoto(@PathVariable("partidaId") Long partidaId, @PathVariable("votoId") Long votoId,
                                 HttpServletResponse response, Principal principal){
-        ModelAndView res =new ModelAndView(PRETOR_EDIT);
         //response.addHeader("Refresh", "10");
         Partida p = partidaService.getPartidaById(partidaId).get();
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
         Voto v = votoService.getVotoById(votoId).get();
         List<FaccionType> elegir = j.getParticipacionEnPartida(p).getOpciones();
-        FaccionType faccionApoyada = j.getParticipacionEnPartida(p).getFaccionApoyada();
-        res.addObject("faccionApoyada", faccionApoyada);
+        ModelAndView res = pasarPropiedadesComunes(PRETOR_EDIT, principal, p, j);
         res.addObject("elegir", elegir);
         res.addObject("voto", v);
-        res.addObject("jugadorLog", j);
-        res.addObject("partida", p);
-        res.addObject("principal", principal);
         return res;
 
     }
@@ -429,7 +405,6 @@ public class PartidaController {
 
     @GetMapping("/jugar/consul/{id}")
     public ModelAndView partidaConsul(@PathVariable("id") Long id, HttpServletResponse response, Principal principal){
-        ModelAndView result = new ModelAndView(CONSUL_JUGAR);
         //response.addHeader("Refresh", "2");
         Partida p = partidaService.getPartidaById(id).get();
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
@@ -437,25 +412,21 @@ public class PartidaController {
         Integer maxid = partidaService.getFaccionesType().stream().map(x->x.getId()).max(Comparator.comparing(x->x)).orElse(1);
         ft.setId(maxid+1);
         List<String> opciones = j.getParticipacionEnPartida(p).getOpciones().stream().map(x->x.getName()).collect(Collectors.toList());
-        
+        ModelAndView result = pasarPropiedadesComunes(CONSUL_JUGAR, principal, p, j);
         result.addObject("faccionType", ft);
         result.addObject("opciones", opciones);
-        result.addObject("jugadorLog", j);
-        result.addObject("partida", p);
         return result;
     }
 
     @GetMapping("/jugar/consul/eleccionP/{id}")
     public ModelAndView escogerPretor(@PathVariable("id") Long id, HttpServletResponse response, Principal principal){
-        ModelAndView res = new ModelAndView(ESCOGER_PRETOR);
         Partida p = partidaService.getPartidaById(id).get();
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
         List<Jugador> jugadores = p.getJugadores();
         List<Jugador> jugadoresFiltrado = jugadores.stream().filter(x-> x.getRol() != null).filter(x-> !x.getRol().getName().equals("Pretor")).filter(x-> !x.getRol().getName().equals("Consul")).filter(x-> x.getYaElegido() != true).collect(Collectors.toList());
         List<String> opciones = j.getParticipacionEnPartida(p).getOpciones().stream().map(x->x.getName()).collect(Collectors.toList());
+        ModelAndView res = pasarPropiedadesComunes(ESCOGER_PRETOR, principal, p, j);
         res.addObject("opciones", opciones);
-        res.addObject("jugadorLog", j);
-        res.addObject("partida", p);
         res.addObject("jugFilt", jugadoresFiltrado);
         return res;
     }
@@ -491,7 +462,6 @@ public class PartidaController {
 
     @GetMapping("/jugar/consul/eleccionE/{id}")
     public ModelAndView escogerEdil(@PathVariable("id") Long id, HttpServletResponse response, Principal principal){
-        ModelAndView res = new ModelAndView(ESCOGER_EDIL);
         Partida p = partidaService.getPartidaById(id).get();
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
         List<Jugador> jugadores = p.getJugadores();
@@ -502,9 +472,8 @@ public class PartidaController {
             jugadoresFiltrado = jugadores.stream().filter(x-> x.getRol() != null).filter(x-> !x.getRol().getName().equals("Edil")).filter(x-> !x.getRol().getName().equals("Consul")).filter(x-> x.getYaElegido() != true).collect(Collectors.toList());
         }
         List<String> opciones = j.getParticipacionEnPartida(p).getOpciones().stream().map(x->x.getName()).collect(Collectors.toList());
+        ModelAndView res = pasarPropiedadesComunes(ESCOGER_EDIL, principal, p, j);
         res.addObject("opciones", opciones);
-        res.addObject("jugadorLog", j);
-        res.addObject("partida", p);
         res.addObject("jugFilt", jugadoresFiltrado);
         return res;
     }
@@ -685,19 +654,14 @@ public class PartidaController {
     @GetMapping("/jugar/pretor/edit2/{partidaId}/{votoId}")
     public ModelAndView pretorEditVotoRonda2(@PathVariable("partidaId") Long partidaId, @PathVariable("votoId") Long votoId,
                                 HttpServletResponse response, Principal principal){
-        ModelAndView res =new ModelAndView(PRETOR_EDIT2);
         //response.addHeader("Refresh", "10");
         Partida p = partidaService.getPartidaById(partidaId).get();
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
         Voto v = votoService.getVotoById(votoId).get();
         List<FaccionType> elegir = j.getParticipacionEnPartida(p).getOpciones();
-        FaccionType faccionApoyada = j.getParticipacionEnPartida(p).getFaccionApoyada();
-        res.addObject("faccionApoyada", faccionApoyada);
+        ModelAndView res = pasarPropiedadesComunes(PRETOR_EDIT2, principal, p, j);
         res.addObject("elegir", elegir);
         res.addObject("voto", v);
-        res.addObject("jugadorLog", j);
-        res.addObject("partida", p);
-        res.addObject("principal", principal);
         return res;
 
     }
@@ -788,23 +752,18 @@ public class PartidaController {
     @GetMapping("/jugar/edil/edit/{partidaId}/{votoId}")
     public ModelAndView edilEditVoto(@PathVariable("partidaId") Long partidaId, @PathVariable("votoId") Long votoId,
                                 HttpServletResponse response, Principal principal){
-        ModelAndView res =new ModelAndView(EDIL_EDIT);
         //response.addHeader("Refresh", "10");
         Partida p = partidaService.getPartidaById(partidaId).get();
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
+        ModelAndView res = pasarPropiedadesComunes(EDIL_EDIT, principal, p, j);
         Voto v = votoService.getVotoById(votoId).get();
         List<FaccionType> elegir = j.getParticipacionEnPartida(p).getOpciones();
-        FaccionType faccionApoyada = j.getParticipacionEnPartida(p).getFaccionApoyada();
         List<FaccionType> facciones = partidaService.getFaccionesType().stream()
                                                     .filter(x->!x.getName().equals(v.getFaccion().getName()))
                                                     .filter(x->!x.getName().equals("No decidido"))
                                                     .collect(Collectors.toList());
-        res.addObject("faccionApoyada", faccionApoyada);
         res.addObject("elegir", elegir);
         res.addObject("voto", v);
-        res.addObject("jugadorLog", j);
-        res.addObject("partida", p);
-        res.addObject("principal", principal);
         res.addObject("facciones", facciones);
         return res;
 
@@ -892,6 +851,16 @@ public class PartidaController {
     public ModelAndView deletePartida(@PathVariable("id") long id){
         partidaService.deletePartida(id);
         return new ModelAndView("redirect:/partidas");
+    }
+
+    public ModelAndView pasarPropiedadesComunes(String url, Principal principal, Partida p, Jugador j){
+        ModelAndView res = new ModelAndView(url);
+        FaccionType faccionApoyada = j.getParticipacionEnPartida(p).getFaccionApoyada();
+        res.addObject("principal", principal);
+        res.addObject("jugadorLog", j);
+        res.addObject("partida", p);
+        res.addObject("faccionApoyada", faccionApoyada);
+        return res;
     }
 
 }
