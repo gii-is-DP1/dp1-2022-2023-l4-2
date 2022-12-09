@@ -188,8 +188,6 @@ public class PartidaController {
 
     @GetMapping("/jugar/{id}")
     public ModelAndView jugarPartida(@PathVariable("id") Long id, HttpServletResponse response, Principal principal) throws Exception{
-
-        ModelAndView result = new ModelAndView(PARTIDAS_JUGAR);
         response.addHeader("Refresh", "4");
         Partida p = partidaService.getPartidaById(id).get();
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
@@ -226,7 +224,6 @@ public class PartidaController {
 
     @GetMapping("/final/{id}")
     public ModelAndView finalPartida(@PathVariable("id") Long id, HttpServletResponse response, Principal principal) throws Exception{
-        ModelAndView result = new ModelAndView(PARTIDAS_FINAL);
         Partida p = partidaService.getPartidaById(id).get();
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
         Integer numVotos = votoService.getVotosTurnoJugador(p, j).size();
@@ -250,9 +247,6 @@ public class PartidaController {
 
     @GetMapping("/jugar/edil/{id}")
     public ModelAndView partidaEdil(@PathVariable("id") Long id, HttpServletResponse response, Principal principal){
-
-        ModelAndView result = new ModelAndView(EDIL_JUGAR);
-
         Partida p = partidaService.getPartidaById(id).get();
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
         FaccionType ft = new FaccionType();
@@ -302,7 +296,6 @@ public class PartidaController {
     @GetMapping("/jugar/pretor/edit/{partidaId}/{votoId}")
     public ModelAndView pretorEditVoto(@PathVariable("partidaId") Long partidaId, @PathVariable("votoId") Long votoId,
                                 HttpServletResponse response, Principal principal){
-        ModelAndView res =new ModelAndView(PRETOR_EDIT);
         Partida p = partidaService.getPartidaById(partidaId).get();
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
         Voto v = votoService.getVotoById(votoId).get();
@@ -361,7 +354,6 @@ public class PartidaController {
     public ModelAndView partidaConsul(@PathVariable("id") Long id, HttpServletResponse response, Principal principal){
 
         response.addHeader("Refresh", "10");
-        ModelAndView result = new ModelAndView(CONSUL_JUGAR);
         Partida p = partidaService.getPartidaById(id).get();
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
         FaccionType ft = new FaccionType();
@@ -608,8 +600,6 @@ public class PartidaController {
     @GetMapping("/jugar/pretor/edit2/{partidaId}/{votoId}")
     public ModelAndView pretorEditVotoRonda2(@PathVariable("partidaId") Long partidaId, @PathVariable("votoId") Long votoId,
                                 HttpServletResponse response, Principal principal){
-
-        ModelAndView res =new ModelAndView(PRETOR_EDIT2);
         Partida p = partidaService.getPartidaById(partidaId).get();
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
         Voto v = votoService.getVotoById(votoId).get();
@@ -704,8 +694,6 @@ public class PartidaController {
     @GetMapping("/jugar/edil/edit/{partidaId}/{votoId}")
     public ModelAndView edilEditVoto(@PathVariable("partidaId") Long partidaId, @PathVariable("votoId") Long votoId,
                                 HttpServletResponse response, Principal principal){
-
-        ModelAndView res =new ModelAndView(EDIL_EDIT);
         Partida p = partidaService.getPartidaById(partidaId).get();
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
         ModelAndView res = pasarPropiedadesComunes(EDIL_EDIT, principal, p, j);
