@@ -172,6 +172,11 @@ public class PartidaController {
             partidaService.save(p);
 
         }
+        if(!j.getPartidas().contains(p)){
+            List<Partida> partidasJ = j.getPartidas();
+            partidasJ.add(p);
+            j.setPartidas(partidasJ);
+        }
         Map<Jugador,List<FaccionType>> map = partidaService.jugadoresConOpcionesDePartida(p);
         for(Jugador jugador:p.getJugadores()){
             Participacion part = jugador.getParticipacionEnPartida(p);
@@ -393,13 +398,12 @@ public class PartidaController {
         if(numElegidos == 3){
             for(int i = 0;i<p.getJugadores().size();i++){
                 Jugador jug = p.getJugadores().get(i);
-                if(p.getRonda()==2&&p.getTurno() == 1){
-                    if(j.getRol().getName().equals("Consul")){
-                        j.setRol(consul);
-                    }
+                if(p.getRonda()==2&&p.getTurno() == 1&&jug.getRol().getName().equals("Consul")){
+                        jug.setRol(consul);
                 }else if(!jug.getYaElegido()){
-                    j.setRol(sinRol);
+                    jug.setRol(sinRol);
                 }
+                jugadorService.save2(jug);
             }
         }
 
@@ -441,10 +445,8 @@ public class PartidaController {
         if(numElegidos == 3){
             for(int i = 0;i<p.getJugadores().size();i++){
                 Jugador jug = p.getJugadores().get(i);
-                if(p.getRonda()==2&&p.getTurno() == 1){
-                    if(j.getRol().getName().equals("Consul")){
+                if(p.getRonda()==2&&p.getTurno() == 1 &&jug.getRol().getName().equals("Consul")){
                         jug.setRol(consul);
-                    }
                 }else if(!jug.getYaElegido()){
                     jug.setRol(sinRol);
                 }
@@ -650,6 +652,7 @@ public class PartidaController {
                     }else if(jug.getRol().getName().equals("Consul")){
                         jug.setRol(sr);
                     }
+                    jugadorService.save2(jug);
                 }
                 if(p.getTurno()>p.getNumJugadores()){
                     p.setRonda(p.getRonda()+1);
@@ -755,6 +758,7 @@ public class PartidaController {
                         }else if(jug.getRol().getName().equals("Consul")){
                             jug.setRol(sr);
                         }
+                        jugadorService.save2(jug);
                     }
                 }
         for(int i = 0;i<p.getJugadores().size();i++){
