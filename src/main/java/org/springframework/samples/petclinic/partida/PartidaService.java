@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.hibernate.type.descriptor.java.UUIDTypeDescriptor.ToBytesTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.samples.petclinic.jugador.Jugador;
@@ -16,12 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class PartidaService {
     private PartidaRepository partidaRepo;
-    private ParticipacionService participacionService;
 
     @Autowired
     public PartidaService(PartidaRepository partidaRepo, ParticipacionService participacionService){
         this.partidaRepo = partidaRepo;
-        this.participacionService = participacionService;
     }
 
     @Transactional(readOnly = true)

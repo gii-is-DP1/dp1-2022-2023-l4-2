@@ -2,13 +2,10 @@ package org.springframework.samples.petclinic.jugador;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
-import org.springframework.samples.petclinic.partida.Partida;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -25,6 +22,5 @@ public interface JugadorRepository extends CrudRepository<Jugador, Integer> {
     @Query("SELECT r FROM RolType r")
     List<RolType> findRoles();
 
-    //@Query("SELECT p FROM Jugador p WHERE ")
-   // List<Partida> findPartidaAmigos(Jugador j);
+
 }

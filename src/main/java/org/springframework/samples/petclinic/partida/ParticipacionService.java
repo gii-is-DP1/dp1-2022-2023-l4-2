@@ -1,6 +1,5 @@
 package org.springframework.samples.petclinic.partida;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -61,7 +60,6 @@ public class ParticipacionService {
         if(p.getParticipaciones().isEmpty()){
             part.setNumConsul(0);
         }else{
-            Integer maxNumConsul = p.participaciones.stream().map(x->x.getNumConsul()).max(Comparator.comparing(x->x)).orElse(1);
             part.setNumConsul(0);
         }
         if(p.getAnfitrion() == j.getUser().getUsername()){
