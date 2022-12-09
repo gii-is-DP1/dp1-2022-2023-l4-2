@@ -564,6 +564,10 @@ public class PartidaController {
             LocalDateTime fechaFinal = LocalDateTime.of(LocalDate.now(), LocalTime.now());
             p.setFaccionGanadora(p.calculoFaccionGanadora());
             p.setTiempo(p.calculaTiempoFinal(p.getFechaInicio(), fechaFinal));
+            List<RolType> roles = jugadorService.getRoles();
+            List<Jugador> jugadores = p.getJugadores();
+            jugadores.stream().forEach(x->x.setRol(roles.get(3)));
+            jugadores.stream().forEach(x->x.setEstaEnPartida(false));
         }
         if(p.getTurno()==2 && p.getRonda()==2){
             //preparaRolesRonda2(p);
@@ -758,6 +762,10 @@ public class PartidaController {
                 LocalDateTime fechaFinal = LocalDateTime.of(LocalDate.now(), LocalTime.now());
                 p.setFaccionGanadora(p.calculoFaccionGanadora());
                 p.setTiempo(p.calculaTiempoFinal(p.getFechaInicio(), fechaFinal));
+                List<RolType> roles = jugadorService.getRoles();
+                List<Jugador> jugadores = p.getJugadores();
+                jugadores.stream().forEach(x->x.setRol(roles.get(3)));
+                jugadores.stream().forEach(x->x.setEstaEnPartida(false));
             }
             
             for(int i = 0;i<p.getJugadores().size();i++){
@@ -870,6 +878,9 @@ public class PartidaController {
             LocalDateTime fechaFinal = LocalDateTime.of(LocalDate.now(), LocalTime.now());
             p.setFaccionGanadora(p.calculoFaccionGanadora());
             p.setTiempo(p.calculaTiempoFinal(p.getFechaInicio(), fechaFinal));
+            List<Jugador> jugadores = p.getJugadores();
+            jugadores.stream().forEach(x->x.setRol(roles.get(3)));
+            jugadores.stream().forEach(x->x.setEstaEnPartida(false));
         }
         
         
