@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.partida;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,5 +52,36 @@ public class ParticipacionService {
             save(part);
         }
 
+    }
+    
+    public void creaParticipacion(Jugador j, Partida p){
+        Participacion part = new Participacion();
+        Integer idp = getParticipaciones().stream().map(x->x.getId()).max(Comparator.comparing(x->x)).orElse(1);
+        part.setId(idp+1);
+        if(p.getParticipaciones().isEmpty()){
+            part.setNumConsul(0);
+        }else{
+            Integer maxNumConsul = p.participaciones.stream().map(x->x.getNumConsul()).max(Comparator.comparing(x->x)).orElse(1);
+            part.setNumConsul(0);
+        }
+        if(p.getAnfitrion() == j.getUser().getUsername()){
+        part.setEsAnfitrion(true);
+        }else{
+            part.setEsAnfitrion(false);
+        }
+        part.setVotosContraCesar(0);
+        part.setVotosFavorCesar(0);
+        part.setVotosNeutros(0);
+        part.setPartidas(p);
+        part.setFaccionApoyada(null);
+        part.setOpciones(List.of());
+        List<Participacion> ls2 = p.getParticipaciones();
+        List<Participacion> ls = j.getParticipaciones();
+        save(part);
+        ls.add(part);
+        ls2.add(part);
+        j.setEstaEnPartida(true);
+        j.setParticipaciones(ls);
+        p.setParticipaciones(ls2);
     }
 }
