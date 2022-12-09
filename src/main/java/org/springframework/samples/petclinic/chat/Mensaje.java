@@ -6,12 +6,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.samples.petclinic.jugador.Jugador;
-import org.springframework.samples.petclinic.model.BaseEntity;
-import org.springframework.samples.petclinic.partida.Partida;
 import lombok.Getter;
 import lombok.Setter;
 
