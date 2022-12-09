@@ -232,3 +232,5 @@ INSERT INTO participacion_opciones(participacion_id,opciones_id)
     (6,1),(6,2);
 
 
+INSERT INTO employees (id, email_id, first_name, last_name)
+    VALUES (1, 'davisals122@gmail.com', 'David', 'Reyes');
