@@ -1,26 +1,19 @@
 package org.springframework.samples.petclinic.chat;
 
-import java.net.PortUnreachableException;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
+
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
+
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.Header;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
+
 import org.springframework.samples.petclinic.jugador.Jugador;
 import org.springframework.samples.petclinic.jugador.JugadorService;
 import org.springframework.samples.petclinic.partida.Partida;
 import org.springframework.samples.petclinic.partida.PartidaService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -97,13 +90,7 @@ public class ChatController {
             return new ModelAndView(SHOW_CHAT,br.getModel());
         }
         Jugador jActual = jugadorService.getJugadorByUsername(principal.getName());
-        List<Mensaje> todos = mensajeService.getAll();
-        Integer idMax;
-        if(todos.isEmpty()){
-            idMax=0;
-        }else{
-            idMax= todos.stream().max(Comparator.comparing(x -> x.getId())).map(x -> x.getId()).get();
-        }
+        Integer idMax = mensajeService.devuelveIdMax();
         Chat c = chatService.getByPartidaId(id);
         mensaje.setId(idMax + 1);
         mensaje.setJugador(jActual);

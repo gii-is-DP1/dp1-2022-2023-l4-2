@@ -44,5 +44,6 @@ public class ChatService {
         toUpdate.setPartida(c.getPartida());
         chatRepo.save(toUpdate);
     }
+
     
 }
