@@ -89,8 +89,17 @@
             <input type="hidden" name="id" value="${voto.id}"/>
             <div class="form-group has-feedback">                
                 
-                
-                
+                <div>
+                    <c:if test ="${voto.faccion.getName() == 'Leal'}">
+                        <span>El voto es a favor del C&#233;sar</span>
+                    </c:if>
+                    <c:if test = "${voto.faccion.getName() == 'Traidor'}">
+                        <span>El voto es en contra del C&#233;sar</span>
+                    </c:if>
+                    <c:if test = "${voto.faccion.getName() == 'Mercader'}">
+                        <span>El voto es neutro</span>
+                    </c:if>
+                </div>
                 <tr>
                     <td>&#191;Quieres que el edil cambie este voto?</td>
                     <td>

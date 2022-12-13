@@ -15,7 +15,7 @@
             <petclinic:inputField label="Nombre" name="firstName"/>
             <petclinic:inputField label="Apellidos" name="lastName"/>
             <petclinic:inputField label="Nombre de usuario" name="user.username"/>
-            <petclinic:inputField label="Contraseña" name="user.password"/>
+            <petclinic:inputField label="Contrase&ntilde;a" name="user.password"/>
 
         </div>
         <div class="form-group">

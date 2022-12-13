@@ -82,7 +82,7 @@
             <span>El voto es a favor del C&#233;sar</span>
         </c:if>
         <c:if test = "${voto.faccion.getName() == 'Traidor'}">
-            <sapn>El voto es en contra del C&#233;sar</sapn>
+            <span>El voto es en contra del C&#233;sar</span>
         </c:if>
         <form:form modelAttribute="voto"
                    class="form-horizontal">

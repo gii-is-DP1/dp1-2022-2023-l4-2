@@ -24,7 +24,7 @@
             <div class="form-group has-feedback">                
                 <petclinic:inputField label="Nombre" name="firstName"/>
                 <petclinic:inputField label="Apellido" name="lastName"/>
-                <petclinic:inputField label="Contraseña" name="user.password"/>
+                <petclinic:inputField label="Contrase&ntilde;a" name="user.password"/>
             </div>
             <div class="form-group">
                 <c:if test = "${jugador.user.username == nombreUsuario}">
