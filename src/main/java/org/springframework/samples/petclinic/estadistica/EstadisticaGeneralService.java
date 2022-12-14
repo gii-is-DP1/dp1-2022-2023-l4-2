@@ -147,29 +147,26 @@ public class EstadisticaGeneralService {
     }
 
     public String getFaccionPerdedora(List<Partida> partidas) {
+        List<FaccionType> facciones = partidaRepo.findAllFaccionType();
+        facciones = facciones.stream().filter(x->!x.getName().equals("No decidido"))
+                                      .collect(Collectors.toList());
         partidas = partidas.stream().filter(x->!x.getParticipaciones().isEmpty())
                                     .filter(x->!x.getActiva())
                                     .collect(Collectors.toList());
-        String res = "Hay facciones empatadas en numero de victorias";
         Map<FaccionType,Integer> aux = new HashMap<FaccionType, Integer>();
+        facciones.forEach(x->aux.put(x, 0));
         for(Partida partida: partidas){
             if(partida.getFaccionGanadora()!=null){
                 if (aux.containsKey(partida.getFaccionGanadora())){
                     aux.put(partida.getFaccionGanadora(), aux.get(partida.getFaccionGanadora()) + 1);
-                }else{
-                    aux.put(partida.getFaccionGanadora(),  1);
                 }
             }
         }
-        String res1 = aux.entrySet().stream().min(Comparator.comparing(x->x.getValue()))
+        String res = aux.entrySet().stream().min(Comparator.comparing(x->x.getValue()))
                                              .get()
                                              .getKey()
                                              .getName();
-        if(res1 != null){
-            return res1;
-        }else{
-            return res;
-        }
+        return res;
     }
 
     public Long getMaxDifVotos(List<Partida> partidas) {
