@@ -33,8 +33,12 @@ public class EstadisticaGeneralService {
         return partidaRepo.findPartidasNoActivas();
     }
 
-    public List<Jugador> getTopJugadoresConVictorias() {
-        List<Jugador> jugadores = jugadorRepo.findAll();
+    @Transactional(readOnly = true)
+    public List<Jugador> getJugadores(){
+        return jugadorRepo.findAll();
+    }
+
+    public List<Jugador> getTopJugadoresConVictorias(List<Jugador> jugadores) {
         List<Jugador> res = jugadores.stream()
                                      .sorted(Comparator.comparing(x-> x.getPartidasGanadas(), Comparator.reverseOrder()))
                                      .limit(5)
@@ -42,8 +46,7 @@ public class EstadisticaGeneralService {
         return res;
     }
 
-    public List<Jugador> getTopJugadoresConPartidas() {
-        List<Jugador> jugadores = jugadorRepo.findAll();
+    public List<Jugador> getTopJugadoresConPartidas(List<Jugador> jugadores) {
         List<Jugador> res = jugadores.stream()
                                      .sorted(Comparator.comparing(x-> x.getPartidasJugadas(), Comparator.reverseOrder()))
                                      .limit(5)

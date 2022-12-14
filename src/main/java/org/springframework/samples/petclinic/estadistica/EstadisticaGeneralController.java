@@ -3,6 +3,7 @@ package org.springframework.samples.petclinic.estadistica;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.jugador.Jugador;
 import org.springframework.samples.petclinic.partida.Partida;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,7 @@ public class EstadisticaGeneralController {
     @GetMapping()
     public ModelAndView getEstadisticas(){
         List<Partida> partidas = eGeneralService.getPartidasNoActivas();
+        List<Jugador> jugadores = eGeneralService.getJugadores();
         ModelAndView result = new ModelAndView(ESTADISTICAS_PAGE);
 		result.addObject("numPartidas", eGeneralService.getNumPartidas(partidas));
 
@@ -36,8 +38,8 @@ public class EstadisticaGeneralController {
         result.addObject("maxVotosEnContraCesar", eGeneralService.getMaxVotosEnContraCesar(partidas));
         result.addObject("maxDiferenciaDeVotos", eGeneralService.getMaxDifVotos(partidas));
         result.addObject("faccionPerdedora", eGeneralService.getFaccionPerdedora(partidas));
-        result.addObject("topJugadoresConVictoria", eGeneralService.getTopJugadoresConVictorias());
-        result.addObject("topJugadoresConPartida", eGeneralService.getTopJugadoresConPartidas());
+        result.addObject("topJugadoresConVictoria", eGeneralService.getTopJugadoresConVictorias(jugadores));
+        result.addObject("topJugadoresConPartida", eGeneralService.getTopJugadoresConPartidas(jugadores));
 		return result;
 
     }
