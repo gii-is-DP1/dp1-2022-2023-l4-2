@@ -116,4 +116,13 @@ public class PartidaService {
         Double res = Math.floor(Math.random() * max);
         return res.intValue();
     }
+
+    public Voto cambiarVoto(Voto v){
+        if(v.getFaccion().getName() == "Leal"){
+            v.setFaccion(getFaccionesTypeByName("Traidor"));
+        }else{
+            v.setFaccion(getFaccionesTypeByName("Leal"));
+        }
+        return v;
+    }
 }
