@@ -13,8 +13,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.petclinic.estadistica.EstadisticaGeneralService;
 import org.springframework.samples.petclinic.jugador.Jugador;
-import org.springframework.samples.petclinic.partida.FaccionType;
-import org.springframework.samples.petclinic.partida.Participacion;
 import org.springframework.samples.petclinic.partida.Partida;
 import org.springframework.stereotype.Service;
 
@@ -148,7 +146,7 @@ public class EstadisticaGeneralServiceTests {
     public void getFaccionPerdedoraTest(){
         List<Partida> partidas = estadisticaGeneralService.getPartidasNoActivas();
         assertNotNull(partidas);
-        assertEquals("Traidor", estadisticaGeneralService.getFaccionPerdedora(partidas));
+        assertEquals("Mercader", estadisticaGeneralService.getFaccionPerdedora(partidas));
     }
 
     @Test
