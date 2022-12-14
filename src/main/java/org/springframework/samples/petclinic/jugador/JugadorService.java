@@ -125,5 +125,21 @@ public class JugadorService {
         return jugadorRepo.findRoles();
     }
 
+    public void preparaRolesRonda2(Partida p){
+        List<RolType> roles = getRoles();
+        RolType consul = roles.stream().filter(x->x.getName().equals("Consul")).findAny().get();
+        RolType sinRol = roles.stream().filter(x->x.getName().equals("Sin rol")).findAny().get();
+        
+        for(int i = 0;i<p.getJugadores().size();i++){
+            Jugador j = p.getJugadores().get(i);
+            if(j.getParticipacionEnPartida(p).getNumConsul() == p.getTurno()){
+                j.setRol(consul);
+            }else{
+                j.setRol(sinRol);
+            }
+            save2(j);
+        }
+    }
+
     
 }

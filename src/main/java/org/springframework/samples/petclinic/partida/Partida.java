@@ -1,7 +1,9 @@
 package org.springframework.samples.petclinic.partida;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +20,7 @@ import javax.persistence.OneToMany;
 
 import org.hibernate.validator.constraints.Range;
 import org.springframework.samples.petclinic.jugador.Jugador;
+import org.springframework.samples.petclinic.jugador.RolType;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -135,5 +138,15 @@ public class Partida implements Serializable{
         return minutos + segundos/60;
 
     }
+    public void terminaPartida(List<RolType> roles){
+        LocalDateTime fechaFinal = LocalDateTime.of(LocalDate.now(), LocalTime.now());
+        setFaccionGanadora(calculoFaccionGanadora());
+        setTiempo(calculaTiempoFinal(getFechaInicio(), fechaFinal));
+        List<Jugador> jugadores = getJugadores();
+        jugadores.stream().forEach(x->x.setRol(roles.get(3)));
+        jugadores.stream().forEach(x->x.setEstaEnPartida(false));
+        setActiva(false);
+    }
+
     
 }

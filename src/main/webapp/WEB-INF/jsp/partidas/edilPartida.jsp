@@ -83,16 +83,22 @@
             <div class="form-group has-feedback">                
                 <tr>
                     <td>Voto:</td>
-                            <div style="display: inline;">
+                            <div style="display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            flex-wrap: wrap;">
+                                <div>
                                 <spring:url value="/resources/images/SoldadoLeal.png" var="Leal"/>
                                 <img class="img-responsive" style ="margin: auto;width: 200px;   height: 200px;   border-radius: 50%;" src="${Leal}"/>
                                 <td>Leal</td>
                                 <input type="radio" name="name" value="Leal" checked/>
-                            
+                                </div>
+                                <div>
                                 <spring:url value="/resources/images/SoldadoTraidor.jpg" var="Traidor"/>
                                 <img class="img-responsive" style ="margin: auto;width: 200px;   height: 200px;   border-radius: 50%;" src="${Traidor}"/>
                                 <td>Traidor</td>
                                 <input type="radio" name="name" value="Traidor"/>
+                                </div>
                             </div>
                 </tr>
             </div>
@@ -111,21 +117,28 @@
                 <tr>
                     <td>Voto:</td>
                     
-                    <div>
+                    <div style = "display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-wrap: wrap;">
+                        <div>
                         <spring:url value="/resources/images/SoldadoLeal.png" var="Leal"/>
                         <img class="img-responsive" style ="margin: auto;width: 200px;   height: 200px;   border-radius: 50%;" src="${Leal}"/>
                         <td>Leal</td>
                         <input type="radio" name="name" value="Leal" checked/>
-                    
+                        </div>
+                        <div>
                         <spring:url value="/resources/images/SoldadoTraidor.jpg" var="Traidor"/>
                         <img class="img-responsive" style ="margin: auto;width: 200px;   height: 200px;   border-radius: 50%;" src="${Traidor}"/>
                         <td>Traidor</td>
                         <input type="radio" name="name" value="Traidor"/>
-                    
+                        </div>
+                        <div>
                         <spring:url value="/resources/images/SoldadoNeutral.png" var="Mercader"/>
                         <img class="img-responsive" style ="margin: auto;width: 200px;   height: 200px;   border-radius: 50%;" src="${Mercader}"/>
                         <td>Mercader</td>
                         <input type="radio" name="name" value="Mercader"/>
+                        </div>
                     </div>
                     
                 </tr>

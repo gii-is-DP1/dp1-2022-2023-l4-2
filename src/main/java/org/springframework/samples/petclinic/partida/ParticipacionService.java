@@ -82,4 +82,21 @@ public class ParticipacionService {
         j.setParticipaciones(ls);
         p.setParticipaciones(ls2);
     }
+    @Transactional
+    public void actualizaParticipacionesYPartida(List<Voto> votos, Partida p){
+        for(Voto v: votos){
+            Participacion participacion = v.getJugador().getParticipacionEnPartida(p);
+
+            if(v.getFaccion().getName().equals("Traidor")){
+                p.setVotosContraCesar(p.getVotosContraCesar()+1);
+                participacion.setVotosContraCesar(participacion.getVotosContraCesar()+1);
+            }else if(v.getFaccion().getName().equals("Leal")){
+                p.setVotosFavorCesar(p.getVotosFavorCesar()+1);
+                participacion.setVotosFavorCesar(participacion.getVotosFavorCesar()+1);
+            }else{
+                participacion.setVotosNeutros(participacion.getVotosNeutros()+1);
+            }
+            save(participacion);
+        }
+    }
 }

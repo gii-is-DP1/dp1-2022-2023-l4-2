@@ -28,4 +28,6 @@ public class Voto extends BaseEntity{
 
     private Boolean elegido;
 
+    
+
 }
