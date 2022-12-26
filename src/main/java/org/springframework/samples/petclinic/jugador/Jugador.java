@@ -124,9 +124,9 @@ public class Jugador extends Person{
     
     public Long getTiempoJugado() {
         Long res = 0L;
-        List<Partida> partidas = getPartidas();
-        for (Partida partida : partidas) {
-            if(Long.valueOf(partida.getTiempo())!=null){
+        List<Partida> partidasJ = getPartidas().stream().filter(x->!x.getParticipaciones().isEmpty()).filter(x->x.getActiva() ==false).collect(Collectors.toList());
+        for (Partida partida : partidasJ) {
+            if(Long.valueOf(partida.getTiempo())!=null && !partida.getActiva()){
                 res += partida.getTiempo();
             }
         }

@@ -68,4 +68,15 @@ public class VotoService {
                     .findFirst().orElse(null);
         return v;
     }
+
+    public void CrearVoto(Jugador j, FaccionType faccion, Partida p, Integer maxVoto){
+        Voto v = new Voto();
+        v.setId(maxVoto+1);
+        v.setFaccion(faccion);
+        v.setJugador(j);
+        v.setPartida(p);
+        v.setRonda(p.getRonda());
+        v.setTurno(p.getTurno());
+        saveVoto(v);
+    }
 }

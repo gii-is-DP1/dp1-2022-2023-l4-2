@@ -74,17 +74,6 @@
                 </c:if>
             </div>
         </div>
-
-
-
-    <c:if test = "${partida.getRonda() == 2 && partida.getTurno() == 1}">
-        <c:if test ="${voto.faccion.getName() == 'Leal'}">
-            <span>El voto es a favor del C&#233;sar</span>
-        </c:if>
-        <c:if test = "${voto.faccion.getName() == 'Traidor'}">
-            <sapn>El voto es en contra del C&#233;sar</sapn>
-        </c:if>
-    </c:if>
         <form:form modelAttribute="voto"
                    class="form-horizontal">
             <input type="hidden" name="id" value="${voto.id}"/>

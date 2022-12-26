@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.partida.Participacion;
 import org.springframework.samples.petclinic.partida.Partida;
 import org.springframework.samples.petclinic.user.AuthoritiesService;
 import org.springframework.samples.petclinic.user.UserService;
@@ -136,6 +137,48 @@ public class JugadorService {
                 j.setRol(consul);
             }else{
                 j.setRol(sinRol);
+            }
+            save2(j);
+        }
+    }
+
+    public void añadePartidaAJugador(Partida p,Jugador j){
+        if(!j.getPartidas().contains(p)){
+            List<Partida> ls = j.getPartidas();
+            ls.add(p);
+            j.setPartidas(ls);
+            saveJugador(j);
+        }
+    }
+
+    public void reparteRoles(Partida p){
+        List<RolType> roles = getRoles();
+        for(int i=0;i<p.getJugadores().size();i++){
+            Jugador j =p.getJugadores().get(i);
+            Participacion part = j.getParticipacionEnPartida(p);
+            RolType consul = roles.stream().filter(x->x.getName().equals("Consul")).findAny().get();
+            RolType pretor= roles.stream().filter(x->x.getName().equals("Pretor")).findAny().get();
+            RolType edil = roles.stream().filter(x->x.getName().equals("Edil")).findAny().get();
+            RolType sinRol = roles.stream().filter(x->x.getName().equals("Sin rol")).findAny().get();
+            if(part.getNumConsul()== p.getTurno()){
+                j.setRol(consul);
+            }else if(part.getNumConsul() == (p.getTurno()+1)%p.getNumJugadores()){
+                j.setRol(pretor);
+            }else if(part.getNumConsul() == (p.getTurno()+2)%p.getNumJugadores() ||part.getNumConsul() == (p.getTurno()+3)%p.getNumJugadores()){
+                j.setRol(edil);
+            }else{
+                j.setRol(sinRol);
+            }
+            if(part.getNumConsul() == p.getNumJugadores()){
+                if(part.getNumConsul() == p.getTurno()){
+                    j.setRol(consul);
+                }else if(part.getNumConsul()-1 == p.getTurno()){
+                    j.setRol(pretor);
+                }else if(part.getNumConsul()-2 == p.getTurno() || part.getNumConsul()-3 == p.getTurno()){
+                    j.setRol(edil);
+                }else{
+                    j.setRol(sinRol);
+                }
             }
             save2(j);
         }
