@@ -1,20 +1,12 @@
 package org.springframework.samples.petclinic.partida;
-
 import java.security.Principal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.samples.petclinic.jugador.Jugador;
@@ -48,7 +40,6 @@ public class PartidaController {
     public static final String ESCOGER_EDIL = "partidas/escogerEdil";
     public static final String PRETOR_EDIT2 = "partidas/pretorEdit2";
     public static final String EDIL_EDIT = "partidas/edilEdit";
-
 
     private PartidaService partidaService;
 
@@ -340,18 +331,7 @@ public class PartidaController {
         jugadorService.save2(j);
         RolType sinRol = roles.stream().filter(x->x.getName().equals("Sin rol")).findAny().get();
         RolType consul = roles.stream().filter(x->x.getName().equals("Consul")).findAny().get();
-        Integer numElegidos = p.getJugadores().stream().mapToInt(x->x.getYaElegido()?1:0).sum();
-        if(numElegidos == 3){
-            for(int i = 0;i<p.getJugadores().size();i++){
-                Jugador jug = p.getJugadores().get(i);
-                if(p.getRonda()==2&&p.getTurno() == 1&&jug.getRol().getName().equals("Consul")){
-                        jug.setRol(consul);
-                }else if(!jug.getYaElegido()){
-                    jug.setRol(sinRol);
-                }
-                jugadorService.save2(jug);
-            }
-        }
+        jugadorService.reestableceRolesDeNoElegidos(p, consul, sinRol);
         ModelAndView res = new ModelAndView("redirect:/partidas/jugar/{id}");
         return res;
     }
@@ -360,19 +340,7 @@ public class PartidaController {
     public ModelAndView escogerEdil(@PathVariable("id") Long id, HttpServletResponse response, Principal principal){
         Partida p = partidaService.getPartidaById(id).get();
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
-        List<Jugador> jugadores = p.getJugadores();
-        List<Jugador> jugadoresFiltrado = List.of();
-        if (p.getNumJugadores() == 5) {
-            jugadoresFiltrado = jugadores.stream()
-                    .filter(x-> x.getRol() != null).filter(x-> !x.getRol().getName().equals("Consul"))
-                    .filter(x-> x.getYaElegido() != true)
-                    .collect(Collectors.toList());
-        } else {
-            jugadoresFiltrado = jugadores.stream()
-            .filter(x-> x.getRol() != null).filter(x-> !x.getRol().getName().equals("Edil"))
-            .filter(x-> !x.getRol().getName().equals("Consul")).filter(x-> x.getYaElegido() != true)
-            .collect(Collectors.toList());
-        }
+        List<Jugador> jugadoresFiltrado = jugadorService.jugadoresQuePuedenSerEdil(p);
         List<String> opciones = j.getParticipacionEnPartida(p).getOpciones().stream().map(x->x.getName()).collect(Collectors.toList());
         ModelAndView res = pasarPropiedadesComunes(ESCOGER_EDIL, principal, p, j);
         res.addObject("opciones", opciones);
@@ -391,18 +359,7 @@ public class PartidaController {
         jugadorService.save2(j);
         RolType sinRol = roles.stream().filter(x->x.getName().equals("Sin rol")).findAny().get();
         RolType consul = roles.stream().filter(x->x.getName().equals("Consul")).findAny().get();
-        Integer numElegidos = p.getJugadores().stream().mapToInt(x->x.getYaElegido()?1:0).sum();
-        if(numElegidos == 3){
-            for(int i = 0;i<p.getJugadores().size();i++){
-                Jugador jug = p.getJugadores().get(i);
-                if(p.getRonda()==2&&p.getTurno() == 1 &&jug.getRol().getName().equals("Consul")){
-                        jug.setRol(consul);
-                }else if(!jug.getYaElegido()){
-                    jug.setRol(sinRol);
-                }
-                jugadorService.save2(jug);
-            }
-        }
+        jugadorService.reestableceRolesDeNoElegidos(p, consul, sinRol);
         ModelAndView res = new ModelAndView("redirect:/partidas/jugar/{id}");
         return res; 
     }
@@ -420,26 +377,11 @@ public class PartidaController {
         if(p.getRonda()!=2){
             jugadorService.reparteRoles(p);
         }
-        if(p.getTurno()>p.getNumJugadores()){
-            p.setRonda(p.getRonda()+1);
-            p.setTurno(1);
-            jugadorService.preparaRolesRonda2(p);;
-        }
+        jugadorService.cambiaRonda(p);
         if(p.getRonda() == 3){
             p.terminaPartida(roles);
         }
-        if(p.getTurno()==2 && p.getRonda()==2){
-                for(int i=0;i<p.getJugadores().size();i++){
-                    RolType consul = roles.stream().filter(x->x.getName().equals("Consul")).findAny().get();
-                    Jugador jug = p.getJugadores().get(i);
-                    RolType sr = roles.stream().filter(x->x.getName().equals("Sin rol")).findAny().get();
-                    if(jug.getParticipacionEnPartida(p).getNumConsul() == p.getTurno()){
-                        jug.setRol(consul);
-                    }else if(jug.getRol().getName().equals("Consul")){
-                        jug.setRol(sr);
-                    }
-                }
-        }
+        jugadorService.consulRonda2(p, roles);
         ModelAndView res = new ModelAndView("redirect:/partidas/jugar/{id}");
         partidaService.save(p);
         participacionService.save(participacion);  
@@ -452,21 +394,7 @@ public class PartidaController {
             return new ModelAndView(PARTIDAS_CREAR,br.getModel());
         }
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
-        List<Jugador> ls = List.of(j);
-        partida.setRonda(0);
-        partida.setTurno(0);
-        partida.setTiempo(0);
-        partida.setFechaInicio(LocalDateTime.now());
-        partida.setVotosContraCesar(0);
-        partida.setVotosFavorCesar(0);
-        partida.setFaccionGanadora(null);
-        partida.setParticipaciones(new ArrayList<>());
-        partida.setJugadores(ls);
-        partida.setAnfitrion(j.getUser().getUsername());
-        partida.setLimite(partida.calculaLimite(partida.getNumJugadores()));
-        partida.setActiva(true);
-        partida.setFase(0);
-        partidaService.save(partida);
+        partidaService.CrearPartida(j, partida);
         ModelAndView result =new ModelAndView("redirect:/partidas/join/"+partida.getId());
         return result;
     }
@@ -491,44 +419,14 @@ public class PartidaController {
         Partida p = partidaService.getPartidaById(partidaId).get();
         Voto votoToUpdate = votoService.getVotoById(votoId).get();
         votoToUpdate.setElegido(voto.getElegido());
-        if(votoToUpdate.getFaccion().getName().equals("Mercader")){
+        if(votoToUpdate.getFaccion().getName().equals("Mercader")){ //Da igual lo que diga el pretor, si el voto que observa es de mercader, todos deben saberlo y quien voto está obligado a cambiarlo
             votoToUpdate.setElegido(true);
         }
         votoService.saveVoto(votoToUpdate);
         List<RolType> roles = jugadorService.getRoles();
         List<Voto> votos = votoService.getVotosRondaTurno(p);
-        if(!votoToUpdate.getElegido()){
-            participacionService.actualizaParticipacionesYPartida(votos, p);
-            if(p.getTurno()!=1 && p.getRonda()==2){
-                p.setTurno(p.getTurno()+1);
-                for(int i=0;i<p.getJugadores().size();i++){
-                    RolType consul = roles.stream().filter(x->x.getName().equals("Consul")).findAny().get();
-                    RolType sr = roles.stream().filter(x->x.getName().equals("Sin rol")).findAny().get();
-                    Jugador jug = p.getJugadores().get(i);
-                    if(jug.getParticipacionEnPartida(p).getNumConsul() == p.getTurno()){
-                        jug.setRol(consul);
-                    }else if(jug.getRol().getName().equals("Consul")){
-                        jug.setRol(sr);
-                    }
-                    jugadorService.save2(jug);
-                }
-                if(p.getTurno()>p.getNumJugadores()){
-                    p.setRonda(p.getRonda()+1);
-                    p.setTurno(1);
-                }
-            }
-            if(p.getRonda() == 2 && p.getTurno()>=2){
-                if(p.getVotosContraCesar()> p.getLimite() || p.getVotosFavorCesar() >p.getLimite()){
-                    p.setRonda(3);
-                    p.setTurno(1);
-                }
-            }
-            if(p.getRonda() == 3){
-                p.terminaPartida(roles);
-            }
-            for(int i = 0;i<p.getJugadores().size();i++){
-                p.getJugadores().get(i).setYaElegido(false);
-            }
+        if(!votoToUpdate.getElegido()){ // Si no se elige el voto, se tiene que actualizar el marcador
+            actualizaMarcadorYDatosRonda2(p, votos, roles);
         }
         if(votoToUpdate.getElegido()){
             p.setFase(1);
@@ -538,6 +436,25 @@ public class PartidaController {
         }
         partidaService.save(p);
         return "redirect:/partidas/jugar/{partidaId}";
+    }
+
+    public void actualizaMarcadorYDatosRonda2(Partida p,List<Voto> votos,List<RolType> roles){
+        participacionService.actualizaParticipacionesYPartida(votos, p);
+            if(p.getTurno()!=1 && p.getRonda()==2){
+                p.setTurno(p.getTurno()+1);
+                jugadorService.consulRonda2(p, roles);
+                if(p.getTurno()>p.getNumJugadores()){
+                    p.setRonda(p.getRonda()+1);
+                    p.setTurno(1);
+                }
+            }
+            partidaService.comprobarSiSobrepasaLimite(p);
+            if(p.getRonda() == 3){
+                p.terminaPartida(roles);
+            }
+            for(int i = 0;i<p.getJugadores().size();i++){
+                p.getJugadores().get(i).setYaElegido(false);
+            }
     }
     
     @GetMapping("/jugar/edil/edit/{partidaId}/{votoId}")
@@ -576,22 +493,7 @@ public class PartidaController {
             p.setFase(0);
         }
         List<RolType> roles = jugadorService.getRoles();
-                for(int i=0;i<p.getJugadores().size();i++){
-                    RolType consul = roles.stream().filter(x->x.getName().equals("Consul")).findAny().get();
-                    RolType sr = roles.stream().filter(x->x.getName().equals("Sin rol")).findAny().get();
-                    Jugador jug = p.getJugadores().get(i);
-                    if(p.getRonda()==2&&p.getTurno()!=1){
-                        if(jug.getRol().getName().equals("Consul")){
-                            jug.setRol(sr);
-                        }
-                        if(jug.getParticipacionEnPartida(p).getNumConsul() == p.getTurno()){
-                            jug.setRol(consul);
-                        }else if(jug.getRol().getName().equals("Consul")){
-                            jug.setRol(sr);
-                        }
-                        jugadorService.save2(jug);
-                    }
-                }
+        jugadorService.consulRonda2(p, roles);
         for(int i = 0;i<p.getJugadores().size();i++){
             p.getJugadores().get(i).setYaElegido(false);
         }
@@ -599,12 +501,7 @@ public class PartidaController {
             p.setRonda(p.getRonda()+1);
             p.setTurno(1);
         }
-        if(p.getRonda() == 2 && p.getTurno()>=2){
-            if(p.getVotosContraCesar()> p.getLimite() || p.getVotosFavorCesar() >p.getLimite()){
-                p.setRonda(3);
-                p.setTurno(1);
-            }
-        }
+        partidaService.comprobarSiSobrepasaLimite(p);
         if(p.getRonda() == 3){
             p.terminaPartida(roles);
         }        

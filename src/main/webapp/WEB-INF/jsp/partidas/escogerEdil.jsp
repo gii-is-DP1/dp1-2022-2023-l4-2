@@ -39,7 +39,6 @@
 
                 </div>
                 <div style="text-align:left">
-                    Tus opciones: 
                     <div>
                         <c:forEach items="${elegir}" var="opcion">
                             <tr style = "text-align: left; ";>

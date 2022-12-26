@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -68,7 +69,7 @@ public class JugadorService {
     }
     @Transactional
     public void save2(Jugador j) throws DataAccessException{
-        jugadorRepo.save(j);
+        jugadorRepo.save(j);//Necesitamos este método porque el otro save, tambien guarda las autoridades y el usuario, este lo usamos para solo modificar datos
     }
 
     @Transactional
@@ -184,5 +185,59 @@ public class JugadorService {
         }
     }
 
-    
+    public void reestableceRolesDeNoElegidos(Partida p,RolType consul,RolType sinRol){
+        Integer numElegidos = p.getJugadores().stream().mapToInt(x->x.getYaElegido()?1:0).sum();
+        if(numElegidos == 3){
+            for(int i = 0;i<p.getJugadores().size();i++){
+                Jugador jug = p.getJugadores().get(i);
+                if(p.getRonda()==2&&p.getTurno() == 1&&jug.getRol().getName().equals("Consul")){
+                        jug.setRol(consul);
+                }else if(!jug.getYaElegido()){
+                    jug.setRol(sinRol);
+                }
+                save2(jug);
+            }
+        }
+    }
+
+    public List<Jugador> jugadoresQuePuedenSerEdil(Partida p){
+        List<Jugador> jugadores = p.getJugadores();
+        List<Jugador> jugadoresFiltrado = List.of();
+        if (p.getNumJugadores() == 5) {
+            jugadoresFiltrado = jugadores.stream()
+                    .filter(x-> x.getRol() != null).filter(x-> !x.getRol().getName().equals("Consul"))
+                    .filter(x-> x.getYaElegido() != true)
+                    .collect(Collectors.toList());
+        } else {
+            jugadoresFiltrado = jugadores.stream()
+            .filter(x-> x.getRol() != null).filter(x-> !x.getRol().getName().equals("Edil"))
+            .filter(x-> !x.getRol().getName().equals("Consul")).filter(x-> x.getYaElegido() != true)
+            .collect(Collectors.toList());
+        }
+        return jugadoresFiltrado;
+    }
+
+    public void consulRonda2(Partida p, List<RolType> roles){
+        if(p.getTurno()>=2 && p.getRonda()==2){
+            for(int i=0;i<p.getJugadores().size();i++){
+                RolType consul = roles.stream().filter(x->x.getName().equals("Consul")).findAny().get();
+                Jugador jug = p.getJugadores().get(i);
+                RolType sr = roles.stream().filter(x->x.getName().equals("Sin rol")).findAny().get();
+                if(jug.getParticipacionEnPartida(p).getNumConsul() == p.getTurno()){
+                    jug.setRol(consul);
+                }else if(jug.getRol().getName().equals("Consul")){
+                    jug.setRol(sr);
+                }
+                save2(jug);
+            }
+        }
+    }
+
+    public void cambiaRonda(Partida p){
+        if(p.getTurno()>p.getNumJugadores()){
+            p.setRonda(p.getRonda()+1);
+            p.setTurno(1);
+            preparaRolesRonda2(p);
+        }
+    }
 }
