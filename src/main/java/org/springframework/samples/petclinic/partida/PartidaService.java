@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.partida;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -142,6 +143,33 @@ public class PartidaService {
             jugadores.add(j);
             p.setJugadores(jugadores);
             edit(p);
+        }
+    }
+
+    public void CrearPartida(Jugador j,Partida partida){
+        List<Jugador> ls = List.of(j);
+        partida.setRonda(0);
+        partida.setTurno(0);
+        partida.setTiempo(0);
+        partida.setFechaInicio(LocalDateTime.now());
+        partida.setVotosContraCesar(0);
+        partida.setVotosFavorCesar(0);
+        partida.setFaccionGanadora(null);
+        partida.setParticipaciones(new ArrayList<>());
+        partida.setJugadores(ls);
+        partida.setAnfitrion(j.getUser().getUsername());
+        partida.setLimite(partida.calculaLimite(partida.getNumJugadores()));
+        partida.setActiva(true);
+        partida.setFase(0);
+        save(partida);
+    }
+
+    public void comprobarSiSobrepasaLimite(Partida p){
+        if(p.getRonda() == 2 && p.getTurno()>=2){
+            if(p.getVotosContraCesar()> p.getLimite() || p.getVotosFavorCesar() >p.getLimite()){
+                p.setRonda(3);
+                p.setTurno(1);
+            }
         }
     }
 }
