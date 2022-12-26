@@ -114,7 +114,7 @@
         </c:if>
         <c:if test="${jugadorLog.rol.getName() == 'Consul'}">
             <c:if test="${partida.getRonda() == 2 && partida.fase !=2}">
-                <c:if test="${!hayConsul}">
+                <c:if test="${!hayPretor}">
                     <a class="btn btn-default" href="/partidas/jugar/consul/eleccionP/${partida.id}">Escoger Pretor</a>
                 </c:if>
             </c:if>

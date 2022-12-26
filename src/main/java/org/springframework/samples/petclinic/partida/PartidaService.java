@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.samples.petclinic.jugador.Jugador;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.ModelAndView;
 
 @Service
 public class PartidaService {
@@ -124,5 +125,23 @@ public class PartidaService {
             v.setFaccion(getFaccionesTypeByName("Leal"));
         }
         return v;
+    }
+
+    public ModelAndView BorraPartidaSiAnfitionSale(Partida p,ModelAndView result,Jugador j){
+
+        if(!p.getJugadores().contains(j)){
+            result =new ModelAndView("redirect:/partidas/join/");
+            deletePartida(p.getId());
+        }
+        return result;
+    }
+
+    public void añadeJugadorAPartida(Jugador j,Partida p){
+        if(!p.getJugadores().contains(j)){
+            List<Jugador> jugadores =p.getJugadores();
+            jugadores.add(j);
+            p.setJugadores(jugadores);
+            edit(p);
+        }
     }
 }
