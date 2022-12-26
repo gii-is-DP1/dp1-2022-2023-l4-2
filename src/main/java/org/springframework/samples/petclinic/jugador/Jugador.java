@@ -53,7 +53,7 @@ public class Jugador extends Person{
     
     public Integer getPartidasGanadas() {
         Integer res = 0;
-        List<Partida> partidas = getPartidas();
+        List<Partida> partidas = getPartidas().stream().filter(x->!x.getParticipaciones().isEmpty()).filter(x->x.getActiva() ==false).collect(Collectors.toList());
         List<Participacion> participaciones = getParticipaciones();
         for (Partida partida : partidas) {
             for (Participacion participacion : participaciones) {

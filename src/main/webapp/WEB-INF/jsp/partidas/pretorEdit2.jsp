@@ -74,11 +74,6 @@
                 </c:if>
             </div>
         </div>
-
-
-
-
-       
         <form:form modelAttribute="voto"
                    class="form-horizontal">
             <input type="hidden" name="id" value="${voto.id}"/>
