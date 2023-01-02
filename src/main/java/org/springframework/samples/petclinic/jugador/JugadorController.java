@@ -76,14 +76,24 @@ public String  initCreatinForm(Map<String, Object> model){
 }
 
 @PostMapping("/new")
-public String processCreationForm(@Valid Jugador j, BindingResult br){
+public ModelAndView processCreationForm(@Valid Jugador j, BindingResult br){
+    ModelAndView res = new ModelAndView(JUGADOR_CREATE);
     if(br.hasErrors()){
-        return JUGADOR_CREATE;
+        return res;
+    }else if(j.getUser().getUsername().length()<5 && j.getUser().getPassword().length()<4){
+        res.addObject("Mensaje1", "El usuario es demasiado corto");
+        res.addObject("Mensaje2", "La contraseña es demaiado corta");
+        return res;
+    }else if(j.getUser().getUsername().length()<5){
+        res.addObject("Mensaje1", "El usuario es demasiado corto");
+        return res;
+    }else if(j.getUser().getPassword().length()<4){
+        res.addObject("Mensaje2", "La contraseña es demaiado corta");
+        return res;
     }else{
         j.setRol(jugadorService.getRoles().get(3));
         this.jugadorService.saveJugador(j);
-
-        return "home";
+        return new ModelAndView("redirect:/home");
     }
 }
     @GetMapping("/perfil/{username}")

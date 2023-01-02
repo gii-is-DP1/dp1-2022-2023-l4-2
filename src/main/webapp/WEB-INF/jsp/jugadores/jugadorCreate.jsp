@@ -15,8 +15,13 @@
             <petclinic:inputField label="Nombre" name="firstName"/>
             <petclinic:inputField label="Apellidos" name="lastName"/>
             <petclinic:inputField label="Nombre de usuario" name="user.username"/>
+            <div style="color: red;">
+            <c:out value ="${Mensaje1}"/>
+            </div>
             <petclinic:inputField label="Contrase&ntilde;a" name="user.password"/>
-
+            <div style="color: red;">
+            <c:out value = "${Mensaje2}"/>
+            </div>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">

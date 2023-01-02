@@ -19,6 +19,8 @@ import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.validator.constraints.Length;
+
 /**
  * Simple JavaBean domain object representing an person.
  *
@@ -28,10 +30,12 @@ import javax.validation.constraints.NotEmpty;
 public class Person extends BaseEntity {
 
 	@Column(name = "first_name")
+	@Length(min = 3)
 	@NotEmpty
 	protected String firstName;
 
 	@Column(name = "last_name")
+	@Length(min = 3)
 	@NotEmpty
 	protected String lastName;
 

@@ -100,7 +100,8 @@ public class JugadorServiceTests {
     public void saveJugadorTest(){
         Jugador j = new Jugador();
         User u = new User();
-        u.setUsername("javi");
+        u.setUsername("javielillo");
+        u.setPassword("1324134");
         j.setUser(u);
         j.setFirstName("Javier");
         j.setLastName("Varo");

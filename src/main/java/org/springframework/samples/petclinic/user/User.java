@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.Length;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,10 +18,11 @@ import lombok.Setter;
 @Entity
 @Table(name = "users")
 public class User{
+	@Length(min = 5)
 	@Id
 	String username;
 	
-	
+	@Length(min = 4)
 	String password;
 	
 	boolean enabled;
