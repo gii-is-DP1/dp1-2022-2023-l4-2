@@ -93,7 +93,7 @@ class OwnerServiceTests {
 		owner.setCity("Wollongong");
 		owner.setTelephone("4444444444");
                 User user=new User();
-                user.setUsername("Sam");
+                user.setUsername("Samsss");
                 user.setPassword("supersecretpassword");
                 user.setEnabled(true);
                 owner.setUser(user);                
