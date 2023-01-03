@@ -8,7 +8,7 @@
 <petclinic:layout pageName="listaPartidasEspectar">
 
     <button>
-        <a class="btn btn-default" href="/partidas/join"> Volver</a></th>
+        <a class="btn btn-default" href="/home"> Volver</a></th>
     </button>
 
     <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>Partidas a espectar de ${nombreUsuario}</h2>
