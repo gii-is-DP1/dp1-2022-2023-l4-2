@@ -23,15 +23,8 @@
                         </c:choose> 
             </c:forEach>
 
-        <form:form modelAttribute="mensaje" class="form-horizontal">
-                <div class="form-group has-feedback">                
-                    <petclinic:inputField label="Escribe algo:" name="contenido"/>
-                </div>
-                <div class="form-group">
-                        
-                            <button class="btn btn-default"  type="submit">Enviar</button>
-                        
-                </div>
-            </form:form>    
+            <button>
+                <a class="btn btn-default" href="/chat/escribirMensaje/${id}" target="_blank">Envia un mensaje</a></th>
+            </button>
     </jsp:body>    
 </petclinic:lo2>
