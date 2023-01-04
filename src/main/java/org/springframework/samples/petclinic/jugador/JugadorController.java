@@ -100,6 +100,20 @@ public ModelAndView processCreationForm(@Valid Jugador j, BindingResult br){
     public ModelAndView showPerfil(@PathVariable("username") String username,  Principal principal){
         ModelAndView res = new ModelAndView(JUGADOR_PERFIL);
         Jugador j = jugadorService.getJugadorByUsername(username);
+        List<Jugador> amigos = jugadorService.getJugadorByUsername(username).getAmigoDe();
+        Integer contAmigos = 0;
+        Integer contSeguidores = 0;
+        List<Jugador> todos = jugadorService.getJugadores();
+        for(Jugador e : todos){
+            if(e.getAmigoDe().contains(j)){
+                contSeguidores++;
+            }
+        }
+        for(Jugador a : amigos){
+            if(a.getAmigoDe().contains(j)){
+                contAmigos++;
+            }
+        }
         if(j==null){
             res = new ModelAndView("redirect:/exception");
         }else{
@@ -112,6 +126,9 @@ public ModelAndView processCreationForm(@Valid Jugador j, BindingResult br){
             res.addObject("tiempoJugado", j.getTiempoJugado());
             res.addObject("faccionFavorita", j.getFaccionFavorita());
             res.addObject("nombreUsuario", principal.getName());
+            res.addObject("siguiendo", amigos.size());
+            res.addObject("amigosC", contAmigos);
+            res.addObject("seguidores", contSeguidores);
         }
         return res;
     }

@@ -38,6 +38,33 @@
         </tbody>
     </table>
 
+
+    <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>Estas siguiendo a:</h2> 
+    <table id="amigosTable" class="table table-striped">
+        <thead>
+        <tr>
+            <th>Nombre de usuario</th>
+            <th>Dejar de seguir</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${amigos}" var="amigo">
+            <c:if test = "${amigo.user.username != username}">
+                <tr>
+                    <td>
+                        <c:out value="${amigo.user.username}"/>  
+                    </td>
+                    <td>
+                        <a href="/jugadores/perfil/${username}/amigos/delete/${amigo.user.username}"> 
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        </a> 
+                    </td>
+                </tr>
+            </c:if>
+        </c:forEach>
+        </tbody>
+    </table>
+
     <table>
         <tr>
             <th><a class="btn btn-default" href="/jugadores/search">Todos los jugadores</a></th>

@@ -81,6 +81,18 @@
             <th>Facci&#243;n favorita</th>
             <th><c:out value = "${faccionFavorita}"/></th>
         </tr>
+        <tr>
+            <th>Numero de Amigos</th>
+            <th><c:out value = "${amigosC}"/></th>
+        </tr>
+        <tr>
+            <th>Numero de seguidores</th>
+            <th><c:out value = "${seguidores}"/></th>
+        </tr>
+        <tr>
+            <th>Siguiendo</th>
+            <th><c:out value = "${siguiendo}"/></th>
+        </tr>
     </table>
     <table  style= "width: 100%; text-align:center;position: relative;">
         <tr>
