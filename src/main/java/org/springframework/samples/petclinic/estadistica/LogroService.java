@@ -21,11 +21,11 @@ public class LogroService {
         return logroRepo.findAll();
     }
     @Transactional
-    public void deleteLogro(long id) {
+    public void deleteLogro(int id) {
         logroRepo.deleteById(id);
     }
     @Transactional(readOnly = true)
-    public Optional<Logro> getLogroById(long id) {
+    public Optional<Logro> getLogroById(int id) {
 		Optional<Logro> result = logroRepo.findById(id);
 		return result;
 	}

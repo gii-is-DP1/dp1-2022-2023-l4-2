@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.data.repository.CrudRepository;
 
 @Repository
-public interface LogroRepository extends CrudRepository<Logro, Long>{
+public interface LogroRepository extends CrudRepository<Logro, Integer>{
     List<Logro> findAll();
 }
