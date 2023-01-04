@@ -4,7 +4,7 @@ import java.security.Principal;
 
 import java.util.List;
 
-
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +21,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
+
 @Controller
 @RequestMapping("/chat")
 public class ChatController {
 
     public static final String SHOW_CHAT = "partidas/chat";
+    public static final String ESCRIBIR_MENSAJE = "partidas/escribirMensaje";
     
     MensajeService mensajeService;
 
@@ -70,24 +73,35 @@ public class ChatController {
     }
 
     @GetMapping("/{id}")
-    public ModelAndView chatDePartida(@PathVariable("id") Long id, Principal principal){
-        Partida pActual = partidaService.getPartidaById(id).get();
+    public ModelAndView chatDePartida(@PathVariable("id") Long id, Principal principal, HttpServletResponse response){
+        response.addHeader("Refresh", "1");
         Chat c = chatService.getByPartidaId(id);
         Jugador jActual = jugadorService.getJugadorByUsername(principal.getName());
         ModelAndView result = new ModelAndView(SHOW_CHAT);
         result.addObject("jActual", jActual);
-        result.addObject("pActual", pActual);
+        result.addObject("id", id);
         result.addObject("chat", c);
-        result.addObject("mensaje", new Mensaje());
         
         return result;
     }
 
-    @PostMapping("/{id}")
+    @GetMapping("/escribirMensaje/{id}")
+    public ModelAndView escribirMensaje(@PathVariable("id") Long id, Principal principal){
+        ModelAndView result = new ModelAndView(ESCRIBIR_MENSAJE);
+        Chat c = chatService.getByPartidaId(id);
+        Jugador jActual = jugadorService.getJugadorByUsername(principal.getName());
+        result.addObject("jActual", jActual);
+        result.addObject("id", id);
+        result.addObject("chat", c);
+        result.addObject("mensaje", new Mensaje());
+        return result;
+    }
+
+    @PostMapping("/escribirMensaje/{id}")
     public ModelAndView nuevoMensaje(@PathVariable("id") Long id, @Valid Mensaje mensaje, BindingResult br, Principal principal){
 
         if(br.hasErrors()){
-            return new ModelAndView(SHOW_CHAT,br.getModel());
+            return new ModelAndView(ESCRIBIR_MENSAJE,br.getModel());
         }
         Jugador jActual = jugadorService.getJugadorByUsername(principal.getName());
         Integer idMax = mensajeService.devuelveIdMax();
@@ -99,7 +113,7 @@ public class ChatController {
         m.add(mensaje);
         c.setMensajes(m);
         chatService.edit(c);
-        ModelAndView result = new ModelAndView("redirect:/chat/{id}");
+        ModelAndView result = new ModelAndView("redirect:/chat/escribirMensaje/{id}");
         return result;
     }
 
