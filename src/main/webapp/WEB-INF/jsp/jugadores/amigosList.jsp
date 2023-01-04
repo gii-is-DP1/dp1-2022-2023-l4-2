@@ -19,16 +19,20 @@
         <tbody>
         <c:forEach items="${amigos}" var="amigo">
             <c:if test = "${amigo.user.username != username}">
-                <tr>
-                    <td>
-                        <c:out value="${amigo.user.username}"/>  
-                    </td>
-                    <td>
-                        <a href="/jugadores/perfil/${username}/amigos/delete/${amigo.user.username}"> 
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                        </a> 
-                    </td>
-                </tr>
+                <c:forEach items="${amigo.amigoDe}" var="amigoDos">
+                    <c:if test = "${amigoDos.user.username == username}">
+                        <tr>
+                            <td>
+                                <c:out value="${amigo.user.username}"/>  
+                            </td>
+                            <td>
+                                <a href="/jugadores/perfil/${username}/amigos/delete/${amigo.user.username}"> 
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                </a> 
+                            </td>
+                        </tr>
+                    </c:if>
+                </c:forEach>
             </c:if>
         </c:forEach>
         </tbody>
