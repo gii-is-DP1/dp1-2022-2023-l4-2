@@ -74,10 +74,10 @@ public class LogroServiceTests {
     void shouldSaveLogro(){
         List<Logro> logros = logroService.getLogros();
         Logro logro = logros.get(0);
-        assertEquals(logro.getId(), 1);
+        assertEquals(logro.getId(), (Integer)1);
         logro.setId(2);
         logroService.save(logro);
-        assertEquals(logro.getId(), 2);
+        assertEquals(logro.getId(), (Integer) 2);
     }
 
     @Test

@@ -14,18 +14,16 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.samples.petclinic.model.BaseEntity;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
 @Entity
-public class Logro implements Serializable {
-    @Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false, precision=10)
-    @NotNull
-	private long id;
+public class Logro extends BaseEntity implements Serializable {
+    
     @NotBlank
     @Size(min = 3, max = 20)
     @NotNull

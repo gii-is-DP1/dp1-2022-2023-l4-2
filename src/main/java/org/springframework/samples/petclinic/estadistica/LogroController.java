@@ -37,13 +37,13 @@ public class LogroController {
     }
 
     @GetMapping("/delete/{id}")
-    public ModelAndView deleteLogro(@PathVariable("id") long id) {
+    public ModelAndView deleteLogro(@PathVariable("id") int id) {
         logroService.deleteLogro(id);
         return new ModelAndView("redirect:/logros");
     }
 
     @GetMapping("/edit/{id}")
-    public ModelAndView editLogro(@PathVariable("id") long id) {
+    public ModelAndView editLogro(@PathVariable("id") int id) {
         ModelAndView result = new ModelAndView(LOGROS_FORM);
         Optional<Logro> logro = logroService.getLogroById(id);
         if (logro.isPresent()) {
