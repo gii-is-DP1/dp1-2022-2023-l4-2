@@ -1,8 +1,5 @@
 package org.springframework.samples.petclinic.partida;
-
 import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
@@ -33,9 +30,6 @@ public class Participacion extends BaseEntity{
     private long votosFavorCesar;
 
     private long votosNeutros;
-
-    @ManyToOne(cascade =  CascadeType.ALL)
-    Partida partidas;
 
     @ManyToMany
     List<FaccionType> opciones;
