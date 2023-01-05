@@ -9,7 +9,7 @@
                 <th style="text-align: center;">
                     <spring:url value="/resources/images/errorconsul.png" var="errorImage"/>
                     <img src="${errorImage}"/>
-                    <h2 style="font-family: 'Dalek Pinpoint', sans-serif;width: 50%; text-align:center;position: relative;color: black;background-color: rgb(236, 182, 96);border-color: rgb(121, 102, 6); border-width: 2mm; ;">Ha ocurrido un error por que no existe el recurso que has solicitado</h2>
+                    <h2 style="font-family: 'Dalek Pinpoint', sans-serif;width: 50%; text-align:center;position: relative;color: black;background-color: rgb(236, 182, 96);border-color: rgb(121, 102, 6); border-width: 2mm; ;">Ha ocurrido un error porque no existe el recurso que has solicitado</h2>
                 </th>
             </tr>
 
