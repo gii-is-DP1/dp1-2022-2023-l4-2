@@ -59,11 +59,11 @@ public class PartidaServiceTests {
         participacion1.setEsAnfitrion(true);
         participacion1.setId(99);
         participacion1.setNumConsul(1);
-        participacion1.setPartidas(partida);
+        //participacion1.setPartidas(partida);
         participacion2.setEsAnfitrion(false);
         participacion2.setId(123);
         participacion2.setNumConsul(3);
-        participacion2.setPartidas(partida);
+        //participacion2.setPartidas(partida);
         jugador1.setId(10);
         jugador1.setFirstName("Paco");
         jugador1.setLastName("Candela");

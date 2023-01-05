@@ -70,7 +70,6 @@ public class ParticipacionService {
         part.setVotosContraCesar(0);
         part.setVotosFavorCesar(0);
         part.setVotosNeutros(0);
-        part.setPartidas(p);
         part.setFaccionApoyada(null);
         part.setOpciones(List.of());
         List<Participacion> ls2 = p.getParticipaciones();
