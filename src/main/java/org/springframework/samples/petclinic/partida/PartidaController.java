@@ -213,6 +213,7 @@ public class PartidaController {
         Partida p = partidaService.getPartidaById(id).get();
         result.addObject("partida", p);
         result.addObject("principal", principal);
+        result.addObject("faccionGanadora", p.getFaccionGanadora());
         return result;
     }
 

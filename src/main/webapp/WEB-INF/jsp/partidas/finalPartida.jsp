@@ -49,11 +49,9 @@
                         </div>
                     </div>
                 </c:if>
-            </div>
-        </div>
-
+                
         <c:if test="${partida.ronda == 3}">
-            
+            <div>
             <div style="text-align:left">
                 Facci&#243;n ganadora
                 <div>
@@ -78,6 +76,7 @@
                         </tr>
                 </div>
             </div>
+        </div>
             <div>
                 <tr style = "text-align: center; ";>
                     <td>
