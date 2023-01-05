@@ -26,6 +26,8 @@
         <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 20px;">Ronda:  <c:out value="${partida.ronda}"/></h2>
         <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 20px;">Turno:  <c:out value="${partida.turno}"/></h2>
 
+        <c:if test="${partida.ronda != 3}">
+
         <div style="text-align:left">
             Jugadores de la partida:
             <div>
@@ -40,7 +42,35 @@
                 </c:forEach>
             </div>
         </div>
+    </c:if>
 
+        <c:if test="${partida.ronda == 3}">
+            
+            <div style="text-align:left">
+                Facci&#243;n ganadora
+                <div>
+                        <tr style = "text-align: center; ";>
+                            <td>
+                                <div>
+                                    <c:out value="${faccionGanadora.getName()}"/> 
+                                </div>
+                            </td>
+                        </tr>
+                </div>
+            </div>
+            <div style="text-align:right">
+                Tiempo jugado
+                <div>
+                        <tr style = "text-align: center; ";>
+                            <td>
+                                <div>
+                                    <c:out value="${partida.getTiempo()} MIN"/>
+                                </div>
+                            </td>
+                        </tr>
+                </div>
+            </div>
+        </c:if>
         <div style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 20px;text-align: right;">
             <button>
                 <a class="btn btn-default" href="/home"> Inicio </a></th>
