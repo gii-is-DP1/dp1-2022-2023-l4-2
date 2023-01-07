@@ -15,6 +15,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.petclinic.jugador.Jugador;
 import org.springframework.samples.petclinic.jugador.JugadorService;
+import org.springframework.samples.petclinic.jugador.RolType;
 import org.springframework.stereotype.Service;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
@@ -31,13 +32,14 @@ public class VotoServiceTests {
         this.jugadorService = jugadorService;
     }
 
+   
     @Test
-    public void getVotosTest(){
+    public void getVotosTest() throws VotoDuplicadoException{
         //Añadir voto
         Voto voto = new Voto();
         voto.setRonda(2);
         voto.setTurno(1);
-        votoService.saveVoto(voto);
+        votoService.saveVoto(voto,null);
 
         List<Voto> votos = votoService.getVotos();
         assertNotNull(votos);
@@ -45,7 +47,7 @@ public class VotoServiceTests {
     }
 
     @Test
-    public void getVotosRondaTurnoTest(){
+    public void getVotosRondaTurnoTest() throws VotoDuplicadoException{
         //Partida
         Partida partida1 = partidaService.getPartidaById(1).get();
 
@@ -54,7 +56,7 @@ public class VotoServiceTests {
         voto.setRonda(1);
         voto.setTurno(1);
         voto.setPartida(partida1);
-        votoService.saveVoto(voto);
+        votoService.saveVoto(voto,null);
 
         List<Voto> votos = votoService.getVotosRondaTurno(partida1);
         assertFalse(votos.isEmpty());
@@ -62,7 +64,7 @@ public class VotoServiceTests {
     }
 
     @Test
-    public void getVotosRondaTurnoFailTest(){
+    public void getVotosRondaTurnoFailTest() throws VotoDuplicadoException{
         //Partida
         Partida partida1 = partidaService.getPartidaById(1).get();
 
@@ -71,18 +73,18 @@ public class VotoServiceTests {
         voto.setRonda(4); //Ronda que no existe
         voto.setTurno(1);
         voto.setPartida(partida1);
-        votoService.saveVoto(voto);
+        votoService.saveVoto(voto,null);
 
         List<Voto> votos = votoService.getVotosRondaTurno(partida1);
         assertTrue(votos.isEmpty());
     }
 
     @Test
-    public void saveVotoTest() {
+    public void saveVotoTest() throws VotoDuplicadoException {
         Voto voto = new Voto();
         voto.setRonda(2);
         voto.setTurno(1);
-        votoService.saveVoto(voto);
+        votoService.saveVoto(voto,null);
 
         List<Voto> votos = votoService.getVotos();
         assertEquals(voto, votos.get(votos.size()-1));
@@ -100,7 +102,7 @@ public class VotoServiceTests {
         voto.setTurno(1);
         voto.setJugador(jugador);
         voto.setPartida(partida1);
-        votoService.saveVoto(voto);
+        votoService.saveVoto(voto,null);
 
         List<Voto> votos = votoService.getVotosTurnoJugador(partida1, jugador);
         assertFalse(votos.isEmpty());
@@ -120,7 +122,7 @@ public class VotoServiceTests {
         voto.setTurno(1);
         voto.setJugador(jugador); //Jugador que no esta en la partida
         voto.setPartida(partida1);
-        votoService.saveVoto(voto);
+        votoService.saveVoto(voto,null);
 
         assertThrows(Exception.class,()->votoService.getVotosTurnoJugador(partida1, jugador));
 
@@ -129,19 +131,19 @@ public class VotoServiceTests {
         voto.setTurno(1);
         voto.setJugador(jugador2);
         voto.setPartida(partida1);
-        votoService.saveVoto(voto);
+        votoService.saveVoto(voto,null);
 
         List<Voto> votos = votoService.getVotosTurnoJugador(partida1, jugador2);
         assertTrue(votos.isEmpty());
     }
 
     @Test
-    public void getVotoByIdTest() {
+    public void getVotoByIdTest() throws VotoDuplicadoException {
         //Añadir voto
         Voto voto = new Voto();
         voto.setRonda(2);
         voto.setTurno(1);
-        votoService.saveVoto(voto);
+        votoService.saveVoto(voto,null);
 
         Voto voto2 = votoService.getVotoById((long) voto.getId()).orElse(null);
         

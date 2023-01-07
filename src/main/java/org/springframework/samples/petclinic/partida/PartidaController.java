@@ -233,12 +233,17 @@ public class PartidaController {
 
     
     @PostMapping("/jugar/edil/{id}")
-    public ModelAndView guardarVoto(@PathVariable("id") Long id, @Valid FaccionType ft, BindingResult br, Principal principal){
+    public ModelAndView guardarVoto(@PathVariable("id") Long id, @Valid FaccionType ft, BindingResult br, Principal principal) throws VotoDuplicadoException{
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
         FaccionType faccion = partidaService.getFaccionesTypeByName(ft.getName());
         Partida p = partidaService.getPartidaById(id).get();
         Integer maxVoto = votoService.getVotos().stream().map(x->x.getId()).max(Comparator.comparing(x->x)).orElse(1);
-        votoService.CrearVoto(j,faccion,p,maxVoto);
+        try{
+            votoService.CrearVoto(j,faccion,p,maxVoto);
+        }catch(VotoDuplicadoException v){
+            ModelAndView res = new ModelAndView("redirect:/partidas/jugar/{id}");
+            return res;
+        }
         ModelAndView res = new ModelAndView("redirect:/partidas/jugar/{id}");
         return res;
     }
@@ -271,12 +276,17 @@ public class PartidaController {
 
     @PostMapping("/jugar/pretor/edit/{partidaId}/{votoId}")
     public String partidaPretor(@PathVariable("partidaId") Long partidaId,@PathVariable("votoId") Long votoId,
-                                    @Valid Voto voto,HttpServletResponse response, Principal principal){
+                                    @Valid Voto voto,HttpServletResponse response, Principal principal) throws VotoDuplicadoException{
         response.addHeader("Refresh", "10");
+        Jugador j = jugadorService.getJugadorByUsername(principal.getName());
         Partida p = partidaService.getPartidaById(partidaId).get();
         Voto votoToUpdate = votoService.getVotoById(votoId).get();
         votoToUpdate.setFaccion(voto.getFaccion());
-        votoService.saveVoto(votoToUpdate);
+        try{
+            votoService.saveVoto(votoToUpdate,j);
+        }catch(VotoDuplicadoException v){
+            return "redirect:/partidas/jugar/{partidaId}";
+        }
         List<Voto> votos = votoService.getVotosRondaTurno(p);
         participacionService.actualizaParticipacionesYPartida(votos, p);
         if(p.getTurno() !=1 &&p.getRonda()==1){
@@ -415,15 +425,20 @@ public class PartidaController {
 
     @PostMapping("/jugar/pretor/edit2/{partidaId}/{votoId}")
     public String partidaPretorEditaVoto(@PathVariable("partidaId") Long partidaId,@PathVariable("votoId") Long votoId,
-                                    @Valid Voto voto,HttpServletResponse response, Principal principal){
+                                    @Valid Voto voto,HttpServletResponse response, Principal principal) throws VotoDuplicadoException{
         response.addHeader("Refresh", "10");
+        Jugador j = jugadorService.getJugadorByUsername(principal.getName());
         Partida p = partidaService.getPartidaById(partidaId).get();
         Voto votoToUpdate = votoService.getVotoById(votoId).get();
         votoToUpdate.setElegido(voto.getElegido());
         if(votoToUpdate.getFaccion().getName().equals("Mercader")){ //Da igual lo que diga el pretor, si el voto que observa es de mercader, todos deben saberlo y quien voto está obligado a cambiarlo
             votoToUpdate.setElegido(true);
         }
-        votoService.saveVoto(votoToUpdate);
+        try{
+            votoService.saveVoto(votoToUpdate,j);
+        }catch(VotoDuplicadoException v){
+            return "redirect:/partidas/jugar/{partidaId}";
+        }
         List<RolType> roles = jugadorService.getRoles();
         List<Voto> votos = votoService.getVotosRondaTurno(p);
         if(!votoToUpdate.getElegido()){ // Si no se elige el voto, se tiene que actualizar el marcador
@@ -478,13 +493,18 @@ public class PartidaController {
 
     @PostMapping("/jugar/edil/edit/{partidaId}/{votoId}")
     public String partidaEditEditaVoto(@PathVariable("partidaId") Long partidaId,@PathVariable("votoId") Long votoId,
-                                    @Valid Voto voto,HttpServletResponse response, Principal principal){
+                                    @Valid Voto voto,HttpServletResponse response, Principal principal) throws VotoDuplicadoException{
         response.addHeader("Refresh", "10");
+        Jugador j = jugadorService.getJugadorByUsername(principal.getName());
         Partida p = partidaService.getPartidaById(partidaId).get();
         Voto votoToUpdate = votoService.getVotoById(votoId).get();
         votoToUpdate.setFaccion(voto.getFaccion());
         votoToUpdate.setElegido(false);
-        votoService.saveVoto(votoToUpdate);
+        try{
+            votoService.saveVoto(votoToUpdate,j);
+        }catch(VotoDuplicadoException v){
+            return "redirect:/partidas/jugar/{partidaId}";
+        }
         List<Voto> votos = votoService.getVotosRondaTurno(p);
         participacionService.actualizaParticipacionesYPartida(votos, p);
         if(p.getRonda()==2 && p.getTurno()==1){
@@ -525,5 +545,4 @@ public class PartidaController {
         res.addObject("faccionApoyada", faccionApoyada);
         return res;
     }
-
 }

@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.petclinic.jugador.Jugador;
 import org.springframework.samples.petclinic.jugador.JugadorService;
+import org.springframework.samples.petclinic.jugador.RolType;
 import org.springframework.stereotype.Service;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
@@ -29,14 +30,15 @@ public class VotoRepositoryTests {
         this.votoService = votoService;
         this.jugadorService = jugadorService;
     }
+    
 
     @Test
-    public void findAllTest(){
+    public void findAllTest() throws VotoDuplicadoException{
         //Añadir voto
         Voto voto = new Voto();
         voto.setRonda(2);
         voto.setTurno(1);
-        votoService.saveVoto(voto);
+        votoService.saveVoto(voto,null);
 
         //Test
         List<Voto> votos = votoRepository.findAll();
@@ -45,7 +47,7 @@ public class VotoRepositoryTests {
     }
 
     @Test
-    public void findVotosRondaTurnoTest(){
+    public void findVotosRondaTurnoTest() throws VotoDuplicadoException{
         //Partida
         Partida partida1 = partidaService.getPartidaById(1).get();
 
@@ -54,7 +56,7 @@ public class VotoRepositoryTests {
         voto.setRonda(1);
         voto.setTurno(1);
         voto.setPartida(partida1);
-        votoService.saveVoto(voto);
+        votoService.saveVoto(voto,null);
 
         //Test
         List<Voto> votos = votoRepository.findVotosRondaTurno(partida1.getRonda(), partida1.getTurno(), partida1);
@@ -63,7 +65,7 @@ public class VotoRepositoryTests {
     }
 
     @Test
-    public void findVotosRondaTurnoFailTest(){
+    public void findVotosRondaTurnoFailTest() throws VotoDuplicadoException{
         //Partida
         Partida partida1 = partidaService.getPartidaById(1).get();
 
@@ -72,7 +74,7 @@ public class VotoRepositoryTests {
         voto.setRonda(4); //Ronda que no existe
         voto.setTurno(1);
         voto.setPartida(partida1);
-        votoService.saveVoto(voto);
+        votoService.saveVoto(voto,null);
 
         //Test
         List<Voto> votos = votoRepository.findVotosRondaTurno(partida1.getRonda(), partida1.getTurno(), partida1);
@@ -80,7 +82,7 @@ public class VotoRepositoryTests {
     }
 
     @Test
-    public void findVotosTurnoJugadorTest(){
+    public void findVotosTurnoJugadorTest() throws VotoDuplicadoException{
         //Partida
         Partida partida1 = partidaService.getPartidaById(1).get();
         Jugador jugador = jugadorService.getJugadorByUsername("Guaje");
@@ -91,7 +93,7 @@ public class VotoRepositoryTests {
         voto.setTurno(1);
         voto.setJugador(jugador);
         voto.setPartida(partida1);
-        votoService.saveVoto(voto);
+        votoService.saveVoto(voto,null);
 
         //Test
         List<Voto> votos = votoRepository.findVotosTurnoJugador(jugador, partida1.getRonda(), partida1.getTurno(), partida1);
@@ -100,7 +102,7 @@ public class VotoRepositoryTests {
     }
 
     @Test
-    public void findVotosTurnoJugadorFailTest(){
+    public void findVotosTurnoJugadorFailTest() throws VotoDuplicadoException{
         //Partida
         Partida partida1 = partidaService.getPartidaById(1).get();
         Jugador jugador = jugadorService.getJugadorByUsername("Campanas");
@@ -111,7 +113,7 @@ public class VotoRepositoryTests {
         voto.setRonda(1);
         voto.setTurno(1);
         voto.setPartida(partida1);
-        votoService.saveVoto(voto);
+        votoService.saveVoto(voto,null);
 
         //Test buscando un jugador que no está
         List<Voto> votos = votoRepository.findVotosTurnoJugador(jugador, partida1.getRonda(), partida1.getTurno(), partida1);
@@ -122,7 +124,7 @@ public class VotoRepositoryTests {
         voto.setTurno(1);
         voto.setJugador(jugador2);
         voto.setPartida(partida1);
-        votoService.saveVoto(voto);
+        votoService.saveVoto(voto,null);
 
         //Test buscando una ronda que no esta en la partida
         List<Voto> votos2 = votoRepository.findVotosTurnoJugador(jugador2, partida1.getRonda(), partida1.getTurno(), partida1);

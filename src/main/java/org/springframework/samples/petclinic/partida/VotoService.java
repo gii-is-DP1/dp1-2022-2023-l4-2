@@ -30,9 +30,19 @@ public class VotoService {
         return votoRepository.findVotosRondaTurno(p.getRonda(), p.getTurno(),p);
     }
 
-    @Transactional
-    public void saveVoto(Voto v) throws DataAccessException{
-        votoRepository.save(v);
+    @Transactional(rollbackFor = VotoDuplicadoException.class)
+    public void saveVoto(Voto v,Jugador j) throws VotoDuplicadoException{
+        try{
+            if(null!=j && v.getPartida()!=null){
+                List<Voto> votosRondaTurno = getVotosTurnoJugador(v.getPartida(), j); 
+                if(j.getRol().getName().equals("Edil")&&!votosRondaTurno.isEmpty()){
+                    throw new VotoDuplicadoException();
+                }
+            }
+            votoRepository.save(v);
+        }catch(Exception e){
+            throw new VotoDuplicadoException();
+        }
     }
     
     @Transactional(readOnly = true)
@@ -69,7 +79,7 @@ public class VotoService {
         return v;
     }
 
-    public void CrearVoto(Jugador j, FaccionType faccion, Partida p, Integer maxVoto){
+    public void CrearVoto(Jugador j, FaccionType faccion, Partida p, Integer maxVoto) throws VotoDuplicadoException{
         Voto v = new Voto();
         v.setId(maxVoto+1);
         v.setFaccion(faccion);
@@ -77,6 +87,7 @@ public class VotoService {
         v.setPartida(p);
         v.setRonda(p.getRonda());
         v.setTurno(p.getTurno());
-        saveVoto(v);
+        saveVoto(v, j);
     }
+
 }
