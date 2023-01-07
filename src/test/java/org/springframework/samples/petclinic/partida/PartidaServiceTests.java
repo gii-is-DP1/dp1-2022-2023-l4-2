@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -20,6 +21,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.samples.petclinic.jugador.Jugador;
+import org.springframework.samples.petclinic.user.User;
 import org.springframework.stereotype.Service;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
@@ -172,6 +174,14 @@ public class PartidaServiceTests {
     }
 
     @Test
+    public void getPartidasNoActivasTest(){
+        List<Partida> partidasNoActivas = partidaService.getPartidasNoActivas();
+        assertNotNull(partidasNoActivas);
+        assertFalse(partidasNoActivas.size()==0);
+
+    }
+
+    @Test
     public void getPartidasPageablesSuccessTest(){
         Integer numPartidas = 5;
         Pageable pag = PageRequest.of(0,numPartidas);
@@ -211,4 +221,102 @@ public class PartidaServiceTests {
         assertNotEquals("Traidor", faccion.toString());
     }
 
+
+    @Test
+    public void cambiarVotoSuccessTest(){
+        Voto v1 = new Voto();
+        FaccionType f = new FaccionType();
+        f.setName("Traidor");
+        v1.setFaccion(f);
+        Voto v2 = partidaService.cambiarVoto(v1);
+        assertNotNull(v2);
+        assertEquals("Leal", v2.getFaccion().toString());
+    }
+
+    @Test
+    public void cambiarVotoSuccessTest2(){
+        Voto v1 = new Voto();
+        FaccionType f = new FaccionType();
+        f.setName("Leal");
+        v1.setFaccion(f);
+        Voto v2 = partidaService.cambiarVoto(v1);
+        assertNotNull(v2);
+        assertEquals("Traidor", v2.getFaccion().toString());
+    }
+
+    /*@Test
+    public void cambiarVotoFailTest(){
+        Voto v1 = new Voto();
+        FaccionType f = new FaccionType();
+        f.setName("Mercader");
+        v1.setFaccion(f);
+        Voto v2 = partidaService.cambiarVoto(v1);
+        assertNotNull(v2);
+        assertEquals("Traidor", v2.getFaccion().toString());
+    }*/
+    
+    // No tiene en cuenta el mercader
+    
+    @Test
+    public void añadeJugadorAPartidaTest(){
+        Partida p = partidaService.getPartidaById(1).get();
+        Jugador j1 = new Jugador();
+        Jugador j2 = new Jugador();
+        List<Jugador> jugadores = new ArrayList<Jugador>();
+        jugadores.add(j1);
+        jugadores.add(j2);
+        p.setJugadores(jugadores);
+        Integer numeroJugadores = p.getJugadores().size();
+        Jugador j3 = new Jugador();
+        partidaService.añadeJugadorAPartida(j3, p);
+        assertEquals(numeroJugadores+1, p.getJugadores().size());
+    }
+
+    //Podríamos poner un caso negativo para que no pueda añadir un jugador que
+    //ya está en la partida
+
+    @Test
+    public void crearPartidaTest(){
+        Jugador j1 = new Jugador();
+        Partida p = new Partida();
+        p.setNumJugadores(6);
+        User u = new User();
+        u.setUsername("Pablo");
+        j1.setUser(u);
+        j1.setFirstName("Pablo");
+        partidaService.CrearPartida(j1, p);
+        assertNotNull(p.getJugadores());
+        assertEquals("Pablo", p.getAnfitrion());
+    }
+
+    @Test
+    public void comprobarSiSobrepasaLimiteTest(){
+        Partida p = new Partida();
+        p.setNumJugadores(6);
+        p.setRonda(2);
+        p.setTurno(4);
+        p.setLimite(15);
+        p.setVotosContraCesar(16);
+        p.setVotosFavorCesar(2);
+        partidaService.comprobarSiSobrepasaLimite(p);
+        assertNotNull(p.getLimite());
+        assertEquals(3, p.getRonda());
+    }
+
+    @Test
+    public void comprobarSiSobrepasaLimiteTest2(){
+        Partida p = new Partida();
+        p.setNumJugadores(6);
+        p.setRonda(2);
+        p.setTurno(4);
+        p.setLimite(15);
+        p.setVotosContraCesar(14);
+        p.setVotosFavorCesar(2);
+        partidaService.comprobarSiSobrepasaLimite(p);
+        assertNotNull(p.getLimite());
+        assertEquals(2, p.getRonda());
+    }
+
+    
 }
+
