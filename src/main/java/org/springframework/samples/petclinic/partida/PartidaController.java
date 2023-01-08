@@ -28,6 +28,7 @@ public class PartidaController {
     public static final String PARTIDAS_SELECCIONAR = "partidas/partidasSelect";
     public static final String PARTIDAS_CREAR = "partidas/partidaCreate";
     public static final String PARTIDAS_DISPONIBLES = "partidas/partidasDisponibles";
+    public static final String PARTIDAS_ACTIVAS = "partidas/partidasActivas";
     public static final String PARTIDAS_UNIR = "partidas/partidaJoin";
     public static final String PARTIDAS_JUGAR = "partidas/partida";
     public static final String PARTIDAS_ESPECTAR = "partidas/partidaEspectar";
@@ -136,6 +137,15 @@ public class PartidaController {
         return result;
     }
 
+    @GetMapping("/partidasActivas")
+    public ModelAndView partidasActivas(HttpServletResponse response, Principal principal){
+        response.addHeader("Refresh", "4");
+        List<Partida> partidas = partidaService.getPartidasActivas();
+        ModelAndView result = new ModelAndView(PARTIDAS_ACTIVAS);
+        result.addObject("partidas", partidas);
+        return result;
+    }
+
     @GetMapping("/iniciar/{id}")
     public String iniciarPartida(@PathVariable("id") Long id, HttpServletResponse response, Principal principal){
         Partida p = partidaService.getPartidaById(id).get();
@@ -170,7 +180,7 @@ public class PartidaController {
                 .filter(x -> x.getRol().getName().equals("Edil"))
                 .collect(Collectors.toList()).size();//Flag para saber el numero de ediles escogidos
         List<Voto> votosACambiar = votoService.getVotosElegidosRondaTurno(p, j);
-        Voto v = null; //Varialbe para saber si hay algún voto elegido para ser cambiado
+        Voto v = null; //Variablee para saber si hay algún voto elegido para ser cambiado
         if(!votosACambiar.isEmpty()){
             v = votoService.getVotosElegidosRondaTurno(p, j).get(0);
         }
