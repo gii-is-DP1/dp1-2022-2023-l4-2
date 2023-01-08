@@ -499,7 +499,6 @@ public class PartidaController {
         Partida p = partidaService.getPartidaById(partidaId).get();
         Voto votoToUpdate = votoService.getVotoById(votoId).get();
         votoToUpdate.setFaccion(voto.getFaccion());
-        votoToUpdate.setElegido(false);
         try{
             votoService.saveVoto(votoToUpdate,j);
         }catch(VotoDuplicadoException v){
