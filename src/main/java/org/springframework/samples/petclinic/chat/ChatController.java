@@ -107,7 +107,7 @@ public class ChatController {
         Chat c = chatService.getByPartidaId(id);
         mensaje.setId(idMax + 1);
         mensaje.setJugador(jActual);
-        mensaje.setChat(c);
+        //mensaje.setChat(c);
         List<Mensaje> m = c.getMensajes();
         m.add(mensaje);
         c.setMensajes(m);
