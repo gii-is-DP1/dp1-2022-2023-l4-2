@@ -23,13 +23,10 @@ public class Mensaje extends BaseEntity{
     @ManyToOne
     private Jugador jugador;
 
-    @ManyToOne
-    private Chat chat;
 
     public Mensaje() {
         this.contenido = "";
         this.jugador = null;
-        this.chat = null;
     }
     
 }
