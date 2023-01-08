@@ -129,7 +129,6 @@ public class PartidaService {
     }
 
     public ModelAndView BorraPartidaSiAnfitionSale(Partida p,ModelAndView result,Jugador j){
-
         if(!p.getJugadores().contains(j)){
             result =new ModelAndView("redirect:/partidas/join/");
             deletePartida(p.getId());

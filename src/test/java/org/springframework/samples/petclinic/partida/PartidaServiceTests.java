@@ -61,11 +61,9 @@ public class PartidaServiceTests {
         participacion1.setEsAnfitrion(true);
         participacion1.setId(99);
         participacion1.setNumConsul(1);
-        //participacion1.setPartidas(partida);
         participacion2.setEsAnfitrion(false);
         participacion2.setId(123);
         participacion2.setNumConsul(3);
-        //participacion2.setPartidas(partida);
         jugador1.setId(10);
         jugador1.setFirstName("Paco");
         jugador1.setLastName("Candela");
@@ -84,11 +82,6 @@ public class PartidaServiceTests {
 
     @Test
     public void deletePartidaTest(){
-        //List<Partida> partidas1 = partidaService.getPartidas();
-        //L7ist<Partida> partidas2 = partidaService.getPartidas();
-        //partidaService.deletePartida(partidas1.get(0).getId());
-        //assertNotEquals("Guaje", partidas1.get(0).getAnfitrion());
-        //assertNotEquals(partidas1.get(0).getId(), partidas2.get(0).getId());
         List<Partida> partidas1 = partidaService.getPartidas();
         partidaService.deletePartida(4);
         List<Partida> partidas2 = partidaService.getPartidas();
@@ -100,15 +93,7 @@ public class PartidaServiceTests {
 
     @Test
     public void deletePartidaFalloTest(){
-        //List<Partida> partidas1 = partidaService.getPartidas();
-        //List<Partida> partidas2 = partidaService.getPartidas();
-        //partidaService.deletePartida(partidas1.get(0).getId());
-        //assertEquals("Jose", partidas1.get(0).getAnfitrion());
-        //assertNotEquals(partidas1.get(0), partidas2.get(0));
-        
         assertThrows(EmptyResultDataAccessException.class,()->partidaService.deletePartida(345344));
-
-        
     }
 
     @Test
@@ -124,15 +109,10 @@ public class PartidaServiceTests {
         FaccionType f = new FaccionType();
         f.setName("Inventada");
         p.setFaccionGanadora(f);
-
         partidaService.save(p);
-
         Partida p2 = partidaService.getPartidaById(p.getId()).get();
-
         assertNotNull(p2);
         assertEquals(p2, p);
-
-        
     }
 
     @Test
@@ -158,11 +138,8 @@ public class PartidaServiceTests {
         String anfitrion = p.getAnfitrion();
         p.setAnfitrion("Joselillo");
         partidaService.edit(p);
-        
         Partida p2 = partidaService.getPartidaById(1).get();
-        
         assertNotEquals(anfitrion, p2.getAnfitrion());
-
     }
 
     @Test
@@ -170,7 +147,6 @@ public class PartidaServiceTests {
         List<Partida> partidasActivas = partidaService.getPartidasActivas();
         assertNotNull(partidasActivas);
         assertFalse(partidasActivas.size()==0);
-
     }
 
     @Test
@@ -178,7 +154,6 @@ public class PartidaServiceTests {
         List<Partida> partidasNoActivas = partidaService.getPartidasNoActivas();
         assertNotNull(partidasNoActivas);
         assertFalse(partidasNoActivas.size()==0);
-
     }
 
     @Test
@@ -187,7 +162,6 @@ public class PartidaServiceTests {
         Pageable pag = PageRequest.of(0,numPartidas);
         List<Partida> partidaspaginadas = partidaService.getPartidasPageables(pag);
         assertEquals(partidaspaginadas.size(), numPartidas);
-
     }
 
     
@@ -197,7 +171,6 @@ public class PartidaServiceTests {
         Pageable pag = PageRequest.of(0,numPartidas);
         List<Partida> partidaspaginadas = partidaService.getPartidasPageables(pag);
         assertNotEquals(partidaspaginadas.size(), numPartidas);
-
     }
 
     @Test
@@ -244,7 +217,8 @@ public class PartidaServiceTests {
         assertEquals("Traidor", v2.getFaccion().toString());
     }
 
-    /*@Test
+    // Si por un casual se enviase un voto del tipo mercader se cambiaría a leal
+    @Test
     public void cambiarVotoFailTest(){
         Voto v1 = new Voto();
         FaccionType f = new FaccionType();
@@ -252,10 +226,8 @@ public class PartidaServiceTests {
         v1.setFaccion(f);
         Voto v2 = partidaService.cambiarVoto(v1);
         assertNotNull(v2);
-        assertEquals("Traidor", v2.getFaccion().toString());
-    }*/
-    
-    // No tiene en cuenta el mercader
+        assertEquals("Leal", v2.getFaccion().toString());
+    }
     
     @Test
     public void añadeJugadorAPartidaTest(){
@@ -272,8 +244,20 @@ public class PartidaServiceTests {
         assertEquals(numeroJugadores+1, p.getJugadores().size());
     }
 
-    //Podríamos poner un caso negativo para que no pueda añadir un jugador que
-    //ya está en la partida
+    @Test
+    public void añadeJugadorAPartidaTestFailed(){
+        Partida p = partidaService.getPartidaById(1).get();
+        Jugador j1 = new Jugador();
+        Jugador j2 = new Jugador();
+        List<Jugador> jugadores = new ArrayList<Jugador>();
+        jugadores.add(j1);
+        jugadores.add(j2);
+        p.setJugadores(jugadores);
+        Integer numeroJugadores = p.getJugadores().size();
+        //J1 ya estaba en la partida, si lo vuelvo a intentar añadir no deberia añadirlo
+        partidaService.añadeJugadorAPartida(j1, p);
+        assertEquals(numeroJugadores, p.getJugadores().size());
+    }
 
     @Test
     public void crearPartidaTest(){
