@@ -30,33 +30,47 @@
 
         <div style="text-align:left">
             Jugadores de la partida:
-            <div>
-                <c:forEach items="${partida.jugadores}" var="jugador">
-                    <tr style = "text-align: left; ";>
-                        <td>    
+        </div>
+
+
+        <div>
+            <table class="table table-striped">
+                <tr>
+                    <c:forEach items="${partida.jugadores}" var="jugador">
+                        <td>
                             <div>
                                 <c:out value="${jugador.user.username}"/> -  <c:out value="${jugador.rol}"/>
+                                <div>
+                                    <spring:url value="/resources/images/${jugador.rol.getName()}.png" var="rol"/>
+                                    <img width="70%" height="70%" src="${rol}"/>
+                                </div>
                             </div>
                         </td>
-                    </tr>
-                </c:forEach>
-            </div>
+                    </c:forEach>
+                </tr>
+            </table>
         </div>
     </c:if>
 
         <c:if test="${partida.ronda == 3}">
             
             <div style="text-align:left">
-                Facci&#243;n ganadora
+                ¡Ha ganado la facci&#243;n:
                 <div>
                         <tr style = "text-align: center; ";>
                             <td>
                                 <div>
                                     <c:out value="${faccionGanadora.getName()}"/> 
+
                                 </div>
                             </td>
                         </tr>
                 </div>
+                !
+            </div>
+            <div style="text-align:center">
+                <spring:url value="/resources/images/${faccionGanadora.getName()}.png" var="faccion"/>
+                <img src="${faccion}"/>
             </div>
             <div style="text-align:right">
                 Tiempo jugado
