@@ -35,8 +35,11 @@ public class VotoService {
         try{
             if(null!=j && v.getPartida()!=null){
                 List<Voto> votosRondaTurno = getVotosTurnoJugador(v.getPartida(), j); 
-                if(j.getRol().getName().equals("Edil")&&!votosRondaTurno.isEmpty()){
-                    throw new VotoDuplicadoException();
+                if(j.getRol().getName().equals("Edil")&& !votosRondaTurno.isEmpty() && votosRondaTurno.get(0).getElegido()){
+                    v.setElegido(false);
+                    votoRepository.save(v);
+                }else if(j.getRol().getName().equals("Edil")&&!votosRondaTurno.isEmpty()){
+                    throw new VotoDuplicadoException();                    
                 }
             }
             votoRepository.save(v);
