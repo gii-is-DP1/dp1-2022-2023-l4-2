@@ -235,4 +235,11 @@ INSERT INTO participacion_opciones(participacion_id,opciones_id)
     (5,3),(5,1),
     (6,1),(6,2);
 
+INSERT INTO chat(id, partida_id) 
+    VALUES(8,8);
+INSERT INTO mensaje(id, contenido, jugador_id)
+    VALUES(29, 'Hola desde DB', 3);
+INSERT INTO chat_mensajes(chat_id, mensajes_id)
+    VALUES (8,29);
+
 
