@@ -134,25 +134,25 @@ INSERT INTO rol(id,name)
     VALUES(1,'Consul'),(2,'Pretor'),(3,'Edil'),(4,'Sin rol');
 
 
-INSERT INTO users(username,password,enabled) VALUES ('Guaje', '1111', TRUE);
+INSERT INTO users(username,password,enabled) VALUES ('Guaje', '$2a$10$hXaQPnFeO9CKYi0ikE/2sOrgzFtY7BnJyDX6vCOV7Eh9TRn8a6e/a', TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (10, 'Guaje', 'jugador');
 
-INSERT INTO users(username,password,enabled) VALUES ('Antaca', '1111', TRUE);
+INSERT INTO users(username,password,enabled) VALUES ('Antaca', '$2a$10$hXaQPnFeO9CKYi0ikE/2sOrgzFtY7BnJyDX6vCOV7Eh9TRn8a6e/a', TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (11, 'Antaca', 'jugador');
 
-INSERT INTO users(username,password,enabled) VALUES ('Campanas', '1111', TRUE);
+INSERT INTO users(username,password,enabled) VALUES ('Campanas', '$2a$10$hXaQPnFeO9CKYi0ikE/2sOrgzFtY7BnJyDX6vCOV7Eh9TRn8a6e/a', TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (12, 'Campanas', 'jugador');
 
-INSERT INTO users(username,password,enabled) VALUES ('Davilillo', '1111', TRUE);
+INSERT INTO users(username,password,enabled) VALUES ('Davilillo', '$2a$10$hXaQPnFeO9CKYi0ikE/2sOrgzFtY7BnJyDX6vCOV7Eh9TRn8a6e/a', TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (13, 'Davilillo', 'jugador');
 
-INSERT INTO users(username, password, enabled) VALUES('Bufon', '2222', TRUE);
+INSERT INTO users(username, password, enabled) VALUES('Bufon', '$2a$10$hXaQPnFeO9CKYi0ikE/2sOrgzFtY7BnJyDX6vCOV7Eh9TRn8a6e/a', TRUE);
 INSERT INTO authorities(id, username, authority) VALUES(15, 'Bufon', 'jugador');
 
-INSERT INTO users(username, password, enabled) VALUES('Colombiano', '1111', TRUE);
+INSERT INTO users(username, password, enabled) VALUES('Colombiano', '11$2a$10$hXaQPnFeO9CKYi0ikE/2sOrgzFtY7BnJyDX6vCOV7Eh9TRn8a6e/a11', TRUE);
 INSERT INTO authorities(id, username, authority) VALUES(16, 'Colombiano', 'jugador');
 
-INSERT INTO users(username, password, enabled) VALUES('Espectador', '1111', TRUE);
+INSERT INTO users(username, password, enabled) VALUES('Espectador', '$2a$10$hXaQPnFeO9CKYi0ikE/2sOrgzFtY7BnJyDX6vCOV7Eh9TRn8a6e/a', TRUE);
 INSERT INTO authorities(id, username, authority) VALUES(17, 'Espectador', 'jugador');
 
 INSERT INTO jugador(id,first_name,last_name,username,rol_id,esta_en_partida, ya_elegido)

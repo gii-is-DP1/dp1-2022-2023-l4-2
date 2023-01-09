@@ -14,6 +14,8 @@ import org.springframework.samples.petclinic.estadistica.Logro;
 import org.springframework.samples.petclinic.estadistica.LogroService;
 import org.springframework.samples.petclinic.partida.Partida;
 import org.springframework.samples.petclinic.partida.PartidaService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,6 +58,8 @@ public PartidaService partidaService;
 @Autowired
 private LogroService logroService;
 
+PasswordEncoder passwordEncoder= new BCryptPasswordEncoder();
+
 @GetMapping()
 public ModelAndView showJugadores() {
     ModelAndView result = new ModelAndView(JUGADORES_LISTING);
@@ -92,7 +96,8 @@ public ModelAndView processCreationForm(@Valid Jugador j, BindingResult br,Princ
         res.addObject("Mensaje2", "La contraseña es demaiado corta");
         return res;
     }else{
-        //j.setRol(jugadorService.getRoles().get(3));
+        j.getUser().setPassword(passwordEncoder.encode(j.getUser().getPassword()));
+        j.setRol(jugadorService.getRoles().get(3));
         j.setCreatedDate(LocalDateTime.now());
         j.setCreator(j.getUser().getUsername());
         j.setLastModifiedDate(LocalDateTime.now());
