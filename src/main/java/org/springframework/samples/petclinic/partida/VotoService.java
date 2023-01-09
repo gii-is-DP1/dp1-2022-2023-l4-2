@@ -30,21 +30,23 @@ public class VotoService {
         return votoRepository.findVotosRondaTurno(p.getRonda(), p.getTurno(),p);
     }
 
-    @Transactional(rollbackFor = VotoDuplicadoException.class)
-    public void saveVoto(Voto v,Jugador j) throws VotoDuplicadoException{
+    @Transactional(rollbackFor = VotoNoPermitidoException.class)
+    public void saveVoto(Voto v,Jugador j) throws VotoNoPermitidoException{
         try{
             if(null!=j && v.getPartida()!=null){
                 List<Voto> votosRondaTurno = getVotosTurnoJugador(v.getPartida(), j); 
-                if(j.getRol().getName().equals("Edil")&& !votosRondaTurno.isEmpty() && votosRondaTurno.get(0).getElegido()){
+                if(!j.getRol().getName().equals("Edil")){
+                    throw new VotoNoPermitidoException();
+                }else if(j.getRol().getName().equals("Edil")&& !votosRondaTurno.isEmpty() && votosRondaTurno.get(0).getElegido()){
                     v.setElegido(false);
                     votoRepository.save(v);
                 }else if(j.getRol().getName().equals("Edil")&&!votosRondaTurno.isEmpty()){
-                    throw new VotoDuplicadoException();                    
+                    throw new VotoNoPermitidoException();                    
                 }
             }
             votoRepository.save(v);
         }catch(Exception e){
-            throw new VotoDuplicadoException();
+            throw new VotoNoPermitidoException();
         }
     }
     
@@ -82,7 +84,7 @@ public class VotoService {
         return v;
     }
 
-    public void CrearVoto(Jugador j, FaccionType faccion, Partida p, Integer maxVoto) throws VotoDuplicadoException{
+    public void CrearVoto(Jugador j, FaccionType faccion, Partida p, Integer maxVoto) throws VotoNoPermitidoException{
         Voto v = new Voto();
         v.setId(maxVoto+1);
         v.setFaccion(faccion);

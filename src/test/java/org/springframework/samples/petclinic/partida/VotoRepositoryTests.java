@@ -33,7 +33,7 @@ public class VotoRepositoryTests {
     
 
     @Test
-    public void findAllTest() throws VotoDuplicadoException{
+    public void findAllTest() throws VotoNoPermitidoException{
         //Añadir voto
         Voto voto = new Voto();
         voto.setRonda(2);
@@ -47,7 +47,7 @@ public class VotoRepositoryTests {
     }
 
     @Test
-    public void findVotosRondaTurnoTest() throws VotoDuplicadoException{
+    public void findVotosRondaTurnoTest() throws VotoNoPermitidoException{
         //Partida
         Partida partida1 = partidaService.getPartidaById(1).get();
 
@@ -65,7 +65,7 @@ public class VotoRepositoryTests {
     }
 
     @Test
-    public void findVotosRondaTurnoFailTest() throws VotoDuplicadoException{
+    public void findVotosRondaTurnoFailTest() throws VotoNoPermitidoException{
         //Partida
         Partida partida1 = partidaService.getPartidaById(1).get();
 
@@ -82,7 +82,7 @@ public class VotoRepositoryTests {
     }
 
     @Test
-    public void findVotosTurnoJugadorTest() throws VotoDuplicadoException{
+    public void findVotosTurnoJugadorTest() throws VotoNoPermitidoException{
         //Partida
         Partida partida1 = partidaService.getPartidaById(1).get();
         Jugador jugador = jugadorService.getJugadorByUsername("Guaje");
@@ -102,7 +102,7 @@ public class VotoRepositoryTests {
     }
 
     @Test
-    public void findVotosTurnoJugadorFailTest() throws VotoDuplicadoException{
+    public void findVotosTurnoJugadorFailTest() throws VotoNoPermitidoException{
         //Partida
         Partida partida1 = partidaService.getPartidaById(1).get();
         Jugador jugador = jugadorService.getJugadorByUsername("Campanas");
