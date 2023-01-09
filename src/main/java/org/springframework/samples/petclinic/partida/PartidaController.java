@@ -243,14 +243,14 @@ public class PartidaController {
 
     
     @PostMapping("/jugar/edil/{id}")
-    public ModelAndView guardarVoto(@PathVariable("id") Long id, @Valid FaccionType ft, BindingResult br, Principal principal) throws VotoDuplicadoException{
+    public ModelAndView guardarVoto(@PathVariable("id") Long id, @Valid FaccionType ft, BindingResult br, Principal principal) throws VotoNoPermitidoException{
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
         FaccionType faccion = partidaService.getFaccionesTypeByName(ft.getName());
         Partida p = partidaService.getPartidaById(id).get();
         Integer maxVoto = votoService.getVotos().stream().map(x->x.getId()).max(Comparator.comparing(x->x)).orElse(1);
         try{
             votoService.CrearVoto(j,faccion,p,maxVoto);
-        }catch(VotoDuplicadoException v){
+        }catch(VotoNoPermitidoException v){
             ModelAndView res = new ModelAndView("redirect:/partidas/jugar/{id}");
             return res;
         }
@@ -286,7 +286,7 @@ public class PartidaController {
 
     @PostMapping("/jugar/pretor/edit/{partidaId}/{votoId}")
     public String partidaPretor(@PathVariable("partidaId") Long partidaId,@PathVariable("votoId") Long votoId,
-                                    @Valid Voto voto,HttpServletResponse response, Principal principal) throws VotoDuplicadoException{
+                                    @Valid Voto voto,HttpServletResponse response, Principal principal) throws VotoNoPermitidoException{
         response.addHeader("Refresh", "10");
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
         Partida p = partidaService.getPartidaById(partidaId).get();
@@ -294,7 +294,7 @@ public class PartidaController {
         votoToUpdate.setFaccion(voto.getFaccion());
         try{
             votoService.saveVoto(votoToUpdate,j);
-        }catch(VotoDuplicadoException v){
+        }catch(VotoNoPermitidoException v){
             return "redirect:/partidas/jugar/{partidaId}";
         }
         List<Voto> votos = votoService.getVotosRondaTurno(p);
@@ -435,7 +435,7 @@ public class PartidaController {
 
     @PostMapping("/jugar/pretor/edit2/{partidaId}/{votoId}")
     public String partidaPretorEditaVoto(@PathVariable("partidaId") Long partidaId,@PathVariable("votoId") Long votoId,
-                                    @Valid Voto voto,HttpServletResponse response, Principal principal) throws VotoDuplicadoException{
+                                    @Valid Voto voto,HttpServletResponse response, Principal principal) throws VotoNoPermitidoException{
         response.addHeader("Refresh", "10");
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
         Partida p = partidaService.getPartidaById(partidaId).get();
@@ -446,7 +446,7 @@ public class PartidaController {
         }
         try{
             votoService.saveVoto(votoToUpdate,j);
-        }catch(VotoDuplicadoException v){
+        }catch(VotoNoPermitidoException v){
             return "redirect:/partidas/jugar/{partidaId}";
         }
         List<RolType> roles = jugadorService.getRoles();
@@ -503,7 +503,7 @@ public class PartidaController {
 
     @PostMapping("/jugar/edil/edit/{partidaId}/{votoId}")
     public String partidaEditEditaVoto(@PathVariable("partidaId") Long partidaId,@PathVariable("votoId") Long votoId,
-                                    @Valid Voto voto,HttpServletResponse response, Principal principal) throws VotoDuplicadoException{
+                                    @Valid Voto voto,HttpServletResponse response, Principal principal) throws VotoNoPermitidoException{
         response.addHeader("Refresh", "10");
         Jugador j = jugadorService.getJugadorByUsername(principal.getName());
         Partida p = partidaService.getPartidaById(partidaId).get();
@@ -511,7 +511,7 @@ public class PartidaController {
         votoToUpdate.setFaccion(voto.getFaccion());
         try{
             votoService.saveVoto(votoToUpdate,j);
-        }catch(VotoDuplicadoException v){
+        }catch(VotoNoPermitidoException v){
             return "redirect:/partidas/jugar/{partidaId}";
         }
         List<Voto> votos = votoService.getVotosRondaTurno(p);

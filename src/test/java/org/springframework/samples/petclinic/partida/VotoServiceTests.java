@@ -34,7 +34,7 @@ public class VotoServiceTests {
 
    
     @Test
-    public void getVotosTest() throws VotoDuplicadoException{
+    public void getVotosTest() throws VotoNoPermitidoException{
         //Añadir voto
         Voto voto = new Voto();
         voto.setRonda(2);
@@ -47,7 +47,7 @@ public class VotoServiceTests {
     }
 
     @Test
-    public void getVotosRondaTurnoTest() throws VotoDuplicadoException{
+    public void getVotosRondaTurnoTest() throws VotoNoPermitidoException{
         //Partida
         Partida partida1 = partidaService.getPartidaById(1).get();
 
@@ -64,7 +64,7 @@ public class VotoServiceTests {
     }
 
     @Test
-    public void getVotosRondaTurnoFailTest() throws VotoDuplicadoException{
+    public void getVotosRondaTurnoFailTest() throws VotoNoPermitidoException{
         //Partida
         Partida partida1 = partidaService.getPartidaById(1).get();
 
@@ -80,7 +80,7 @@ public class VotoServiceTests {
     }
 
     @Test
-    public void saveVotoTest() throws VotoDuplicadoException {
+    public void saveVotoTest() throws VotoNoPermitidoException {
         Voto voto = new Voto();
         voto.setRonda(2);
         voto.setTurno(1);
@@ -138,7 +138,7 @@ public class VotoServiceTests {
     }
 
     @Test
-    public void getVotoByIdTest() throws VotoDuplicadoException {
+    public void getVotoByIdTest() throws VotoNoPermitidoException {
         //Añadir voto
         Voto voto = new Voto();
         voto.setRonda(2);
