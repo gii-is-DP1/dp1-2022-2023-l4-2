@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.jugador;
 
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -92,6 +93,15 @@ public ModelAndView processCreationForm(@Valid Jugador j, BindingResult br){
         return res;
     }else{
         j.setRol(jugadorService.getRoles().get(3));
+        
+        j.setCreatedDate(LocalDateTime.now());
+
+        j.setCreator(j.getUser().getUsername());
+
+        j.setLastModifiedDate(LocalDateTime.now());
+
+        j.setModifier(j.getUser().getUsername());
+
         this.jugadorService.saveJugador(j);
         return new ModelAndView("redirect:/home");
     }
@@ -227,6 +237,8 @@ public ModelAndView getLogrosDelJugador(@PathVariable("username") String usernam
 
     @PostMapping("/editPerfil/{username}")
     public ModelAndView savePerfilJugador(Jugador jugador, BindingResult br, @PathVariable("username") String username) {
+        jugador.setLastModifiedDate(LocalDateTime.now());
+        jugador.setModifier(jugador.getUser().getUsername());
         if (!br.hasErrors()) {
             jugadorService.editJugador(jugador);
         } else {
