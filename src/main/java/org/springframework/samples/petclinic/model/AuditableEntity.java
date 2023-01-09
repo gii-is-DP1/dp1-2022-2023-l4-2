@@ -21,9 +21,6 @@ import lombok.Setter;
 @EntityListeners(AuditingEntityListener.class)
 public class AuditableEntity extends Person{
 
-	@Version
-	private Integer version;
-
 	@CreatedBy            
 	private String creator; 
 
