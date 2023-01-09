@@ -14,6 +14,8 @@ import org.springframework.samples.petclinic.partida.Participacion;
 import org.springframework.samples.petclinic.partida.Partida;
 import org.springframework.samples.petclinic.user.AuthoritiesService;
 import org.springframework.samples.petclinic.user.UserService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +33,8 @@ public class JugadorService {
     public JugadorService(JugadorRepository jugadorRepo){
         this.jugadorRepo = jugadorRepo;
     }
+
+    PasswordEncoder passwordEncoder= new BCryptPasswordEncoder();
 
     @Transactional(readOnly = true)
     public List<Jugador> getJugadores(){
@@ -65,7 +69,7 @@ public class JugadorService {
         Jugador toUpdate = jugadorRepo.findById(j.getId()).get();
         toUpdate.setFirstName(j.getFirstName());
         toUpdate.setLastName(j.getLastName());
-        toUpdate.getUser().setPassword(j.getUser().getPassword());
+        toUpdate.getUser().setPassword(passwordEncoder.encode(j.getUser().getPassword()));
         toUpdate.setLastModifiedDate(j.getLastModifiedDate());
         toUpdate.setModifier(j.getModifier());
         jugadorRepo.save(toUpdate);
