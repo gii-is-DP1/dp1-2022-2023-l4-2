@@ -13,7 +13,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import org.springframework.samples.petclinic.user.User;
 import org.springframework.samples.petclinic.model.AuditableEntity;
-import org.springframework.samples.petclinic.model.Person;
 import org.springframework.samples.petclinic.partida.Participacion;
 import org.springframework.samples.petclinic.partida.Partida;
 
