@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import org.springframework.samples.petclinic.user.User;
+import org.springframework.samples.petclinic.model.AuditableEntity;
 import org.springframework.samples.petclinic.model.Person;
 import org.springframework.samples.petclinic.partida.Participacion;
 import org.springframework.samples.petclinic.partida.Partida;
@@ -22,7 +23,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Jugador extends Person{
+public class Jugador extends AuditableEntity {
     
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "username",referencedColumnName = "username")

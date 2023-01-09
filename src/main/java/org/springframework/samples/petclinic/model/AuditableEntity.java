@@ -1,0 +1,30 @@
+package org.springframework.samples.petclinic.model;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import javax.persistence.EntityListeners;
+import javax.persistence.MappedSuperclass;
+
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import javax.persistence.Version;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+@MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
+public class AuditableEntity extends Person{
+	@Version
+	private Integer version;
+	@CreatedBy            
+	private String creator; 
+	@CreatedDate         
+	private LocalDateTime createdDate; 
+	@LastModifiedBy 	    
+	private String modifier;
+	@LastModifiedDate 
+	private LocalDateTime lastModifiedDate; 
+
+}
