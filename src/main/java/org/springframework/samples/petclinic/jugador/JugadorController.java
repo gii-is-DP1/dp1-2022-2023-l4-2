@@ -77,7 +77,7 @@ public String  initCreatinForm(Map<String, Object> model){
 }
 
 @PostMapping("/new")
-public ModelAndView processCreationForm(@Valid Jugador j, BindingResult br){
+public ModelAndView processCreationForm(@Valid Jugador j, BindingResult br,Principal principal){
     ModelAndView res = new ModelAndView(JUGADOR_CREATE);
     if(br.hasErrors()){
         return res;
@@ -92,16 +92,11 @@ public ModelAndView processCreationForm(@Valid Jugador j, BindingResult br){
         res.addObject("Mensaje2", "La contraseña es demaiado corta");
         return res;
     }else{
-        j.setRol(jugadorService.getRoles().get(3));
-        
+        //j.setRol(jugadorService.getRoles().get(3));
         j.setCreatedDate(LocalDateTime.now());
-
         j.setCreator(j.getUser().getUsername());
-
         j.setLastModifiedDate(LocalDateTime.now());
-
         j.setModifier(j.getUser().getUsername());
-
         this.jugadorService.saveJugador(j);
         return new ModelAndView("redirect:/home");
     }
@@ -236,10 +231,10 @@ public ModelAndView getLogrosDelJugador(@PathVariable("username") String usernam
     }
 
     @PostMapping("/editPerfil/{username}")
-    public ModelAndView savePerfilJugador(Jugador jugador, BindingResult br, @PathVariable("username") String username) {
-        jugador.setLastModifiedDate(LocalDateTime.now());
-        jugador.setModifier(jugador.getUser().getUsername());
+    public ModelAndView savePerfilJugador(Jugador jugador, BindingResult br, @PathVariable("username") String username,Principal principal) {
         if (!br.hasErrors()) {
+            jugador.setLastModifiedDate(LocalDateTime.now());
+            jugador.setModifier(principal.getName());
             jugadorService.editJugador(jugador);
         } else {
             return new ModelAndView(JUGADOR_EDITAR_PERFIL);

@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.jugador;
 
+import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -64,6 +66,8 @@ public class JugadorService {
         toUpdate.setFirstName(j.getFirstName());
         toUpdate.setLastName(j.getLastName());
         toUpdate.getUser().setPassword(j.getUser().getPassword());
+        toUpdate.setLastModifiedDate(j.getLastModifiedDate());
+        toUpdate.setModifier(j.getModifier());
         jugadorRepo.save(toUpdate);
         userService.saveUser(toUpdate.getUser());
     }
