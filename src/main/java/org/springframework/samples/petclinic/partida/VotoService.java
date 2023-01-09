@@ -35,7 +35,10 @@ public class VotoService {
         try{
             if(null!=j && v.getPartida()!=null){
                 List<Voto> votosRondaTurno = getVotosTurnoJugador(v.getPartida(), j); 
-                if(!j.getRol().getName().equals("Edil")){
+                Voto voto = getVotoById(v.getId().longValue()).orElse(null);
+                if(j.getRol().getName().equals("Pretor") && voto != null){
+                    votoRepository.save(v);
+                }else if(!j.getRol().getName().equals("Edil")){
                     throw new VotoNoPermitidoException();
                 }else if(j.getRol().getName().equals("Edil")&& !votosRondaTurno.isEmpty() && votosRondaTurno.get(0).getElegido()){
                     v.setElegido(false);
