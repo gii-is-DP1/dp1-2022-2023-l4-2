@@ -13,6 +13,10 @@
         <tr>
             <th>Nombre de usuario</th>
             <th>&#191;Est&#225; en partida?</th>
+            <th>Dia de Creacion</th>
+            <th>Creador</th>
+            <th>Ultima modificacion</th>
+            <th>Persona que lo modifico</th>
             <th>Eliminar</th>
         </tr>
         </thead>
@@ -26,6 +30,18 @@
                 </td>
                 <td>
                     <c:out value="${jugador.estaEnPartida ? 'Si, esta jugando' : 'No esta en ninguna partida'}"/>
+                </td>
+                <td>
+                    <c:out value="${jugador.createdDate}"/>
+                </td>
+                <td>
+                    <c:out value="${jugador.creator}"/>
+                </td>
+                <td>
+                    <c:out value="${jugador.lastModifiedDate}"/>
+                </td>
+                <td>
+                    <c:out value="${jugador.modifier}"/>
                 </td>
                 <td> 
                     <a href="/jugadores/delete/${jugador.id}"> 
