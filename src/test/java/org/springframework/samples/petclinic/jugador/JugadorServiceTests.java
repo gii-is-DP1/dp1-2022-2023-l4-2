@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -40,8 +39,8 @@ public class JugadorServiceTests {
     }
 
     @Test
-    public void gestJugadorByIdFailTest(){
-        assertNotEquals("Pedro", jugadorService.getJugadorById(6).get().getFirstName());
+    public void getJugadorByIdFailTest(){
+        assertThrows(NoSuchElementException.class, () -> jugadorService.getJugadorById(77).get().getFirstName());
     }
 
     @Test

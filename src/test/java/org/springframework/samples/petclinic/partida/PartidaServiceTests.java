@@ -294,8 +294,8 @@ public class PartidaServiceTests {
         p.setRonda(2);
         p.setTurno(4);
         p.setLimite(15);
-        p.setVotosContraCesar(14);
-        p.setVotosFavorCesar(2);
+        p.setVotosContraCesar(2);
+        p.setVotosFavorCesar(14);
         partidaService.comprobarSiSobrepasaLimite(p);
         assertNotNull(p.getLimite());
         assertEquals(2, p.getRonda());
