@@ -1,33 +1,34 @@
+<%@ page session="false" trimDirectiveWhitespaces="true" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+
 <petclinic:layout pageName="error">
 
-    <body style="background-image: url(/resources/images/idusDeMarzo.jpg); background-repeat: 
+    <body style="background-image: url(/resources/images/fondo.jpg); background-repeat: 
     no-repeat; background-attachment: fixed; background-size: cover;">
 
-        <table  style= "width: 100%; text-align:center;position: relative;">
+        <div style="text-align: center;">
+            <div>
+                <spring:url value="/resources/images/errorconsul2.png" var="errorImage"/>
+                <img width="30%" height="50%" src="${errorImage}"/>
+            </div>
+            
+            <div style="display: flex; flex-direction:column; align-items:center; justify-content: center; padding: 1%;  width:100%;">
+                <table>
+                    <tr>
+                        <td>
+                            <div style="text-align:center; margin-top: 5%; opacity: 0.9;">
+                                <h2 style="font-size: 30px; font-family: 'Dalek Pinpoint', sans-serif; background-color: brown; padding: 1%;">ERROR 500: El servidor ha encontrado un error interno</h2>
+                            </div>
+                            <div style="text-align:center; margin-top: 5%;">
+                                <a class="btn btn-default" style="font-size: 30px; font-family: 'Dalek Pinpoint', sans-serif; background-color: brown; padding: 1%;"  href="/home">INICIO</a>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
 
-            <tr>
-                <th style="text-align: center;">
-                    <spring:url value="/resources/images/errorconsul.png" var="errorImage"/>
-                    <img src="${errorImage}"/>
-                    <h2 style="font-family: 'Dalek Pinpoint', sans-serif;width: 50%; text-align:center;position: relative;color: black;background-color: rgb(236, 182, 96);border-color: rgb(121, 102, 6); border-width: 2mm; ;">Ha ocurrido un error porque el servidor ha encontrado un error interno</h2>
-                </th>
-            </tr>
-
-            <tr>
-                <spring:url value="/resources/images/logo_big.png" var="errorImage"/>
-                <img src="${errorImage}"/>
-            </tr>
-
-            <tr>
-                <th style="text-align: center;">
-                    <button style="width: 10%;position: relative; height: 50;background-color: rgb(236, 182, 96); font-size: x-large; border-color: rgb(121, 102, 6); border-width: 2mm;">
-                        <a class="btn btn-default" href="/home"> Volver</a>
-                    </button>
-                </th>
-            </tr>
-
-        </table>
-
-    </body> 
+    </body>
 
 </petclinic:layout>

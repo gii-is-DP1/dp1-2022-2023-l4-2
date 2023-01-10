@@ -6,7 +6,9 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="estadisticas">
-    <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>Estad&#237;sticas generales</h2>
+    <div style="text-align: center;">
+        <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>Estad&#237;sticas generales</h2>
+    </div>
 
     <table id="estadisticasGeneralesTable" class="table table-striped">
         <thead>
@@ -50,7 +52,9 @@
         </thead>
     </table>
 
-    <h2>Top 5 jugadores con m&#225;s victorias</h2>
+    <div style="text-align: center;">
+        <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>Top 5 jugadores con m&#225;s victorias</h2>
+    </div>
     <table id="jugadoresMasVictoriasTable" class="table table-striped">
         <thead>
         <c:forEach items="${topJugadoresConVictoria}" var="top">
@@ -62,7 +66,9 @@
         </thead>
     </table>
 
-    <h2>Top 5 jugadores con m&#225;s partidas</h2>
+    <div style="text-align: center;">
+        <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>Top 5 jugadores con m&#225;s partidas</h2>
+    </div>
     <table id="jugadoresMasPartidasTable" class="table table-striped">
         <thead>
         <c:forEach items="${topJugadoresConPartida}" var="top">

@@ -7,9 +7,9 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="jugadores">
-    <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;">
-       Nuevo Jugador
-    </h2>
+    <div style="text-align: center; ">
+        <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 20px;";>Nuevo Jugador</h2>
+    </div>
     <form:form modelAttribute="jugador" class="form-horizontal" id="add-jugador-form">
         <div class="form-group has-feedback">
             <petclinic:inputField label="Nombre" name="firstName"/>
@@ -24,8 +24,8 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button class="btn btn-default" type="submit">Crear jugador</button>
+            <div style="text-align: center; ">
+                <button class="btn btn-default" style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 20px;" type="submit">Crear jugador</button>
             </div>
         </div>
     </form:form>
