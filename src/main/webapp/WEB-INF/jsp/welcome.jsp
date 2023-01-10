@@ -10,10 +10,14 @@
 
 <body style="background-image: url(/resources/images/idusDeMarzo.jpg); background-repeat: 
 no-repeat; background-attachment: fixed; background-size: cover;" class="welcome">
-    <div style="text-align: center; position: relative; top: 30%;">
-        <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; color: white;";>BIENVENIDO AL IDUS MARTII</h2>
-        <spring:url value="/home" htmlEscape="true" var="home"/>
-        <a class="btn btn-default"  href="${home}">CONTINUAR</a>
+    <div style="display: flex; flex-direction:column; align-items:center; justify-content: center; padding: 1%;  height: 70%; font-size: xx-large;">
+        <div style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 40px; color: white;">
+            BIENVENIDO AL IDUS MARTII
+            <div style="text-align: center; margin: 5%;">
+                <spring:url value="/home" htmlEscape="true" var="home"/>
+                <a class="btn btn-default"  href="${home}">INICIO</a>
+            </div>
+        </div>
     </div>
 </body>
 

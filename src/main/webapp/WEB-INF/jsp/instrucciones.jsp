@@ -9,17 +9,23 @@
 <petclinic:layout pageName="instrucciones">
     <table style="width: 100%; text-align: center; position: relative; top: 30%;">
         <tr>
-            <td><h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>C&#211;MO JUGAR</h2></td>
-        </tr>
-        <tr>
             <td>
-                <iframe width="50%" height="315" src="https://www.youtube.com/embed/1Rl2DWWoBmI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <div style="margin: 2%;">
+                    <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>C&#211;MO JUGAR</h2>
+                </div>
             </td>
         </tr>
         <tr>
             <td>
-                <spring:url value="/resources/docs/instrucciones.pdf" htmlEscape="true" var="pdf"/>
-                <a class="btn btn-default"  href="${pdf}" target="_blank">PDF</a>
+                <iframe width="50%" height="350px" src="https://www.youtube.com/embed/1Rl2DWWoBmI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div style="margin: 10%; font-size: xx-large;">
+                    <spring:url value="/resources/docs/instrucciones.pdf" htmlEscape="true" var="pdf"/>
+                    <a class="btn btn-default" style="font-size: 20px; font-family: 'Dalek Pinpoint', sans-serif;"  href="${pdf}" target="_blank">INSTRUCCIONES EN PDF</a>
+                </div>
             </td>
         </tr>
     </table>
