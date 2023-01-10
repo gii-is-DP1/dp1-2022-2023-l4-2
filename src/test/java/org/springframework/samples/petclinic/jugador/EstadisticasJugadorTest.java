@@ -12,6 +12,10 @@ import org.springframework.samples.petclinic.user.User;
 public class EstadisticasJugadorTest {
 
     Jugador jugador1 = new Jugador();
+    Jugador jugador2 = new Jugador();
+    Jugador jugador3 = new Jugador();
+    Jugador jugador4 = new Jugador();
+    Jugador jugador5 = new Jugador();
     Partida p1 = new Partida();
     Partida p2 = new Partida();
     Partida p3 = new Partida();
@@ -29,6 +33,34 @@ public class EstadisticasJugadorTest {
         jugador1.setAmigoDe(List.of());
         jugador1.setParticipaciones(List.of());
         jugador1.setPartidas(List.of());
+
+        User u2 = new User();
+        u2.setUsername("PEPILLO2");
+        u2.setPassword("213132");
+        jugador2.setAmigoDe(List.of());
+        jugador2.setParticipaciones(List.of());
+        jugador2.setPartidas(List.of());
+
+        User u3 = new User();
+        u3.setUsername("PEPILLO3");
+        u3.setPassword("213132");
+        jugador3.setAmigoDe(List.of());
+        jugador3.setParticipaciones(List.of());
+        jugador3.setPartidas(List.of());
+
+        User u4 = new User();
+        u4.setUsername("PEPILLO4");
+        u4.setPassword("213132");
+        jugador4.setAmigoDe(List.of());
+        jugador4.setParticipaciones(List.of());
+        jugador4.setPartidas(List.of());
+
+        User u5 = new User();
+        u5.setUsername("PEPILLO5");
+        u5.setPassword("213132");
+        jugador5.setAmigoDe(List.of());
+        jugador5.setParticipaciones(List.of());
+        jugador5.setPartidas(List.of());
 
         FaccionType ft1 = new FaccionType();
         ft1.setName("Leal");
@@ -100,7 +132,11 @@ public class EstadisticasJugadorTest {
 
         jugador1.setPartidas(List.of(p1,p2,p3,p4));
         jugador1.setParticipaciones(List.of(part1,part2,part3,part4));
-                
+
+        jugador1.setAmigoDe(List.of(jugador2,jugador3,jugador4));
+        jugador2.setAmigoDe(List.of(jugador1));
+        jugador3.setAmigoDe(List.of(jugador1));
+        jugador5.setAmigoDe(List.of(jugador1));
     }
 
     @Test
@@ -152,5 +188,26 @@ public class EstadisticasJugadorTest {
         assertEquals(jugador1.getParticipacionEnPartida(p2), part2);
         assertEquals(jugador1.getParticipacionEnPartida(p3), part3);
         assertEquals(jugador1.getParticipacionEnPartida(p4), part4);
+    }
+
+    @Test
+    public void testNumeroSeguidos(){
+        config();
+        Integer res = jugador1.getnNumeroSeguidos();
+        assertEquals(3, res);
+    }
+
+    @Test
+    public void testNumeroSeguidores(){
+        config();
+        Integer res=jugador1.getNumeroDeSeguidores(List.of(jugador2,jugador3,jugador4,jugador5));
+        assertEquals(res, 3);
+    }
+
+    @Test
+    public void testNumeroAmigos(){
+        config();
+        Integer res = jugador1.getNumeroAmigos();
+        assertEquals(res, 2);
     }
 }
