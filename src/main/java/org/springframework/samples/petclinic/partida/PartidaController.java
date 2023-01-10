@@ -190,6 +190,9 @@ public class PartidaController {
         if(yaE ==null){
             yaE = false;
         }
+        Voto votoElegido = votoService.getVotoElegidoRondaTurno(p).orElse(null);
+        
+        result.addObject("votoElegido",votoElegido);
         result.addObject("yaE", yaE);
         result.addObject("votoMercaderE", votoMercaderE);
         result.addObject("numEdil", numEdil);

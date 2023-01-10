@@ -8,8 +8,12 @@
 
     <div style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 20px;text-align: center; height: 200;">
 
-        <div style="font-size: 35px">
-            <c:out value="${principal.name}"/>
+        <div style="font-size: 35px; justify-content: center;">
+            <c:forEach items="${partida.jugadores}" var="jugador">
+                <c:if test="${jugador.user.username == principal.name}">
+                    <c:out value="${jugador.user.username}"/> -  <c:out value="${jugador.rol}"/>
+                </c:if>
+            </c:forEach>
         </div>
 
         <table class="table table-striped">
@@ -23,134 +27,155 @@
         <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 20px;">Ronda:  <c:out value="${partida.ronda}"/></h2>
         <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 20px;">Turno:  <c:out value="${partida.turno}"/></h2>
 
-        <div style="text-align:left">
-            Jugadores de la partida:
-            <div>
-                <c:forEach items="${partida.jugadores}" var="jugador">
-                    <tr style = "text-align: left; ";>
-                        <td>
-                            <div>
+        <div style="border: 1px solid; padding: 1%; background-color: #f9f9f9; margin-bottom: 1%;">
+            <div style="text-align:center">
+                Jugadores de la partida:
+            </div>
+            <div style="margin-left: 5%;">
+                <table>
+                    <tr>
+                        <c:forEach items="${partida.jugadores}" var="jugador">
+                            <td>
                                 <c:out value="${jugador.user.username}"/> -  <c:out value="${jugador.rol}"/>
-                            </div>
-                        </td>
-                    </tr>
-                </c:forEach>
-                <div style="height:100px; width: 100px;">
-
-                </div>
-                <c:if test ="${faccionApoyada == null}">
-                <div style="text-align:left">
-                    Tus opciones: 
-                    <div>
-                        <c:forEach items="${elegir}" var="opcion">
-                            <tr style = "text-align: left; ";>
-                                <td>
-                                    <div>
-                                        <c:out value="${opcion.getName()}"/> 
-                                    </div>
-                                </td>
-                            </tr>
+                                <div>
+                                    <spring:url value="/resources/images/${jugador.rol.getName()}.png" var="rol"/>
+                                    <img width="70%" height="70%" src="${rol}"/>
+                                </div>
+                            </td>
                         </c:forEach>
-                    </div>
-                </div>
-                </c:if>
-                <div style="height:100px; width: 100px;">
-        
-                </div>
-                
-                <c:if test ="${faccionApoyada != null}">
-                    <div style="text-align:left">
-                        Tu facci&#243;n Apoyada
-                        <div>
-                                <tr style = "text-align: left; ";>
-                                    <td>
-                                        <div>
-                                            <c:out value="${faccionApoyada.getName()}"/> 
-                                        </div>
-                                    </td>
-                                </tr>
-                        </div>
-                    </div>
-                </c:if>
+                    </tr>
+                </table>
             </div>
         </div>
 
-        
-        <c:if test="${partida.ronda == 1}">
-            <form:form modelAttribute="faccionType"
-                   class="form-horizontal">
-            <input type="hidden" name="id" value="${faccionType.id}"/>
-            <div class="form-group has-feedback">                
-                <tr>
-                    <td>Voto:</td>
-                            <div style="display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            flex-wrap: wrap;">
-                                <div>
-                                <spring:url value="/resources/images/SoldadoLeal.png" var="Leal"/>
-                                <img class="img-responsive" style ="margin: auto;width: 200px;   height: 200px;   border-radius: 50%;" src="${Leal}"/>
-                                <td>Leal</td>
-                                <input type="radio" name="name" value="Leal" checked/>
-                                </div>
-                                <div>
-                                <spring:url value="/resources/images/SoldadoTraidor.jpg" var="Traidor"/>
-                                <img class="img-responsive" style ="margin: auto;width: 200px;   height: 200px;   border-radius: 50%;" src="${Traidor}"/>
-                                <td>Traidor</td>
-                                <input type="radio" name="name" value="Traidor"/>
+        <div style="display: flex; flex-direction: row; justify-content: space-between; font-size: 19px;">
+            <div style="border: 1px solid; padding: 1%; background-color: #f9f9f9; width: 47%;">
+                <c:if test="${faccionApoyada == null}">
+                    <div style="text-align:center">
+                        Tus opciones de facci&#243;n para apoyar:
+                        <table>
+                            <tr>
+                                <c:forEach items="${elegir}" var="opcion">
+                                    <td>
+                                        <div>
+                                            <div style="padding: 2%; text-align:center">
+                                                <c:out value="${opcion.getName()}" />
+                                                <div>
+                                                    <spring:url value="/resources/images/${opcion.getName()}.png" var="opcion" />
+                                                    <img class="img-responsive" style ="margin: auto;width: 50%;  height: 50%;" src="${opcion}" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </c:forEach>
+                            </tr>
+                        </table>
+                    </div>
+                </c:if>
+                <c:if test="${faccionApoyada != null}">
+                    <div style="text-align:center;">
+                        Tu facci&#243;n Apoyada:
+                        <div>
+                            <div style="padding: 1%; text-align:center;">
+                                <c:out value="${faccionApoyada.getName()}" />
+                                <div style="text-align: center;">
+                                    <spring:url value="/resources/images/${faccionApoyada.getName()}.png" var="faccion" />
+                                    <img style ="width: 30%;  height: 67%;" src="${faccion}" />
                                 </div>
                             </div>
-                </tr>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10"></div>
-                     <button class="btn btn-default" type="submit">Votar</button>
-                </div>
-            </div>
-        </form:form>
-        </c:if>
-        <c:if test="${partida.ronda == 2}">
-            <form:form modelAttribute="faccionType"
-                   class="form-horizontal">
-            <input type="hidden" name="id" value="${faccionType.id}"/>
-            <div class="form-group has-feedback">                
-                <tr>
-                    <td>Voto:</td>
-                    
-                    <div style = "display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    flex-wrap: wrap;">
-                        <div>
-                        <spring:url value="/resources/images/SoldadoLeal.png" var="Leal"/>
-                        <img class="img-responsive" style ="margin: auto;width: 200px;   height: 200px;   border-radius: 50%;" src="${Leal}"/>
-                        <td>Leal</td>
-                        <input type="radio" name="name" value="Leal" checked/>
-                        </div>
-                        <div>
-                        <spring:url value="/resources/images/SoldadoTraidor.jpg" var="Traidor"/>
-                        <img class="img-responsive" style ="margin: auto;width: 200px;   height: 200px;   border-radius: 50%;" src="${Traidor}"/>
-                        <td>Traidor</td>
-                        <input type="radio" name="name" value="Traidor"/>
-                        </div>
-                        <div>
-                        <spring:url value="/resources/images/SoldadoNeutral.png" var="Mercader"/>
-                        <img class="img-responsive" style ="margin: auto;width: 200px;   height: 200px;   border-radius: 50%;" src="${Mercader}"/>
-                        <td>Mercader</td>
-                        <input type="radio" name="name" value="Mercader"/>
                         </div>
                     </div>
-                    
-                </tr>
+                </c:if>
             </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10"></div>
-                     <button class="btn btn-default" type="submit">Votar</button>
-                </div>
+
+            <div style="border: 1px solid; padding: 1%; background-color: #f9f9f9; width: 50%;">
+                <c:if test="${partida.ronda == 1}">
+                    <form:form modelAttribute="faccionType" class="form-horizontal">
+                        <input type="hidden" name="id" value="${faccionType.id}"/>
+                        <div class="form-group has-feedback">                
+                            <tr>
+                                <td>Voto:</td>
+                                <div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap;">
+                                    <div>
+                                        <td>Leal</td>
+                                        <input type="radio" name="name" value="Leal" checked/>
+                                        <spring:url value="/resources/images/votoLeal.png" var="Leal"/>
+                                        <img class="img-responsive" style ="margin: auto;width: 50%;   height: 50%;" src="${Leal}"/>
+                                    </div>
+                                    <div>
+                                        <td>Traidor</td>
+                                        <input type="radio" name="name" value="Traidor"/>
+                                        <spring:url value="/resources/images/votoTraidor.png" var="Traidor"/>
+                                        <img class="img-responsive" style ="margin: auto;width: 50%;  height: 50%;" src="${Traidor}"/>
+                                    </div>
+                                </div>
+                            </tr>
+                        </div>
+                        <div style="justify-content: center;">
+                            <button class="btn btn-default" type="submit">Votar</button>
+                        </div>
+                    </form:form>
+                </c:if>
+                <c:if test="${partida.ronda == 2}">
+                    <form:form modelAttribute="faccionType" class="form-horizontal">
+                        <input type="hidden" name="id" value="${faccionType.id}"/>
+                        <table>
+                            <tr>
+                                Voto:
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div>
+                                        <div style="padding: 0%; text-align:center">
+                                            <c:out value="Leal" />
+                                            <input type="radio" name="name" value="Leal"/>
+                                            <div>
+                                                <spring:url value="/resources/images/votoLeal.png" var="Leal" />
+                                                <img class="img-responsive" style ="margin: auto;width: 50%;  height: 50%;" src="${Leal}" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <div style="padding: 0%; text-align:center">
+                                            <c:out value="Traidor" />
+                                            <input type="radio" name="name" value="Traidor"/>
+                                            <div>
+                                                <spring:url value="/resources/images/votoTraidor.png" var="Traidor" />
+                                                <img class="img-responsive" style ="margin: auto;width: 50%;  height: 50%;" src="${Traidor}" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <div style="padding: 0%; text-align:center">
+                                            <c:out value="Mercader" />
+                                            <input type="radio" name="name" value="Mercader"/>
+                                            <div>
+                                                <spring:url value="/resources/images/votoNeutro.png" var="Mercader" />
+                                                <img class="img-responsive" style ="margin: auto;width: 50%;  height: 50%;" src="${Mercader}" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <div style="margin: 5%;">
+                            <button class="btn btn-default" type="submit">Votar</button>
+                        </div>
+                    </form:form>
+                </c:if>
             </div>
-        </form:form>
-        </c:if>
-        
+            
+        </div>  
+
+        <div style = "margin: 1%; text-align: left;">
+            <button>
+                <a class="btn btn-default" href="/chat/creaChat/${partida.id}" target="_blank">Chat</a></th>
+            </button>
+        </div>
     </div>
    
 </petclinic:lo2>

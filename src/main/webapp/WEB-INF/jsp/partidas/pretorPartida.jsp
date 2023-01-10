@@ -8,8 +8,12 @@
 
     <div style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 20px;text-align: center; height: 200;">
 
-        <div style="font-size: 35px">
-            <c:out value="${principal.name}"/>
+        <div style="font-size: 35px; justify-content: center;">
+            <c:forEach items="${partida.jugadores}" var="jugador">
+                <c:if test="${jugador.user.username == principal.name}">
+                    <c:out value="${jugador.user.username}"/> -  <c:out value="${jugador.rol}"/>
+                </c:if>
+            </c:forEach>
         </div>
 
         <table class="table table-striped">
@@ -23,79 +27,104 @@
         <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 20px;">Ronda:  <c:out value="${partida.ronda}"/></h2>
         <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 20px;">Turno:  <c:out value="${partida.turno}"/></h2>
 
-        <div style="text-align:left">
-            Jugadores de la partida:
-            <div>
-                <c:forEach items="${partida.jugadores}" var="jugador">
-                    <tr style = "text-align: left; ";>
-                        <td>
-                            <div>
+        <div style="border: 1px solid; padding: 1%; background-color: #f9f9f9; margin-bottom: 1%;">
+            <div style="text-align:center">
+                Jugadores de la partida:
+            </div>
+            <div style="margin-left: 5%;">
+                <table>
+                    <tr>
+                        <c:forEach items="${partida.jugadores}" var="jugador">
+                            <td>
                                 <c:out value="${jugador.user.username}"/> -  <c:out value="${jugador.rol}"/>
-                            </div>
-                        </td>
-                    </tr>
-                </c:forEach>
-                <div style="height:100px; width: 100px;">
-
-                </div>
-                <c:if test ="${faccionApoyada == null}">
-                <div style="text-align:left">
-                    Tus opciones: 
-                    <div>
-                        <c:forEach items="${elegir}" var="opcion">
-                            <tr style = "text-align: left; ";>
-                                <td>
-                                    <div>
-                                        <c:out value="${opcion.getName()}"/> 
-                                    </div>
-                                </td>
-                            </tr>
+                                <div>
+                                    <spring:url value="/resources/images/${jugador.rol.getName()}.png" var="rol"/>
+                                    <img width="70%" height="70%" src="${rol}"/>
+                                </div>
+                            </td>
                         </c:forEach>
-                    </div>
-                </div>
-                </c:if>
-                <div style="height:100px; width: 100px;">
-        
-                </div>
-                
-                <c:if test ="${faccionApoyada != null}">
-                    <div style="text-align:left">
-                        Tu facci&#243;n Apoyada
-                        <div>
-                                <tr style = "text-align: left; ";>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div style="display: flex; flex-direction: row; justify-content: space-between; font-size: 19px;">
+            <div style="border: 1px solid; padding: 1%; background-color: #f9f9f9; width: 47%;">
+                <c:if test="${faccionApoyada == null}">
+                    <div style="text-align:center">
+                        Tus opciones de facci&#243;n para apoyar:
+                        <table>
+                            <tr>
+                                <c:forEach items="${elegir}" var="opcion">
                                     <td>
                                         <div>
-                                            <c:out value="${faccionApoyada.getName()}"/> 
+                                            <div style="padding: 2%; text-align:center">
+                                                <c:out value="${opcion.getName()}" />
+                                                <div>
+                                                    <spring:url value="/resources/images/${opcion.getName()}.png" var="opcion" />
+                                                    <img class="img-responsive" style ="margin: auto;width: 50%;  height: 50%;" src="${opcion}" />
+                                                </div>
+                                            </div>
                                         </div>
                                     </td>
-                                </tr>
+                                </c:forEach>
+                            </tr>
+                        </table>
+                    </div>
+                </c:if>
+                <c:if test="${faccionApoyada != null}">
+                    <div style="text-align:center;">
+                        Tu facci&#243;n Apoyada:
+                        <div>
+                            <div style="padding: 1%; text-align:center;">
+                                <c:out value="${faccionApoyada.getName()}" />
+                                <div style="text-align: center;">
+                                    <spring:url value="/resources/images/${faccionApoyada.getName()}.png" var="faccion" />
+                                    <img style ="width: 30%;  height: 75%;" src="${faccion}" />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </c:if>
             </div>
-        </div>
-        <span> &#191;A qui&#233;n quieres cambiar el voto?</span>
-        <c:forEach items="${votos}" var="voto">
-                    <tr style = "text-align: left; ";>
+
+            <div style="display: flex; flex-direction:column; align-items:center; justify-content: center; border: 1px solid; padding: 1%; background-color: #f9f9f9; width:47%; ">
+                <div style="margin:2%">
+                    <span> &#191;A qui&#233;n le quieres ver el voto y poder cambiarlo?</span>
+                </div>
+                <c:forEach items="${votos}" var="voto">
+                    <tr>
                         <td>
                             <div>
-                                <c:out value="${voto.jugador.user.username}"/>
-
-                                <c:if test= "${partida.getRonda() == 1}">
-                                    <a href="/partidas/jugar/pretor/edit/${partida.id}/${voto.id}"> 
+                                <div style="border: 2px solid; margin-top: 10%;">
+                                    <c:out value="${voto.jugador.user.username}"/>
+                                
+                            
+                                    <c:if test= "${partida.getRonda() == 1}">
+                                        <a href="/partidas/jugar/pretor/edit/${partida.id}/${voto.id}"> 
+                                            <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>
+                                        </a>
+                                    </c:if>
+                                    <c:if test = "${partida.getRonda() == 2}">
+                                        <a href="/partidas/jugar/pretor/edit2/${partida.id}/${voto.id}"> 
                                         <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>
-                                    </a>
-                                </c:if>
-                                <c:if test = "${partida.getRonda() == 2}">
-                                    <a href="/partidas/jugar/pretor/edit2/${partida.id}/${voto.id}"> 
-                                        <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>
-                                    </a>
-                                </c:if>
-
+                                        </a>
+                                    </c:if>
+                                
+                                </div>
                             </div>
                         </td>
                     </tr>
                 </c:forEach>
+            </div>
+            
+        </div>  
+
+        <div style = "margin: 1%; text-align: left;">
+            <button>
+                <a class="btn btn-default" href="/chat/creaChat/${partida.id}" target="_blank">Chat</a></th>
+            </button>
+        </div>
     </div>
    
 </petclinic:lo2>

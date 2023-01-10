@@ -8,8 +8,12 @@
 
     <div style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 20px;text-align: center; height: 200;">
 
-        <div style="font-size: 35px">
-            <c:out value="${principal.name}"/>
+        <div style="font-size: 35px; justify-content: center;">
+            <c:forEach items="${partida.jugadores}" var="jugador">
+                <c:if test="${jugador.user.username == principal.name}">
+                    <c:out value="${jugador.user.username}"/> -  <c:out value="${jugador.rol}"/>
+                </c:if>
+            </c:forEach>
         </div>
 
         <table class="table table-striped">
@@ -23,94 +27,103 @@
         <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 20px;">Ronda:  <c:out value="${partida.ronda}"/></h2>
         <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 20px;">Turno:  <c:out value="${partida.turno}"/></h2>
 
-        <div style="text-align:left">
-            Jugadores de la partida:
-            <div>
-                <c:forEach items="${partida.jugadores}" var="jugador">
-                    <tr style = "text-align: left; ";>
-                        <td>
-                            <div>
+        <div style="border: 1px solid; padding: 1%; background-color: #f9f9f9; margin-bottom: 1%;">
+            <div style="text-align:center">
+                Jugadores de la partida:
+            </div>
+            <div style="margin-left: 5%;">
+                <table>
+                    <tr>
+                        <c:forEach items="${partida.jugadores}" var="jugador">
+                            <td>
                                 <c:out value="${jugador.user.username}"/> -  <c:out value="${jugador.rol}"/>
-                            </div>
-                        </td>
-                    </tr>
-                </c:forEach>
-                <div style="height:100px; width: 100px;">
-
-                </div>
-                <c:if test ="${faccionApoyada == null}">
-                <div style="text-align:left">
-                    Tus opciones: 
-                    <div>
-                        <c:forEach items="${elegir}" var="opcion">
-                            <tr style = "text-align: left; ";>
-                                <td>
-                                    <div>
-                                        <c:out value="${opcion.getName()}"/> 
-                                    </div>
-                                </td>
-                            </tr>
+                                <div>
+                                    <spring:url value="/resources/images/${jugador.rol.getName()}.png" var="rol"/>
+                                    <img width="70%" height="70%" src="${rol}"/>
+                                </div>
+                            </td>
                         </c:forEach>
-                    </div>
-                </div>
-                </c:if>
-                <div style="height:100px; width: 100px;">
-        
-                </div>
-                
-                <c:if test ="${faccionApoyada != null}">
-                    <div style="text-align:left">
-                        Tu facci&#243;n Apoyada
-                        <div>
-                                <tr style = "text-align: left; ";>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div style="display: flex; flex-direction: row; justify-content: space-between; font-size: 19px;">
+            <div style="border: 1px solid; padding: 1%; background-color: #f9f9f9; width: 47%;">
+                <c:if test="${faccionApoyada == null}">
+                    <div style="text-align:center">
+                        Tus opciones de facci&#243;n para apoyar:
+                        <table>
+                            <tr>
+                                <c:forEach items="${elegir}" var="opcion">
                                     <td>
                                         <div>
-                                            <c:out value="${faccionApoyada.getName()}"/> 
+                                            <div style="padding: 2%; text-align:center">
+                                                <c:out value="${opcion.getName()}" />
+                                                <div>
+                                                    <spring:url value="/resources/images/${opcion.getName()}.png" var="opcion" />
+                                                    <img class="img-responsive" style ="margin: auto;width: 50%;  height: 50%;" src="${opcion}" />
+                                                </div>
+                                            </div>
                                         </div>
                                     </td>
-                                </tr>
+                                </c:forEach>
+                            </tr>
+                        </table>
+                    </div>
+                </c:if>
+                <c:if test="${faccionApoyada != null}">
+                    <div style="text-align:center;">
+                        Tu facci&#243;n Apoyada:
+                        <div>
+                            <div style="padding: 1%; text-align:center;">
+                                <c:out value="${faccionApoyada.getName()}" />
+                                <div style="text-align: center;">
+                                    <spring:url value="/resources/images/${faccionApoyada.getName()}.png" var="faccion" />
+                                    <img style ="width: 30%;  height: 70%;" src="${faccion}" />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </c:if>
             </div>
-        </div>
 
-
-
-        <span>Modificar voto</span><br>
-        <c:if test ="${voto.faccion.getName() == 'Leal'}">
-            <span>El voto es a favor del C&#233;sar</span>
-        </c:if>
-        <c:if test = "${voto.faccion.getName() == 'Traidor'}">
-            <sapn>El voto es en contra del C&#233;sar</sapn>
-        </c:if>
-        <c:if test = "${voto.faccion.getName() == 'Mercader'}">
-            <sapn>El voto es neutro</sapn>
-        </c:if>
-        <form:form modelAttribute="voto"
-                   class="form-horizontal">
-            <input type="hidden" name="id" value="${voto.id}"/>
-            <div class="form-group has-feedback">                
-                
-                
-                
-                <tr>
-                    <td>&#191;A qui&#233;n quieres que se vote?</td>
-                    <td>
-                        <select name = "faccion">
+            <div style="border: 1px solid; padding: 1%; background-color: #f9f9f9; width: 50%;">
+                <form:form modelAttribute="voto" class="form-horizontal">
+                    <input type="hidden" name="id" value="${voto.id}"/>
+                    <table>
+                        <tr>
+                            Cambiar voto:
+                        </tr>
+                        <tr>
                             <c:forEach items="${facciones}" var="faccion">
-                                <option value = "${faccion.id}"> <c:out value = "${faccion.getName()}"/> </option>
+                                <td>
+                                    <div>
+                                        <div style="padding: 2%; text-align:center">
+                                            <c:out value="${faccion.getName()}" />
+                                            <input type="radio" name="faccion" value="${faccion.id}" checked/>
+                                            <div>
+                                                <spring:url value="/resources/images/${faccion.getName()}.png" var="faccion" />
+                                                <img class="img-responsive" style ="margin: auto;width: 50%;  height: 50%;" src="${faccion}" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
                             </c:forEach>
-                        </select>
-                    </td>
-                </tr>
+                        </tr>
+                    </table>
+                    <div style="margin: 1%;">
+                        <button class="btn btn-default" type="submit">Votar</button>
+                    </div>
+                </form:form>
             </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10"></div>
-                     <button class="btn btn-default" type="submit">Modificar voto</button>
-                </div>
-            </div>
-        </form:form> 
+        </div>  
+
+        <div style = "margin: 1%; text-align: left;">
+            <button>
+                <a class="btn btn-default" href="/chat/creaChat/${partida.id}" target="_blank">Chat</a></th>
+            </button>
+        </div>
     </div>
    
 </petclinic:lo2>
