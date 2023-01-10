@@ -132,7 +132,7 @@
                                     <div>
                                         <div style="padding: 0%; text-align:center">
                                             <c:out value="Leal" />
-                                            <input type="radio" name="name" value="Leal"/>
+                                            <input type="radio" name="name" value="Leal" checked/>
                                             <div>
                                                 <spring:url value="/resources/images/votoLeal.png" var="Leal" />
                                                 <img class="img-responsive" style ="margin: auto;width: 50%;  height: 50%;" src="${Leal}" />
