@@ -28,24 +28,28 @@
         <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 20px;">Turno:  <c:out value="${partida.turno}"/></h2>
 
         <div style="border: 1px solid; padding: 1%; background-color: #f9f9f9; margin-bottom: 1%;">
-            <div style="text-align:center">
-                Jugadores de la partida:
-            </div>
-            <div style="margin-left: 5%;">
-                <table>
-                    <tr>
-                        <c:forEach items="${partida.jugadores}" var="jugador">
-                            <td>
-                                <c:out value="${jugador.user.username}"/> -  <c:out value="${jugador.rol}"/>
-                                <div>
-                                    <spring:url value="/resources/images/${jugador.rol.getName()}.png" var="rol"/>
-                                    <img width="70%" height="70%" src="${rol}"/>
-                                </div>
-                            </td>
-                        </c:forEach>
-                    </tr>
-                </table>
-            </div>
+            <c:if test="${partida.ronda != 3 && partida.jugadores.size() < 7}">
+                <div style="text-align:center">
+                    Jugadores de la partida:
+                    <table>
+                        <tr>
+                            <c:forEach items="${partida.jugadores}" var="jugador">
+                                <td>
+                                    <div>
+                                        <div style="padding: 2%; text-align:center">
+                                            <c:out value="${jugador.user.username}"/> -  <c:out value="${jugador.rol}"/>
+                                            <div>
+                                                <spring:url value="/resources/images/${jugador.rol.getName()}.png" var="rol"/>
+                                                <img width="70%" height="70%" src="${rol}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </c:forEach>
+                        </tr>
+                    </table>
+                </div>
+            </c:if>
         </div>
 
         <div style="display: flex; flex-direction: row; justify-content: space-between; font-size: 19px;">

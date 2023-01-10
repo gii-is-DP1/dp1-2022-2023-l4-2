@@ -49,43 +49,19 @@
             <c:if test="${partida.ronda != 3 && partida.jugadores.size() < 7}">
                 <div style="text-align:center">
                     Jugadores de la partida:
-                </div>
-                <div style="margin-left: 5%;">
                     <table>
                         <tr>
                             <c:forEach items="${partida.jugadores}" var="jugador">
                                 <td>
-                                    <c:out value="${jugador.user.username}"/> -  <c:out value="${jugador.rol}"/>
                                     <div>
-                                        <spring:url value="/resources/images/${jugador.rol.getName()}.png" var="rol"/>
-                                        <img width="70%" height="70%" src="${rol}"/>
-                                    </div>
-                                </td>
-                            </c:forEach>
-                        </tr>
-                    </table>
-                </div>
-            </c:if>
-            <c:if test="${partida.ronda != 3 && partida.jugadores.size() >= 7}">
-                <div style="text-align:center">
-                    Jugadores de la partida:
-                </div>
-                <div style="padding-left: 7%;">
-                    <table>
-                        <tr>
-                            <c:forEach items="${partida.jugadores}" var="jugador">
-                                <td>
-                                    <div style="margin: 5%;">
-                                        <div style="text-align:center; margin: 5%;">
-                                            <c:out value="${jugador.user.username}"/> </br>  <c:out value="${jugador.rol}"/>
-                                        </div>
-                                        
-                                        <div style="text-align:center;">
-                                            <spring:url value="/resources/images/${jugador.rol.getName()}.png" var="rol"/>
-                                            <img width="120px" height="170pxs" src="${rol}"/>
+                                        <div style="padding: 2%; text-align:center">
+                                            <c:out value="${jugador.user.username}"/> -  <c:out value="${jugador.rol}"/>
+                                            <div>
+                                                <spring:url value="/resources/images/${jugador.rol.getName()}.png" var="rol"/>
+                                                <img width="70%" height="70%" src="${rol}"/>
+                                            </div>
                                         </div>
                                     </div>
-                                    
                                 </td>
                             </c:forEach>
                         </tr>
@@ -248,7 +224,7 @@
 
                 <div style="margin: 3%;">
                     <c:if test="${jugadorLog.rol.getName() == 'Consul'}">
-                        <c:if test="${partida.getRonda() == 2 && partida.fase !=2}">
+                        <c:if test="${partida.getRonda() == 2 && partida.fase !=2 && hayPretor}">
                             <c:if test="${0 == numEdil}">
                                 <a class="btn btn-default" href="/partidas/jugar/consul/eleccionE/${partida.id}">Elegir Primer Edil</a>
                             </c:if>
@@ -256,7 +232,7 @@
                     </c:if>
 
                     <c:if test="${jugadorLog.rol.getName() == 'Consul'}">
-                        <c:if test="${partida.getRonda() == 2 && partida.fase !=2}">
+                        <c:if test="${partida.getRonda() == 2 && partida.fase !=2 && hayPretor}">
                             <c:if test="${1 == numEdil}">
                                 <a class="btn btn-default" href="/partidas/jugar/consul/eleccionE/${partida.id}">Elegir Segundo Edil</a>
                             </c:if>
