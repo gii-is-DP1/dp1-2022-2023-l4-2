@@ -28,18 +28,17 @@ public class WelcomeController {
 	  @GetMapping({"/","/home"})
 	  public ModelAndView home(Map<String, Object> model, Principal principal) {	    
 		ModelAndView mv = new ModelAndView("home");
-		Jugador j = jugadorService.getJugadorByUsername(principal.getName());
-		String faccionFav = j.getFaccionFavorita();
 		String url = "/resources/images/SoldadoNeutral.png";
-
-		if(faccionFav == "Leal"){
-			url = "/resources/images/SoldadoLeal.png";
-		}else if(faccionFav == "Traidor"){
-			url = "/resources/images/SoldadoTraidor.jpg";
-		}else{}
 
 		if (principal != null){
 			mv.addObject("userName", principal.getName());
+			Jugador j = jugadorService.getJugadorByUsername(principal.getName());
+			String faccionFav = j.getFaccionFavorita();
+			if(faccionFav == "Leal"){
+				url = "/resources/images/SoldadoLeal.png";
+			}else if(faccionFav == "Traidor"){
+				url = "/resources/images/SoldadoTraidor.jpg";
+			}else{}
 		}
 		mv.addObject("url", url);
 	    return mv;
