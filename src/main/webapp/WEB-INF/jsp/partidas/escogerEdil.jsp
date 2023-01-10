@@ -37,7 +37,7 @@
                                 <td>
                                     <div>
                                         <div style="padding: 2%; text-align:center">
-                                            <c:out value="${jugador.user.username}"/> -  <c:out value="${jugador.rol}"/>
+                                            <c:out value="${jugador.user.username}"/> -  <c:out value="${jugador.rol}"/> -  <c:if test="${jugador.yaElegido}"><c:out value="Recien Elegido"/></c:if>
                                             <div>
                                                 <spring:url value="/resources/images/${jugador.rol.getName()}.png" var="rol"/>
                                                 <img width="70%" height="70%" src="${rol}"/>
