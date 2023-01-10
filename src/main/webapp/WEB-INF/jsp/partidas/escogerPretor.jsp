@@ -37,10 +37,18 @@
                         <c:forEach items="${partida.jugadores}" var="jugador">
                             <td>
                                 <c:out value="${jugador.user.username}"/> -  <c:out value="${jugador.rol}"/>
-                                <div>
-                                    <spring:url value="/resources/images/${jugador.rol.getName()}.png" var="rol"/>
-                                    <img width="70%" height="70%" src="${rol}"/>
-                                </div>
+                                <c:if test="${jugador.rol == 'Consul'}">
+                                    <div>
+                                        <spring:url value="/resources/images/${jugador.rol.getName()}.png" var="rol"/>
+                                        <img width="70%" height="70%" src="${rol}"/>
+                                    </div>
+                                </c:if>
+                                <c:if test="${jugador.rol != 'Consul'}">
+                                    <div>
+                                        <spring:url value="/resources/images/Sin rol.png" var="srol"/>
+                                        <img width="70%" height="70%" src="${srol}"/>
+                                    </div>
+                                </c:if>
                             </td>
                         </c:forEach>
                     </tr>
