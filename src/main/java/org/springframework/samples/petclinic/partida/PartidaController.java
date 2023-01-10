@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.partida;
 import java.security.Principal;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -191,7 +193,7 @@ public class PartidaController {
             yaE = false;
         }
         Voto votoElegido = votoService.getVotoElegidoRondaTurno(p).orElse(null);
-        
+        Collections.reverse(p.getJugadores());
         result.addObject("votoElegido",votoElegido);
         result.addObject("yaE", yaE);
         result.addObject("votoMercaderE", votoMercaderE);
@@ -224,6 +226,7 @@ public class PartidaController {
         ModelAndView result = new ModelAndView(PARTIDAS_ESPECTAR);
         response.addHeader("Refresh", "20");
         Partida p = partidaService.getPartidaById(id).get();
+        Collections.reverse(p.getJugadores());
         result.addObject("partida", p);
         result.addObject("principal", principal);
         result.addObject("faccionGanadora", p.getFaccionGanadora());
@@ -239,6 +242,7 @@ public class PartidaController {
         ft.setId(maxid+1);
         List<FaccionType> elegir = j.getParticipacionEnPartida(p).getOpciones();
         ModelAndView result = pasarPropiedadesComunes(EDIL_JUGAR, principal, p, j);
+        Collections.reverse(p.getJugadores());
         result.addObject("elegir", elegir);
         result.addObject("faccionType", ft);
         return result;
@@ -269,6 +273,7 @@ public class PartidaController {
         List<Voto> votos = votoService.getVotosRondaTurno(p);
         List<FaccionType> elegir = j.getParticipacionEnPartida(p).getOpciones();
         ModelAndView result = pasarPropiedadesComunes(PRETOR_JUGAR, principal, p, j);
+        Collections.reverse(p.getJugadores());
         result.addObject("elegir", elegir);
         result.addObject("votos", votos);
         return result;
@@ -282,6 +287,7 @@ public class PartidaController {
         Voto v = votoService.getVotoById(votoId).get();
         List<FaccionType> elegir = j.getParticipacionEnPartida(p).getOpciones();
         ModelAndView res = pasarPropiedadesComunes(PRETOR_EDIT, principal, p, j);
+        Collections.reverse(p.getJugadores());
         res.addObject("elegir", elegir);
         res.addObject("voto", v);
         return res;
@@ -323,6 +329,7 @@ public class PartidaController {
         ft.setId(maxid+1);
         List<String> opciones = j.getParticipacionEnPartida(p).getOpciones().stream().map(x->x.getName()).collect(Collectors.toList());
         ModelAndView result = pasarPropiedadesComunes(CONSUL_JUGAR, principal, p, j);
+        Collections.reverse(p.getJugadores());
         result.addObject("faccionType", ft);
         result.addObject("opciones", opciones);
         return result;
@@ -339,6 +346,7 @@ public class PartidaController {
                     .collect(Collectors.toList());
         List<String> opciones = j.getParticipacionEnPartida(p).getOpciones().stream().map(x->x.getName()).collect(Collectors.toList());
         ModelAndView res = pasarPropiedadesComunes(ESCOGER_PRETOR, principal, p, j);
+        Collections.reverse(p.getJugadores());
         res.addObject("opciones", opciones);
         res.addObject("jugFilt", jugadoresFiltrado);
         return res;
@@ -367,6 +375,7 @@ public class PartidaController {
         List<Jugador> jugadoresFiltrado = jugadorService.jugadoresQuePuedenSerEdil(p);
         List<String> opciones = j.getParticipacionEnPartida(p).getOpciones().stream().map(x->x.getName()).collect(Collectors.toList());
         ModelAndView res = pasarPropiedadesComunes(ESCOGER_EDIL, principal, p, j);
+        Collections.reverse(p.getJugadores());
         res.addObject("opciones", opciones);
         res.addObject("jugFilt", jugadoresFiltrado);
         return res;
@@ -431,6 +440,7 @@ public class PartidaController {
         Voto v = votoService.getVotoById(votoId).get();
         List<FaccionType> elegir = j.getParticipacionEnPartida(p).getOpciones();
         ModelAndView res = pasarPropiedadesComunes(PRETOR_EDIT2, principal, p, j);
+        Collections.reverse(p.getJugadores());
         res.addObject("elegir", elegir);
         res.addObject("voto", v);
         return res;
@@ -498,6 +508,7 @@ public class PartidaController {
                                                     .filter(x->!x.getName().equals(v.getFaccion().getName()))
                                                     .filter(x->!x.getName().equals("No decidido"))
                                                     .collect(Collectors.toList());
+        Collections.reverse(p.getJugadores());
         res.addObject("elegir", elegir);
         res.addObject("voto", v);
         res.addObject("facciones", facciones);

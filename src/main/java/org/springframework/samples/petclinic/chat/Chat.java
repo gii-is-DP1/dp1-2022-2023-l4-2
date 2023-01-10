@@ -12,7 +12,6 @@ import javax.persistence.OneToOne;
 import org.springframework.samples.petclinic.model.BaseEntity;
 import org.springframework.samples.petclinic.partida.Partida;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.Setter;

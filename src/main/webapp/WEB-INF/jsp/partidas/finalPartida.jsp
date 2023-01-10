@@ -48,7 +48,6 @@
                 La p&#225;rtida ha durado 
                 <c:out value="${partida.getTiempo()} minutos"/>
             </div>
-
         </div>
 
         <div style="display: flex; flex-direction: row; justify-content: space-between; font-size: 19px;">
