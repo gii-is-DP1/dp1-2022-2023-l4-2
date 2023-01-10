@@ -78,10 +78,4 @@
             </c:forEach>
         </tr>
     </table>
-    <tr>
-        <td>
-            <spring:url value="/partidas/partidasActivas" htmlEscape="true" var="unirse" />
-            <th style="text-align: center;"><a class="btn btn-default" href="${unirse}">VER PARTIDAS ACTIVAS</a></th>
-        </td>
-    </tr>
 </petclinic:layout>

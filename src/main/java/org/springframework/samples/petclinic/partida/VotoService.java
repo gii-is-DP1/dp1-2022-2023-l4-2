@@ -87,6 +87,11 @@ public class VotoService {
         return v;
     }
 
+    @Transactional(readOnly = true)
+    public Optional<Voto> getVotoElegidoRondaTurno(Partida p){
+        return votoRepository.findVotosTurnoElegidos(p.getTurno(), p.getRonda(), p);
+    }
+
     public void CrearVoto(Jugador j, FaccionType faccion, Partida p, Integer maxVoto) throws VotoNoPermitidoException{
         Voto v = new Voto();
         v.setId(maxVoto+1);
