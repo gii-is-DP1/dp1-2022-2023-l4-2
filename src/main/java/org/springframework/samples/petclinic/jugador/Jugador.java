@@ -172,4 +172,26 @@ public class Jugador extends AuditableEntity {
         }
         return res;
     }
+
+    public Integer getNumeroAmigos(){
+        Integer res = 0;
+        for(Jugador a : this.amigoDe){
+            if(a.getAmigoDe().contains(this)){
+                res++;
+            }
+        }
+        return res;
+    }
+    public Integer getnNumeroSeguidos(){
+        return this.amigoDe.size();
+    }
+    public Integer getNumeroDeSeguidores(List<Jugador> jugadores){
+        Integer res = 0;
+        for(Jugador j: jugadores){
+            if(j.getAmigoDe().contains(this)){
+                res ++;
+            }
+        }
+        return res;
+    }
 }

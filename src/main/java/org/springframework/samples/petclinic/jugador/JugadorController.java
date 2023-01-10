@@ -111,8 +111,8 @@ public ModelAndView processCreationForm(@Valid Jugador j, BindingResult br,Princ
         ModelAndView res = new ModelAndView(JUGADOR_PERFIL);
         Jugador j = jugadorService.getJugadorByUsername(username);
         List<Jugador> amigos = jugadorService.getJugadorByUsername(username).getAmigoDe();
-        Integer contAmigos = 0;
-        Integer contSeguidores = 0;
+        Integer contAmigos = j.getNumeroAmigos();
+        Integer contSeguidores = j.getNumeroDeSeguidores(amigos);
         List<Jugador> todos = jugadorService.getJugadores();
         for(Jugador e : todos){
             if(e.getAmigoDe().contains(j)){
@@ -124,22 +124,18 @@ public ModelAndView processCreationForm(@Valid Jugador j, BindingResult br,Princ
                 contAmigos++;
             }
         }
-        if(j==null){
-            res = new ModelAndView("redirect:/exception");
-        }else{
-            res.addObject("jugador", j);
-            res.addObject("numPartidasJugadas", j.getPartidasJugadas());
-            res.addObject("numPartidasGanadas", j.getPartidasGanadas());
-            res.addObject("victoriasComoLeal", j.getVictoriasComoLeal());
-            res.addObject("victoriasComoTraidor", j.getVictoriasComoTraidor());
-            res.addObject("victoriasComoMercader", j.getVictoriasComoMercader());
-            res.addObject("tiempoJugado", j.getTiempoJugado());
-            res.addObject("faccionFavorita", j.getFaccionFavorita());
-            res.addObject("nombreUsuario", principal.getName());
-            res.addObject("siguiendo", amigos.size());
-            res.addObject("amigosC", contAmigos);
-            res.addObject("seguidores", contSeguidores);
-        }
+        res.addObject("jugador", j);
+        res.addObject("numPartidasJugadas", j.getPartidasJugadas());
+        res.addObject("numPartidasGanadas", j.getPartidasGanadas());
+        res.addObject("victoriasComoLeal", j.getVictoriasComoLeal());
+        res.addObject("victoriasComoTraidor", j.getVictoriasComoTraidor());
+        res.addObject("victoriasComoMercader", j.getVictoriasComoMercader());
+        res.addObject("tiempoJugado", j.getTiempoJugado());
+        res.addObject("faccionFavorita", j.getFaccionFavorita());
+        res.addObject("nombreUsuario", principal.getName());
+        res.addObject("siguiendo", amigos.size());
+        res.addObject("amigosC", contAmigos);
+        res.addObject("seguidores", contSeguidores);
         return res;
     }
 
@@ -147,10 +143,8 @@ public ModelAndView processCreationForm(@Valid Jugador j, BindingResult br,Princ
 public ModelAndView getAmigosDelJugador(@PathVariable("username") String username) {
     ModelAndView res = new ModelAndView(JUGADOR_LISTA_AMIGOS);
     List<Jugador> amigos = jugadorService.getJugadorByUsername(username).getAmigoDe();
-    Integer numAmigos = amigos.size();
     res.addObject("username", username);
     res.addObject("amigos", amigos);
-    res.addObject("numAmigos", numAmigos);
     return res;
 }
 
