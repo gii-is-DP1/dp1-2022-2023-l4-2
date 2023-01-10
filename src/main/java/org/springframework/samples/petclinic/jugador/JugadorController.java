@@ -147,8 +147,10 @@ public ModelAndView processCreationForm(@Valid Jugador j, BindingResult br,Princ
 public ModelAndView getAmigosDelJugador(@PathVariable("username") String username) {
     ModelAndView res = new ModelAndView(JUGADOR_LISTA_AMIGOS);
     List<Jugador> amigos = jugadorService.getJugadorByUsername(username).getAmigoDe();
+    Integer numAmigos = amigos.size();
     res.addObject("username", username);
     res.addObject("amigos", amigos);
+    res.addObject("numAmigos", numAmigos);
     return res;
 }
 

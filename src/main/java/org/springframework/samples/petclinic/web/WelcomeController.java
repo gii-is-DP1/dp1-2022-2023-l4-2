@@ -18,14 +18,14 @@ public class WelcomeController {
 	JugadorService jugadorService;
 	
 	
-	  @GetMapping({"/welcome"})
+	  @GetMapping({"/","/welcome"})
 	  public String welcome(Map<String, Object> model) {	    
 
 	    return "welcome";
 	  }
 	  
 
-	  @GetMapping({"/","/home"})
+	  @GetMapping({"/home"})
 	  public ModelAndView home(Map<String, Object> model, Principal principal) {	    
 		ModelAndView mv = new ModelAndView("home");
 		Jugador j = jugadorService.getJugadorByUsername(principal.getName());
