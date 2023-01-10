@@ -50,6 +50,32 @@
                     </table>
                 </div>
             </c:if>
+            <c:if test="${partida.ronda != 3 && partida.jugadores.size() >= 7}">
+                <div style="text-align:center">
+                    Jugadores de la partida:
+                </div>
+                <div style="display: flex; flex-direction:column; align-items:center; justify-content: center; padding: 1%; background-color: #f9f9f9; width:100%;">
+                    <table>
+                        <tr>
+                            <c:forEach items="${partida.jugadores}" var="jugador">
+                                <td>
+                                    <div style="margin: 5%;">
+                                        <div style="text-align:center; margin: 5%;">
+                                            <c:out value="${jugador.user.username}"/> </br>  <c:out value="${jugador.rol}"/>
+                                        </div>
+
+                                        <div style="text-align:center;">
+                                            <spring:url value="/resources/images/${jugador.rol.getName()}.png" var="rol"/>
+                                            <img width="135px" height="185px" src="${rol}"/>
+                                        </div>
+                                    </div>
+
+                                </td>
+                            </c:forEach>
+                        </tr>
+                    </table>
+                </div>
+            </c:if>
         </div>
 
         <div style="display: flex; flex-direction: row; justify-content: space-between; font-size: 19px;">
