@@ -6,12 +6,14 @@
 
 <petclinic:layout pageName="searchFilter">
     <jsp:body>
-        <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>Buscar amigos:</h2> 
+        <div style="text-align: center; ">
+            <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 40px; margin-bottom: 3%;";>Buscar amigos:</h2>
+        </div>
         <form:form modelAttribute="String" class="form-horizontal" id="jugadorForm" method="GET">
             <div class="form-group has-feedback">
-                <table id="searchFilter" class="table table-striped">
-                    <tr>
-                        <th>
+                <table id="searchFilter" class="table table-striped" style="border: 1px solid;">
+                    <tr style="background-color: rgb(192, 191, 191); border: #e2861e 2px solid;">
+                        <th>Introduzca el nombre de usuario - 
                             <input 
                                 style="width: 50%;"
                                 placeholder="Buscar jugador"
@@ -41,9 +43,10 @@
                         </c:if>
                     </c:forEach>
                     <tr>
-                        <td style="text-align: left;"><button class="btn btn-default" type ="submit">Agregar como amigo</button></td>
-                        <td style="text-align: right;"><a class="btn btn-default" href="/jugadores/perfil/${nombreUsuario}/amigos">Volver a amigos</a></td>
+                        <td style="text-align: left; padding-left: 22%;"><button class="btn btn-default" style="font-size: 20px; font-family: sans-serif;" type ="submit">Agregar como amigo</button></td>
+                        <td style="text-align: right; padding-right: 22%;"><a class="btn btn-default" style="font-size: 20px; font-family: sans-serif;" href="/jugadores/perfil/${nombreUsuario}/amigos">Volver a amigos</a></td>
                     </tr>
+                    
                 </table>
             </div>
         </form:form>

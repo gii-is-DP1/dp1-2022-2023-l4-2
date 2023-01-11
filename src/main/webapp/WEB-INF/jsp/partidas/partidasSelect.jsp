@@ -8,25 +8,30 @@
 
 <petclinic:layout pageName="partidas">
 
-    <a class="btn btn-default" href="/home">VOLVER AL MEN&#218; PRINCIPAL</a>
+    <div style="text-align: center; ">
+        <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 50px; margin-bottom: 1%;";>&#191;Qu&#233; desea?</h2>
+    </div>
 
-    <table style="width: 100%; text-align: center; position: relative; top: 30%;">
-        <tr>
-            <td>
-                <h2 style="font-family: 'Dalek Pinpoint', sans-serif; color: #ecb660;" ;>&#191;Qu&#233; prefiere?</h2>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <spring:url value="/partidas/new" htmlEscape="true" var="seleccionar" />
-                <a class="btn btn-default" href="${seleccionar}">CREAR PARTIDA</a>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <spring:url value="/partidas/join" htmlEscape="true" var="unirse" />
-                <a class="btn btn-default" href="${unirse}">UNIRSE A UNA PARTIDA</a>
-            </td>
-        </tr>
-    </table>
+    <div style="display: flex; flex-direction:column; align-items:center; justify-content: center; padding: 0%;  width:100%;">
+        <table>
+            <tr>
+                
+                <td>
+                    
+                    <div style="text-align:center;">
+                        <spring:url value="/resources/images/logo_big.png" var="logo" />
+                        <img style ="width: 70%;  height: 100%;" src="${logo}" />
+                    </div>
+                    <div style="text-align:center; margin-top: 5%;">
+                        <spring:url value="/partidas/new" htmlEscape="true" var="seleccionar" />
+                        <a class="btn btn-default" style="font-size: 35px; font-family: 'Dalek Pinpoint', sans-serif; "  href="${seleccionar}">Crear una partida</a>
+                    </div>
+                    <div style="text-align:center; margin-top: 5%;">
+                        <spring:url value="/partidas/join" htmlEscape="true" var="unirse" />
+                        <a class="btn btn-default" style="font-size: 35px; font-family: 'Dalek Pinpoint', sans-serif; "  href="${unirse}">Unirse a una partida</a>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
 </petclinic:layout>

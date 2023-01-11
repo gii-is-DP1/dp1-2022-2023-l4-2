@@ -6,10 +6,12 @@
 
 <petclinic:layout pageName="jugadorSearch">
     <jsp:body>
-        <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>Jugadores:</h2> 
+        <div style="text-align: center; ">
+            <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 40px; margin-bottom: 3%;">Lista de jugadores</h2>
+        </div>
         <form:form modelAttribute="jugador" class="form-horizontal" id="jugadorForm">
             <div class="form-group has-feedback">
-                <table id="jugadorSearch" class="table table-striped">
+                <table id="jugadorSearch" class="table table-striped" style="border: 1px solid">
                     <c:forEach items="${jugadores}" var="jugador">
                         <c:if test="${jugador.user.username != nombreUsuario && !amigos.contains(jugador)}">
                             <tr>
@@ -23,9 +25,11 @@
                             <input type="hidden" name="jugador_id" value="${jugador.id}"/>
                         </c:if>
                     </c:forEach>
-                </div>
-                <th style="text-align: left;"><button class="btn btn-default" type ="submit">Agregar como amigo</button></th>
-                <th style="text-align: right;"><a class="btn btn-default" href="/jugadores/perfil/${nombreUsuario}/amigos">Volver a amigos</a></th>
+                    </div>
+                    <tr>
+                        <td style="text-align: left; padding-left: 22%;"><button class="btn btn-default" style="font-size: 20px; font-family: sans-serif;" type ="submit">Agregar como amigo</button></td>
+                        <td style="text-align: right; padding-right: 22%;"><a class="btn btn-default" style="font-size: 20px; font-family: sans-serif;" href="/jugadores/perfil/${nombreUsuario}/amigos">Volver a amigos</a></td>
+                    </tr>
             </table>
         </form:form>
     </jsp:body>

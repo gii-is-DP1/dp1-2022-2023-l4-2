@@ -7,9 +7,11 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <petclinic:layout pageName="logros">
-    <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>Logros</h2>
+    <div style="text-align: center; ">
+        <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 40px; margin-bottom: 3%;";>Logros</h2>
+    </div>
 
-    <table id="logrosTable" class="table table-striped">
+    <table id="logrosTable" class="table table-striped" style="border: 1px solid">
         <thead>
         <tr>
             <th>Nombre</th>
@@ -17,6 +19,12 @@
             <th>Tipo</th>
             <th>L&#205;mite</th>
             <th>Dificultad</th>
+            <sec:authorize access='hasAuthority("admin")' > 
+                <th>Editar</th> 
+            </sec:authorize>   
+            <sec:authorize access='hasAuthority("admin")' > 
+                <th>Eliminar</th> 
+            </sec:authorize>   
         </tr>
         </thead>
         <tbody>
@@ -37,13 +45,13 @@
                 <td>
                     <c:out value="${logro.dificultad}"/>
                 </td>
-                <sec:authorize access='hasAuthority("admin")' > 
                 <td> 
-                    <a href="/logros/edit/${logro.id}"> 
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>                            
-                    </a>       
+                    <sec:authorize access='hasAuthority("admin")' > 
+                        <a href="/logros/edit/${logro.id}"> 
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>                            
+                        </a>    
+                    </sec:authorize>   
                 </td>
-                </sec:authorize>
                 <sec:authorize access='hasAuthority("admin")' > 
                 <td> 
                     <a href="/logros/delete/${logro.id}"> 
@@ -55,7 +63,9 @@
         </c:forEach>
         </tbody>
     </table>
-    <sec:authorize access='hasAuthority("admin")' > 
-        <a class="btn btn-default" href="/logros/new">Crear logro</a>
-    </sec:authorize>
+    <div style="text-align:center; margin-top: 1%;">
+        <sec:authorize access='hasAuthority("admin")' >
+            <a class="btn btn-default" style="font-size: 20px; font-family: sans-serif; "  href="/logros/new">Crear nuevo logro</a>
+        </sec:authorize>
+    </div>
 </petclinic:layout>

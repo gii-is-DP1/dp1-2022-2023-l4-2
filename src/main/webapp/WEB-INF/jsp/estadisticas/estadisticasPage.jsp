@@ -7,7 +7,7 @@
 
 <petclinic:layout pageName="estadisticas">
     <div style="text-align: center;">
-        <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>Estad&#237;sticas generales</h2>
+        <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 40px; margin-bottom: 3%;";>Estad&#237;sticas generales</h2>
     </div>
 
     <table id="estadisticasGeneralesTable" class="table table-striped">

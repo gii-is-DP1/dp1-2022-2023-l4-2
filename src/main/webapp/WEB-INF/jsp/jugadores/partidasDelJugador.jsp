@@ -10,24 +10,23 @@
     
 
 <petclinic:layout pageName="historial">
-    <div style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 100px;text-align: center;">
-        <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>Historial de <c:out value ="${username}"/></h2>
+    <div style="text-align: center; ">
+        <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 40px; margin-bottom: 3%;";>Historial de <c:out value ="${username}"/></h2>
     </div>
 
-
-    <table id="historialTable" class="table table-striped">
+    <table id="historialTable" class="table table-striped" style="border: 1px solid;">
         <thead>
         <tr>
-            <th>Ronda</th>
-            <th>Turno</th>
-            <th>Num. jugadores</th>
-            <th>Anfitri&#243;n</th>
-            <th>Votos a favor del C&#233;sar</th>
-            <th>Votos en contra del C&#233;sar</th>
-            <th>L&#237;mite</th>
-            <th>Facci&#243;n ganadora</th>
-            <th>Tiempo</th>
-            <th>Jugadores de la partida</th>
+            <th style="text-align: center;">Ronda</th>
+            <th style="text-align: center;">Turno</th>
+            <th style="text-align: center;">Num. jugadores</th>
+            <th style="text-align: center;">Anfitri&#243;n</th>
+            <th style="text-align: center;">Votos a favor del C&#233;sar</th>
+            <th style="text-align: center;">Votos en contra del C&#233;sar</th>
+            <th style="text-align: center;">L&#237;mite</th>
+            <th style="text-align: center;">Facci&#243;n ganadora</th>
+            <th style="text-align: center;">Tiempo</th>
+            <th style="text-align: center;">Jugadores de la partida</th>
 
         </tr>
         </thead>
@@ -70,10 +69,12 @@
         </c:forEach>
         </tbody>
     </table>
-    <table  style= "width: 100%; text-align:center;position: relative;">
-        <tr>
-            <th style="text-align: left;"> <a class="btn btn-default" href="/jugadores/perfil/${username}">Volver al Perfil</a></th>
-            <th  style="text-align: right;"><a class="btn btn-default" href="/jugadores/logros/${username}">Mis Logros</a></th>
-        </tr>
-    </table> 
+
+    <div style="text-align: center; justify-content: space-between;">
+        <div style="position: relative; font-family: 'Dalek Pinpoint';">
+            <a class="btn btn-default" style="font-size: 20px; font-family: sans-serif; margin-left: 10%; margin-right: 10%;" href="/jugadores/perfil/${username}">Volver al Perfil</a>
+            <a class="btn btn-default" style="font-size: 20px; font-family: sans-serif; margin-left: 10%; margin-right: 10%;"  href="/jugadores/logros/${username}">Mis Logros</a>
+        </div>
+    </div>
+    
 </petclinic:layout>

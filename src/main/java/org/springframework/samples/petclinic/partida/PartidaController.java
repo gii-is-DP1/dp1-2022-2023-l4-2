@@ -103,6 +103,8 @@ public class PartidaController {
         partidaService.añadeJugadorAPartida(j, p);
         jugadorService.añadePartidaAJugador(p,j);
         generarParticipacion(j, p);
+        result.addObject("jugadoresAct", p.getJugadores().size());
+        result.addObject("jugadoresMax", p.getNumJugadores());
         result.addObject("jugadores", jugadores);
         result.addObject("partida", p);
         result.addObject("jugadorActual", j);

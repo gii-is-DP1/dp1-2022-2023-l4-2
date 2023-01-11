@@ -8,13 +8,15 @@
 <petclinic:lo2 pageName="chat">
     <jsp:body>
         <form:form modelAttribute="mensaje" class="form-horizontal">
-                <div class="form-group has-feedback">                
+            <div style="text-align: center; ">
+                <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 40px; margin-bottom: 3%;";>Escribir mensajes</h2>
+            </div>
+
+                <div class="form-group has-feedback" style="font-size: 20px;">                
                     <petclinic:inputField label="Escribe algo:" name="contenido"/>
                 </div>
-                <div class="form-group">
-                        
-                            <button class="btn btn-default"  type="submit">Enviar</button>
-                        
+                <div style="text-align:center; margin-top: 1%;">
+                    <button class="btn btn-default" style="font-size: 15px; font-family: sans-serif; font-size: 25px; "  type="submit">Enviar</button>
                 </div>
             </form:form>    
     </jsp:body>    

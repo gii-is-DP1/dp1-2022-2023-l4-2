@@ -6,9 +6,11 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="partidas">
-    <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>Partidas</h2>
+    <div style="text-align: center; ">
+        <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 50px; margin-bottom: 2%;";>Partidas</h2>
+    </div>
 
-    <table id="partidasTable" class="table table-striped">
+    <table id="partidasTable" class="table table-striped" style="border: 1px solid">
         <thead>
         <tr>
             <th>Ronda</th>
@@ -66,16 +68,23 @@
         </tbody>
 
     </table>
-    <table>
-        <tr>   
-            <td>P&#225;ginas:</td>
-            
-            <c:forEach begin="0" step="1" end="${num}" var="variable">
-                <td>
-                    <spring:url value="/partidas?page=${variable}" htmlEscape="true" var="como"/>
-                    <a class="btn btn-default"  href="${como}" value = "${variable}"><c:out value = "${variable+1}"/></a>
-                </td>
-            </c:forEach>
-        </tr>
-    </table>
+    <div style="display: flex; flex-direction: row; justify-content:center; font-size: 19px;">
+        <table >
+            <tr>  
+                <div>
+                    <td><h1 style = " font-size: 20px; margin-bottom: 2%;";>P&#225;ginas:</h1></td>
+                
+                    <c:forEach begin="0" step="1" end="${num}" var="variable">
+                        <td>
+                            <div style="margin-left: 30%;">
+                                <spring:url value="/partidas?page=${variable}" htmlEscape="true" var="como"/>
+                                <a class="btn btn-default" style="margin-left: 5%;" href="${como}" value = "${variable}"><c:out value = "${variable+1}"/></a>
+                            </div>
+                        </td>
+                    </c:forEach>
+                </div> 
+            </tr>
+        </table>
+    </div>
+    
 </petclinic:layout>
