@@ -221,7 +221,10 @@ INSERT INTO participacion(id, es_anfitrion,num_consul,votos_contra_cesar,votos_f
     (9,false,3,2,2,0,2),
     (10,false,4,2,2,0,3),
     (11,false,5,2,2,0,1),
-    (12,false,6,2,2,0,2);
+    (12,false,6,2,2,0,2),
+    (13,true,1,0,2,2,3),
+    (14,true,1,0,2,2,3),
+    (15,true,1,0,2,2,3);
 
 INSERT INTO partida_participaciones(partida_id,participaciones_id)
     VALUES(1,1),
@@ -235,7 +238,10 @@ INSERT INTO partida_participaciones(partida_id,participaciones_id)
     (1,9),
     (1,10),
     (1,11),
-    (1,12);
+    (1,12),
+    (5,13),
+    (6,14),
+    (7,15);
     
 INSERT INTO jugador_participaciones(jugador_id,participaciones_id)
     VALUES(1,1),
@@ -249,7 +255,10 @@ INSERT INTO jugador_participaciones(jugador_id,participaciones_id)
     (3,9),
     (4,10),
     (5,11),
-    (7,12);
+    (7,12),
+    (2,13),
+    (2,14),
+    (2,15);
 
 
 INSERT INTO partida_jugadores(partidas_id,jugadores_id) 
@@ -272,7 +281,10 @@ INSERT INTO partida_jugadores(partidas_id,jugadores_id)
     (6,5),
     (7,5),
     (8,3),
-    (8,1);
+    (8,1),
+    (5,2),
+    (6,2),
+    (7,2);
 
 INSERT INTO participacion_opciones(participacion_id,opciones_id)
     VALUES(1,1),(1,2),

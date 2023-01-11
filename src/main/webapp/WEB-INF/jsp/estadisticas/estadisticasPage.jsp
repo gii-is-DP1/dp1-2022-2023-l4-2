@@ -13,7 +13,7 @@
     <table id="estadisticasGeneralesTable" class="table table-striped">
         <thead>
         <tr>
-            <th>N&#250;mero de partidas</th>
+            <th>N&#250;mero de partidas finalizadas</th>
             <th><c:out value="${numPartidas}"/></th>
 
         </tr>

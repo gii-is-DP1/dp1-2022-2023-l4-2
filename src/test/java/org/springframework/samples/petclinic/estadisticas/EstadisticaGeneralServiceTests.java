@@ -42,7 +42,7 @@ public class EstadisticaGeneralServiceTests {
         jugadores.forEach(x->x.getPartidasGanadas());
         List<Jugador> topJugadoresVictorias = estadisticaGeneralService.getTopJugadoresConVictorias(jugadores);
         assertNotNull(topJugadoresVictorias);
-        assertEquals(jugadores.get(0), topJugadoresVictorias.get(0));
+        assertEquals(jugadores.get(1), topJugadoresVictorias.get(0));
     }
 
     @Test
@@ -60,7 +60,7 @@ public class EstadisticaGeneralServiceTests {
         jugadores.forEach(x->x.getPartidasJugadas());
         List<Jugador> topJugadoresPartidas = estadisticaGeneralService.getTopJugadoresConPartidas(jugadores);
         assertNotNull(topJugadoresPartidas);
-        assertEquals(jugadores.get(0), topJugadoresPartidas.get(0));
+        assertEquals(jugadores.get(1), topJugadoresPartidas.get(0));
     }
 
     @Test
@@ -118,7 +118,7 @@ public class EstadisticaGeneralServiceTests {
     public void getNumPartidasTest(){
         List<Partida> partidas = estadisticaGeneralService.getPartidasNoActivas();
         assertNotNull(partidas);
-        assertEquals(4, estadisticaGeneralService.getNumPartidas(partidas));
+        assertEquals(7, estadisticaGeneralService.getNumPartidas(partidas));
     }
 
     @Test
@@ -160,7 +160,7 @@ public class EstadisticaGeneralServiceTests {
     public void getVictoriasLealTest(){
         List<Partida> partidas = estadisticaGeneralService.getPartidasNoActivas();
         assertNotNull(partidas);
-        assertEquals(2, estadisticaGeneralService.getVictoriasLeal(partidas));
+        assertEquals(3, estadisticaGeneralService.getVictoriasLeal(partidas));
     }
 
     @Test
@@ -174,7 +174,7 @@ public class EstadisticaGeneralServiceTests {
     public void getVictoriasTraidorTest(){
         List<Partida> partidas = estadisticaGeneralService.getPartidasNoActivas();
         assertNotNull(partidas);
-        assertEquals(1, estadisticaGeneralService.getVictoriasTraidor(partidas));
+        assertEquals(2, estadisticaGeneralService.getVictoriasTraidor(partidas));
     }
 
     @Test
@@ -188,7 +188,7 @@ public class EstadisticaGeneralServiceTests {
     public void getVictoriasMercaderTest(){
         List<Partida> partidas = estadisticaGeneralService.getPartidasNoActivas();
         assertNotNull(partidas);
-        assertEquals(1, estadisticaGeneralService.getVictoriasMercader(partidas));
+        assertEquals(2, estadisticaGeneralService.getVictoriasMercader(partidas));
     }
 
     @Test
