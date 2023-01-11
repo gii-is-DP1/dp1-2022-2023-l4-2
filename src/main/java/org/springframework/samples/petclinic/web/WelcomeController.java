@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.web;
 
 import java.security.Principal;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.jugador.Jugador;
@@ -28,19 +29,21 @@ public class WelcomeController {
 	  @GetMapping({"/home"})
 	  public ModelAndView home(Map<String, Object> model, Principal principal) {	    
 		ModelAndView mv = new ModelAndView("home");
-		String url = "/resources/images/SoldadoNeutral.png";
 
-		if (principal != null){
+		if (principal != null) {
 			mv.addObject("userName", principal.getName());
 			Jugador j = jugadorService.getJugadorByUsername(principal.getName());
-			String faccionFav = j.getFaccionFavorita();
-			if(faccionFav == "Leal"){
-				url = "/resources/images/SoldadoLeal.png";
-			}else if(faccionFav == "Traidor"){
-				url = "/resources/images/SoldadoTraidor.jpg";
-			}else{}
-		}
-		mv.addObject("url", url);
+			String faccionFav = "Mercader";
+			if(j != null && j.getFaccionFavorita() != null) {
+				faccionFav = j.getFaccionFavorita();
+			}
+
+			if (faccionFav == ""){
+				faccionFav = "Mercader";
+			}
+			mv.addObject("faccion", faccionFav);
+		} 
+		
 	    return mv;
 	  }
 
@@ -48,6 +51,12 @@ public class WelcomeController {
 	  public String instrucciones(Map<String, Object> model) {	    
 
 	    return "instrucciones";
+	  }
+
+	  @GetMapping({"/diaHistorico"})
+	  public String diaHistorico(Map<String, Object> model) {	    
+
+	    return "diaHistorico";
 	  }
 
 

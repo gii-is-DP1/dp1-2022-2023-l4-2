@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -124,6 +125,10 @@ public ModelAndView processCreationForm(@Valid Jugador j, BindingResult br,Princ
                 contAmigos++;
             }
         }
+        String faccionFav = j.getFaccionFavorita();
+        if(faccionFav == ""){
+            faccionFav = "Mercader";
+        }
         res.addObject("jugador", j);
         res.addObject("numPartidasJugadas", j.getPartidasJugadas());
         res.addObject("numPartidasGanadas", j.getPartidasGanadas());
@@ -131,7 +136,7 @@ public ModelAndView processCreationForm(@Valid Jugador j, BindingResult br,Princ
         res.addObject("victoriasComoTraidor", j.getVictoriasComoTraidor());
         res.addObject("victoriasComoMercader", j.getVictoriasComoMercader());
         res.addObject("tiempoJugado", j.getTiempoJugado());
-        res.addObject("faccionFavorita", j.getFaccionFavorita());
+        res.addObject("faccionFavorita", faccionFav);
         res.addObject("nombreUsuario", principal.getName());
         res.addObject("siguiendo", amigos.size());
         res.addObject("amigosC", contAmigos);
@@ -200,7 +205,7 @@ public ModelAndView deleteAmigo(@PathVariable("username1") String username1,@Pat
 @GetMapping("/partidas/{username}")
 public ModelAndView getPartidasDelJugador(@PathVariable("username") String username) {
     ModelAndView res = new ModelAndView(JUGADOR_HISTORIAL);
-    List<Partida> aux = jugadorService.getJugadorByUsername(username).getPartidas();
+    List<Partida> aux = jugadorService.getJugadorByUsername(username).getPartidas().stream().filter(x -> !x.getActiva()).collect(Collectors.toList());
     res.addObject(username);
     res.addObject("historial", aux);
     return res;
