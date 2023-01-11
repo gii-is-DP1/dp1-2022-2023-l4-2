@@ -130,7 +130,7 @@ INSERT INTO logro(id, nombre, descripcion, tipo_id, limite, dificultad_id)
     VALUES(3, 'Primera Victoria', 'Gana una partida', 2, 1, 1);
 
 INSERT INTO logro(id, nombre, descripcion, tipo_id, limite, dificultad_id)
-    VALUES(4, 'Victoria Leal', 'Gana una partida apoyando a los lealas', 3, 1, 2);
+    VALUES(4, 'Victoria Leal', 'Gana una partida apoyando a los leales', 3, 1, 2);
 
 INSERT INTO logro(id, nombre, descripcion, tipo_id, limite, dificultad_id)
     VALUES(5, 'Victoria Traidor', 'Gana una partida apoyando a los traidores', 4, 1, 2);
