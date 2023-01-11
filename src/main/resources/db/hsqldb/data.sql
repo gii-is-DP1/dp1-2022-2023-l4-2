@@ -206,9 +206,7 @@ INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,vot
 INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo,activa)
     VALUES(8,0,0,5,'Davilillo',0,0,15,1,0,true);
 INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo,activa)
-    VALUES(9,2,1,5,'Davilillo',0,0,15,1,0,true);
-INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo,activa)
-    VALUES(10,2,1,5,'Davilillo',0,0,15,1,0,true);
+    VALUES(9,2,1,5,'Guaje',0,0,15,1,0,true);
 
 
 INSERT INTO participacion(id, es_anfitrion,num_consul,votos_contra_cesar,votos_favor_cesar,votos_neutros,faccion_apoyada_id)

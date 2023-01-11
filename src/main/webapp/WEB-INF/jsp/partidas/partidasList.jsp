@@ -22,6 +22,7 @@
             <th>L&#237;mite</th>
             <th>Facci&#243;n ganadora</th>
             <th>Tiempo</th>
+            <th>Activa</th>
             <th>Jugadores</th>
 
         </tr>
@@ -55,6 +56,16 @@
                 </td>
                 <td>
                     <c:out value="${partida.tiempo}"/>
+                </td>
+                <td>
+                    <c:if test="${partida.activa}">
+                        <div style="color: red;">
+                            En juego
+                        </div>
+                    </c:if>
+                    <c:if test="${!partida.activa}">
+                        <c:out value="Finalizada"/>
+                    </c:if>
                 </td>
                 <td>
                     <c:forEach items="${partida.jugadores}" var="jugador">
