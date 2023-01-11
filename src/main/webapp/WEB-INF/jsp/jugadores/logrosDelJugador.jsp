@@ -9,12 +9,12 @@
 
 
 <petclinic:layout pageName="logros">
-    <div style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 100px;text-align: center;">
-        <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>Logros de <c:out value ="${username}"/></h2>
+    <div style="text-align: center; ">
+        <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 40px; margin-bottom: 3%;";>Logros de <c:out value ="${username}"/></h2>
     </div>
 
 
-    <table id="logrosTable" class="table table-striped">
+    <table id="logrosTable" class="table table-striped" style="border: 1px solid;">
         <thead >
         <tr>
             <th>Nombre</th>
@@ -89,10 +89,11 @@
         </c:forEach>
         </tbody>
     </table>
-    <table  style= "width: 100%; text-align:center;position: relative;">
-        <tr>
-            <th style="text-align: left;"> <a class="btn btn-default" href="/jugadores/perfil/${username}">Volver al Perfil</a></th>
-            <th  style="text-align: right;"> <a class="btn btn-default" href="/jugadores/partidas/${username}">Mi Historial de Partidas</a></th>
-        </tr>
-    </table> 
+    <div style="text-align: center; justify-content: space-between;">
+
+        <div style="position: relative; font-family: 'Dalek Pinpoint';">
+                <a class="btn btn-default" style="font-size: 20px; font-family: sans-serif; margin-left: 10%; margin-right: 10%;" href="/jugadores/perfil/${username}">Volver al Perfil</a>
+                <a class="btn btn-default" style="font-size: 20px; font-family: sans-serif; margin-left: 10%; margin-right: 10%;"  href="/jugadores/partidas/${username}">Mi Historial de Partidas</a>
+        </div>
+    </div>
 </petclinic:layout>

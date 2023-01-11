@@ -7,37 +7,48 @@
 
 <petclinic:layout pageName="listaPartidasEspectar">
 
-    <button>
-        <a class="btn btn-default" href="/home"> Volver</a></th>
-    </button>
-
-    <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>Partidas a espectar de ${nombreUsuario}</h2>
-
+    <div style="text-align: center; ">
+        <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 40px; margin-bottom: 3%;";>Partidas a espectar en las que estan jugando los amigos de ${nombreUsuario}</h2>
+    </div>
     <table id="listaPartidasEspectear" class="table table-striped">
         <thead>
         <tr>
+            <th>Jugadores</th>
             <th>Anfitri&#243;n</th>
-            <th>Jugadores en la sala</th>
-            <th>Unirse</th>
+            <th>Participantes</th>
+            <th>Ronda</th>
+            <th>Turno</th>
+            <th>Observar</th>
+            
+
         </tr>
         </thead>
 
         <tbody>
-        
         <c:forEach items="${partidasAmigos}" var="partida">
-            <tr>
+            <tr style = "text-align: left; ";>
                 <td>
-                <c:out value="${partida.anfitrion}"/>
+                    <c:out value="${partida.jugadores.size()}"/>/<c:out value="${partida.numJugadores}"/>
                 </td>
                 <td>
-                    <c:forEach items="${partida.jugadores}" var = "jugador"/>
-                    <c:out value ="${jugador.user.username} "/>
+                    <c:out value="${partida.anfitrion}"/>
                 </td>
                 <td>
-                <a class="btn btn-default" href="/partidas/espectar/${partida.id}">Espectar partida</a></th>
+                    <c:forEach items="${partida.jugadores}" var="jugador">
+                        <c:out value="${jugador.user.username},"/>
+                    </c:forEach>
+                </td>
+                <td>
+                    <c:out value="${partida.ronda}"/>
+                </td>
+                <td>
+                    <c:out value="${partida.turno}"/>
+                </td>
+                <td>
+                    <a class="btn btn-default" href="/partidas/espectar/${partida.id}">Espectar partida</a>
                 </td>
             </tr>
         </c:forEach>
-    </tbody>
+        </tbody>
     </table>
 </petclinic:layout>

@@ -18,7 +18,7 @@
                     <tr>
                         <td>
                             <div style="text-align:center; margin-top: 15%;">
-                                <a class="btn btn-default" style="font-size: 30px; font-family: 'Dalek Pinpoint', sans-serif; background-color: brown;"  href="/home">INICIO</a>
+                                <a class="btn btn-default" style="font-size: 30px; font-family: 'Dalek Pinpoint', sans-serif; background-color: brown;"  href="/home">VOLVER</a>
                             </div>
                         </td>
                     </tr>

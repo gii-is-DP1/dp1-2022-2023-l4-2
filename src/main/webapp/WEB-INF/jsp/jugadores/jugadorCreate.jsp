@@ -8,7 +8,7 @@
 
 <petclinic:layout pageName="jugadores">
     <div style="text-align: center; ">
-        <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 20px;";>Nuevo Jugador</h2>
+        <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 40px; margin-bottom: 3%;";>Nuevo Jugador</h2>
     </div>
     <form:form modelAttribute="jugador" class="form-horizontal" id="add-jugador-form">
         <div class="form-group has-feedback">

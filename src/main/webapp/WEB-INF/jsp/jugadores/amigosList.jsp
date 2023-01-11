@@ -8,9 +8,9 @@
 <petclinic:layout pageName="jugadores">
 
     <div style="text-align: center; ">
-        <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 20px;";>Lista de amigos</h2>
+        <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 40px; margin-bottom: 3%;";>Lista de amigos</h2>
     </div>
-    <table id="amigosTable" class="table table-striped">
+    <table id="amigosTable" class="table table-striped" style="border: 1px solid">
         <thead>
         <tr>
             <th>Nombre de usuario</th>
@@ -43,7 +43,7 @@
         <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 20px;";>Estas siguiendo a:</h2>
     </div>
 
-    <table id="amigosTable" class="table table-striped">
+    <table id="amigosTable" class="table table-striped" style="border: 1px solid">
         <thead>
         <tr>
             <th>Nombre de usuario</th>

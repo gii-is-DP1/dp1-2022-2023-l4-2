@@ -6,7 +6,9 @@
 
 
 <petclinic:layout pageName="partidasDisponibles">
-    <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>Partidas disponibles</h2>
+    <div style="text-align: center; ">
+        <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 40px; margin-bottom: 3%;";>Partidas disponibles</h2>
+    </div>
         <c:choose>
             <c:when test = "${empty partidas}">
                 <div style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 20px;text-align: center;">
@@ -49,9 +51,7 @@
                                     </c:forEach>
                                 </td>
                                 <td>
-                                        <sec:authorize access='hasRole("admin")' > 
-                                            <a class="btn btn-default" href="/partidas/join/${partida.id}">Unirse como jugador</a>
-                                        </sec:authorize>
+                                    <a class="btn btn-default" href="/partidas/join/${partida.id}">Unirse como jugador</a>
                                 </td>
                             </tr>
                         </c:if>
@@ -61,6 +61,10 @@
             </c:otherwise>
         </c:choose>
 
-    <a class="btn btn-default" href="/partidas/seleccionar">VOLVER AL MEN&#218; DE OPCIONES DE PARTIDA</a>
+        <div class="form-group" style="text-align: center; font-size: x-large;">
+            <div>
+                <a class="btn btn-default" style="font-size: 20px; font-family: sans-serif; margin-left: 10%; margin-right: 10%;" href="/partidas/seleccionar">Volver al menu de opciones de partida</a>
+            </div>
+        </div>
 
 </petclinic:layout>
