@@ -112,19 +112,9 @@ public ModelAndView processCreationForm(@Valid Jugador j, BindingResult br,Princ
         ModelAndView res = new ModelAndView(JUGADOR_PERFIL);
         Jugador j = jugadorService.getJugadorByUsername(username);
         List<Jugador> amigos = jugadorService.getJugadorByUsername(username).getAmigoDe();
-        Integer contAmigos = j.getNumeroAmigos();
-        Integer contSeguidores = j.getNumeroDeSeguidores(amigos);
         List<Jugador> todos = jugadorService.getJugadores();
-        for(Jugador e : todos){
-            if(e.getAmigoDe().contains(j)){
-                contSeguidores++;
-            }
-        }
-        for(Jugador a : amigos){
-            if(a.getAmigoDe().contains(j)){
-                contAmigos++;
-            }
-        }
+        Integer contAmigos = j.getNumeroAmigos();
+        Integer contSeguidores = j.getNumeroDeSeguidores(todos);
         String faccionFav = j.getFaccionFavorita();
         if(faccionFav == ""){
             faccionFav = "Mercader";

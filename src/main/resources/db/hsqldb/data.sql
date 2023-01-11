@@ -106,9 +106,10 @@ INSERT INTO dificultad(id,name) VALUES(2,'Normal');
 INSERT INTO dificultad(id,name) VALUES(3,'Dificil');
 
  INSERT INTO tipo(id, name)
-    VALUES(2, 'Por ganar');
- INSERT INTO tipo(id, name)
     VALUES(1, 'Por jugar');
+
+ INSERT INTO tipo(id, name)
+    VALUES(2, 'Por ganar');
 
 INSERT INTO tipo(id, name)
     VALUES(3, 'Victorias leal');
@@ -119,20 +120,29 @@ INSERT INTO tipo(id, name)
 INSERT INTO tipo(id, name)
     VALUES(5, 'Victorias mercader');
 
+INSERT INTO logro(id, nombre, descripcion, tipo_id, limite, dificultad_id)
+    VALUES(1, 'Primer Intento', 'Juega tu primera partida', 1, 1, 1);
 
 INSERT INTO logro(id, nombre, descripcion, tipo_id, limite, dificultad_id)
-    VALUES(1, 'Maestro Pokemon', 'Obten todos los pokemon', 1, 10, 3);
+    VALUES(2, 'Experimentado', 'Juega varias partidas', 1, 10, 1);
 
 INSERT INTO logro(id, nombre, descripcion, tipo_id, limite, dificultad_id)
-    VALUES(2, 'Maestro Fifa', 'Se mejor que guaje en fifa', 2, 10, 3);
+    VALUES(3, 'Primera Victoria', 'Gana una partida', 2, 1, 1);
 
 INSERT INTO logro(id, nombre, descripcion, tipo_id, limite, dificultad_id)
-    VALUES(3, 'Mbappe', 'Sigue los pasos de Mbappe', 4, 100, 3);
+    VALUES(4, 'Victoria Leal', 'Gana una partida apoyando a los lealas', 3, 1, 2);
 
+INSERT INTO logro(id, nombre, descripcion, tipo_id, limite, dificultad_id)
+    VALUES(5, 'Victoria Traidor', 'Gana una partida apoyando a los traidores', 4, 1, 2);
+
+INSERT INTO logro(id, nombre, descripcion, tipo_id, limite, dificultad_id)
+    VALUES(6, 'Victoria Mercader', 'Gana una partida apoyando a los mercaderes', 5, 1, 2);
+
+INSERT INTO logro(id, nombre, descripcion, tipo_id, limite, dificultad_id)
+    VALUES(7, 'Ganador', 'Gana varias partidas', 2, 10, 3);
 
 INSERT INTO rol(id,name)
     VALUES(1,'Consul'),(2,'Pretor'),(3,'Edil'),(4,'Sin rol');
-
 
 INSERT INTO users(username,password,enabled) VALUES ('Guaje', '$2a$10$hXaQPnFeO9CKYi0ikE/2sOrgzFtY7BnJyDX6vCOV7Eh9TRn8a6e/a', TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (10, 'Guaje', 'jugador');
@@ -168,6 +178,17 @@ INSERT INTO jugador(id,first_name,last_name,username,rol_id,esta_en_partida, ya_
     (7, 'Prueba', 'Espectar', 'Espectador', 4, false, false),
     (8, 'Prueba2', 'jugador', 'JugadorPrueba', 4, false, false);
 
+INSERT INTO jugador_amigo_de(jugador_id,amigo_de_id)
+    VALUES(1,2),
+    (1,3),
+    (1,4),
+    (1,5),
+    (1,6),
+    (2,1),
+    (3,4),
+    (2,6),
+    (5,1);
+
 INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo,activa)
     VALUES(1,1,1,6,'Guaje',14,12,15,1,20,false);
 INSERT INTO partida(id,ronda,turno,num_jugadores,anfitrion,votos_favor_cesar,votos_contra_cesar,limite,faccion_ganadora_id,tiempo,activa)
@@ -196,7 +217,13 @@ INSERT INTO participacion(id, es_anfitrion,num_consul,votos_contra_cesar,votos_f
     (3,false,1,1,1,2,3),
     (4,false,1,0,2,2,3),
     (5,true,0,0,0,0,4), 
-    (6,false,0,0,0,0,4);
+    (6,false,0,0,0,0,4),
+    (7,false,0,0,0,0,4),
+    (8,false,2,2,2,0,1),
+    (9,false,3,2,2,0,2),
+    (10,false,4,2,2,0,3),
+    (11,false,5,2,2,0,1),
+    (12,false,6,2,2,0,2);
 
 INSERT INTO partida_participaciones(partida_id,participaciones_id)
     VALUES(1,1),
@@ -204,7 +231,13 @@ INSERT INTO partida_participaciones(partida_id,participaciones_id)
     (3,4),
     (2,2),
     (8,5),
-    (8,6);
+    (8,6),
+    (4,7),
+    (1,8),
+    (1,9),
+    (1,10),
+    (1,11),
+    (1,12);
     
 INSERT INTO jugador_participaciones(jugador_id,participaciones_id)
     VALUES(1,1),
@@ -212,10 +245,22 @@ INSERT INTO jugador_participaciones(jugador_id,participaciones_id)
     (1,4),
     (2,2),
     (3,5),
-    (1,6);
+    (1,6),
+    (1,7),
+    (2,8),
+    (3,9),
+    (4,10),
+    (5,11),
+    (7,12);
+
 
 INSERT INTO partida_jugadores(partidas_id,jugadores_id) 
     VALUES(1,1),
+    (1,2),
+    (1,3),
+    (1,4),
+    (1,5),
+    (1,7),
     (2,1),
     (3,1),
     (2,4),
@@ -237,7 +282,13 @@ INSERT INTO participacion_opciones(participacion_id,opciones_id)
     (3,2),(3,3),
     (4,3),(4,1),
     (5,3),(5,1),
-    (6,1),(6,2);
+    (6,1),(6,2),
+    (7,1),(7,2),
+    (8,1),(8,2),
+    (9,1),(9,2),
+    (10,1),(10,2),
+    (11,1),(11,2),
+    (12,1),(12,2);
 
 INSERT INTO chat(id, partida_id) 
     VALUES(8,8);
@@ -245,5 +296,3 @@ INSERT INTO mensaje(id, contenido, jugador_id)
     VALUES(29, 'Hola desde DB', 3);
 INSERT INTO chat_mensajes(chat_id, mensajes_id)
     VALUES (8,29);
-
-
