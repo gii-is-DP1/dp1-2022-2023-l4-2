@@ -14,6 +14,8 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
@@ -273,32 +275,43 @@ public class PartidaServiceTests {
         assertEquals("Pablo", p.getAnfitrion());
     }
 
-    @Test
-    public void comprobarSiSobrepasaLimiteTest(){
+    @ParameterizedTest
+    @ValueSource(ints = {13,14,15,16,17})
+    public void comprobarSiSobrepasaLimiteTest(int i){
         Partida p = new Partida();
         p.setNumJugadores(6);
         p.setRonda(2);
         p.setTurno(4);
         p.setLimite(15);
-        p.setVotosContraCesar(16);
         p.setVotosFavorCesar(2);
-        partidaService.comprobarSiSobrepasaLimite(p);
-        assertNotNull(p.getLimite());
-        assertEquals(3, p.getRonda());
+        p.setVotosContraCesar(i);
+        if(p.getVotosContraCesar()<=p.getLimite()){
+            partidaService.comprobarSiSobrepasaLimite(p);
+            assertEquals(2, p.getRonda());
+        }else if(p.getVotosContraCesar()>p.getLimite()){
+            partidaService.comprobarSiSobrepasaLimite(p);
+            assertEquals(3, p.getRonda());
+        }
+        
     }
 
-    @Test
-    public void comprobarSiSobrepasaLimiteTest2(){
+    @ParameterizedTest
+    @ValueSource(ints = {13,14,15,16,17})
+    public void comprobarSiSobrepasaLimiteTest2(int i){
         Partida p = new Partida();
         p.setNumJugadores(6);
         p.setRonda(2);
         p.setTurno(4);
         p.setLimite(15);
         p.setVotosContraCesar(2);
-        p.setVotosFavorCesar(14);
-        partidaService.comprobarSiSobrepasaLimite(p);
-        assertNotNull(p.getLimite());
-        assertEquals(2, p.getRonda());
+        p.setVotosFavorCesar(i);
+        if(p.getVotosFavorCesar()<=p.getLimite()){
+            partidaService.comprobarSiSobrepasaLimite(p);
+            assertEquals(2, p.getRonda());
+        }else if(p.getVotosFavorCesar()>p.getLimite()){
+            partidaService.comprobarSiSobrepasaLimite(p);
+            assertEquals(3, p.getRonda());
+        }
     }
 
     
