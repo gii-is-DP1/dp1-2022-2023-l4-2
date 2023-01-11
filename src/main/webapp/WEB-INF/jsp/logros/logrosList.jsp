@@ -45,13 +45,13 @@
                 <td>
                     <c:out value="${logro.dificultad}"/>
                 </td>
-                <td> 
-                    <sec:authorize access='hasAuthority("admin")' > 
+                <sec:authorize access='hasAuthority("admin")' > 
+                    <td> 
                         <a href="/logros/edit/${logro.id}"> 
                             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>                            
                         </a>    
-                    </sec:authorize>   
-                </td>
+                    </td> 
+                </sec:authorize>   
                 <sec:authorize access='hasAuthority("admin")' > 
                 <td> 
                     <a href="/logros/delete/${logro.id}"> 
