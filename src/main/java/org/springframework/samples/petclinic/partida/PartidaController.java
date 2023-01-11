@@ -166,6 +166,7 @@ public class PartidaController {
         if(p.getParticipaciones().size() == p.getNumJugadores() && p.getParticipaciones().stream().mapToInt(x->x.getNumConsul()).sum() == 0){
             participacionService.ordenaNumConsul(p);
             jugadorService.reparteRoles(p);
+            jugadorService.guardaJugadoresPartida(p);
         }
         return "redirect:/partidas/jugar/{id}";
     }
@@ -315,7 +316,8 @@ public class PartidaController {
         }
         if(p.getTurno() == 1 && p.getRonda()==1){
             p.setTurno(p.getTurno()+1);
-            jugadorService.reparteRoles(p);;
+            jugadorService.reparteRoles(p);
+            jugadorService.guardaJugadoresPartida(p);
         }
         partidaService.save(p);
         return "redirect:/partidas/jugar/{partidaId}";
@@ -366,6 +368,7 @@ public class PartidaController {
         RolType sinRol = roles.stream().filter(x->x.getName().equals("Sin rol")).findAny().get();
         RolType consul = roles.stream().filter(x->x.getName().equals("Consul")).findAny().get();
         jugadorService.reestableceRolesDeNoElegidos(p, consul, sinRol);
+        jugadorService.guardaJugadoresPartida(p);
         ModelAndView res = new ModelAndView("redirect:/partidas/jugar/{id}");
         return res;
     }
@@ -395,6 +398,7 @@ public class PartidaController {
         RolType sinRol = roles.stream().filter(x->x.getName().equals("Sin rol")).findAny().get();
         RolType consul = roles.stream().filter(x->x.getName().equals("Consul")).findAny().get();
         jugadorService.reestableceRolesDeNoElegidos(p, consul, sinRol);
+        jugadorService.guardaJugadoresPartida(p);
         ModelAndView res = new ModelAndView("redirect:/partidas/jugar/{id}");
         return res; 
     }
@@ -411,12 +415,15 @@ public class PartidaController {
         List<RolType> roles = jugadorService.getRoles();
         if(p.getRonda()!=2){
             jugadorService.reparteRoles(p);
+            jugadorService.guardaJugadoresPartida(p);
         }
         jugadorService.cambiaRonda(p);
+        jugadorService.guardaJugadoresPartida(p);
         if(p.getRonda() == 3){
             p.terminaPartida(roles);
         }
         jugadorService.consulRonda2(p, roles);
+        jugadorService.guardaJugadoresPartida(p);
         ModelAndView res = new ModelAndView("redirect:/partidas/jugar/{id}");
         partidaService.save(p);
         participacionService.save(participacion);  
@@ -484,6 +491,7 @@ public class PartidaController {
             if(p.getTurno()!=1 && p.getRonda()==2){
                 p.setTurno(p.getTurno()+1);
                 jugadorService.consulRonda2(p, roles);
+                jugadorService.guardaJugadoresPartida(p);
                 if(p.getTurno()>p.getNumJugadores()){
                     p.setRonda(p.getRonda()+1);
                     p.setTurno(1);
@@ -540,6 +548,7 @@ public class PartidaController {
         }
         List<RolType> roles = jugadorService.getRoles();
         jugadorService.consulRonda2(p, roles);
+        jugadorService.guardaJugadoresPartida(p);
         for(int i = 0;i<p.getJugadores().size();i++){
             p.getJugadores().get(i).setYaElegido(false);
         }

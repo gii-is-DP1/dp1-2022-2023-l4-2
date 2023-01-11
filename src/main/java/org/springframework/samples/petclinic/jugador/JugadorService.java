@@ -187,7 +187,6 @@ public class JugadorService {
                     j.setRol(sinRol);
                 }
             }
-            save2(j);
         }
     }
 
@@ -201,7 +200,6 @@ public class JugadorService {
                 }else if(!jug.getYaElegido()){
                     jug.setRol(sinRol);
                 }
-                save2(jug);
             }
         }
     }
@@ -234,7 +232,6 @@ public class JugadorService {
                 }else if(jug.getRol().getName().equals("Consul")){
                     jug.setRol(sr);
                 }
-                save2(jug);
             }
         }
     }
@@ -244,9 +241,12 @@ public class JugadorService {
             p.setRonda(p.getRonda()+1);
             p.setTurno(1);
             preparaRolesRonda2(p);
-            for(int i = 0;i<p.getNumJugadores();i++){
-                save2(p.getJugadores().get(i));
-            }
+        }
+    }
+
+    public void guardaJugadoresPartida(Partida p){
+        for(int i = 0;i<p.getNumJugadores();i++){
+            save2(p.getJugadores().get(i));
         }
     }
 }
