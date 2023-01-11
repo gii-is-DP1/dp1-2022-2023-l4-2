@@ -26,7 +26,7 @@
                     </tr>
                     <c:if test="${error!=null}">
                         <tr>
-                            <td colspan="2" style="color:rgb(247, 11, 11)">${error}<td>
+                            <td style="color:rgb(247, 11, 11)">${error}<td>
                         </tr>
                     </c:if>
                     <c:forEach items="${jugadores}" var="jugador">
