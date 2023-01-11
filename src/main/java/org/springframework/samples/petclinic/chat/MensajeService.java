@@ -35,7 +35,6 @@ public class MensajeService {
         mensajeRepo.save(m);
     }
 
-    @Transactional(readOnly = true)
     public Integer devuelveIdMax(){
         Integer idMax;
         List<Mensaje> todos = getAll();
