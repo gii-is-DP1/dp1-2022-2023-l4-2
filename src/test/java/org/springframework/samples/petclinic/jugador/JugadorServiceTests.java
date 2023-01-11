@@ -150,10 +150,8 @@ public class JugadorServiceTests {
     @Test
     public void deleteAmigoFailTest(){
         Jugador jugador6 = jugadorService.getJugadorById(6).get();
-        Jugador jugador1 = jugadorService.getJugadorById(1).get();
-        assertThrows(Exception.class,()->jugadorService.deleteAmigo(jugador1.getUser().getUsername(), jugador6.getUser().getUsername()));
-    
-        
+        Jugador jugador7 = jugadorService.getJugadorById(7).get();
+        assertThrows(Exception.class,()->jugadorService.deleteAmigo(jugador7.getUser().getUsername(), jugador6.getUser().getUsername()));
     }
 
     @Test
@@ -179,10 +177,10 @@ public class JugadorServiceTests {
 
     @Test
     public void TestGetPartidasActivasAmigosFail(){
-        Jugador jugador6 = jugadorService.getJugadorById(6).get();
-        Jugador jugador1 = jugadorService.getJugadorById(1).get();
-        List<Partida> listaVacia = jugadorService.getPartidasActivasAmigos(jugador1);
-        jugadorService.agregarAmigo(jugador6, jugador1.getUser().getUsername());
-        assertEquals(listaVacia, jugadorService.getPartidasActivasAmigos(jugador6));
+        Jugador jugador7 = jugadorService.getJugadorById(7).get();
+        Jugador jugador8 = jugadorService.getJugadorById(8).get();
+        List<Partida> listaVacia = jugadorService.getPartidasActivasAmigos(jugador8);
+        jugadorService.agregarAmigo(jugador8, jugador7.getUser().getUsername());
+        assertEquals(listaVacia, jugadorService.getPartidasActivasAmigos(jugador8));
     }
 }

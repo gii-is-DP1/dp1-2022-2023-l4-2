@@ -162,8 +162,8 @@ INSERT INTO authorities(id, username, authority) VALUES(15, 'Bufon', 'jugador');
 INSERT INTO users(username, password, enabled) VALUES('Colombiano', '$2a$10$hXaQPnFeO9CKYi0ikE/2sOrgzFtY7BnJyDX6vCOV7Eh9TRn8a6e/a', TRUE);
 INSERT INTO authorities(id, username, authority) VALUES(16, 'Colombiano', 'jugador');
 
-INSERT INTO users(username, password, enabled) VALUES('Espectador', '$2a$10$hXaQPnFeO9CKYi0ikE/2sOrgzFtY7BnJyDX6vCOV7Eh9TRn8a6e/a', TRUE);
-INSERT INTO authorities(id, username, authority) VALUES(17, 'Espectador', 'jugador');
+INSERT INTO users(username, password, enabled) VALUES('Manolo', '$2a$10$hXaQPnFeO9CKYi0ikE/2sOrgzFtY7BnJyDX6vCOV7Eh9TRn8a6e/a', TRUE);
+INSERT INTO authorities(id, username, authority) VALUES(17, 'Manolo', 'jugador');
 
 INSERT INTO users(username, password, enabled) VALUES('JugadorPrueba', '$2a$10$hXaQPnFeO9CKYi0ikE/2sOrgzFtY7BnJyDX6vCOV7Eh9TRn8a6e/a', TRUE);
 INSERT INTO authorities(id, username, authority) VALUES(18, 'JugadorPrueba', 'jugador');
@@ -175,8 +175,8 @@ INSERT INTO jugador(id,first_name,last_name,username,rol_id,esta_en_partida, ya_
     (2,'Eduardo', 'Pizarro', 'Bufon', 4, false, false),
     (5, 'Alejadro', 'Campano', 'Campanas', 4, false, false),
     (6, 'Pablo', 'Mera', 'Colombiano', 4, false, false),
-    (7, 'Prueba', 'Espectar', 'Espectador', 4, false, false),
-    (8, 'Prueba2', 'jugador', 'JugadorPrueba', 4, false, false);
+    (7, 'Manolito', 'Manolet', 'Manolo', 4, false, false),
+    (8, 'Prueba', 'Jugador', 'JugadorPrueba', 4, false, false);
 
 INSERT INTO jugador_amigo_de(jugador_id,amigo_de_id)
     VALUES(1,2),
