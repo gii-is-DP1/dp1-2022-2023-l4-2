@@ -23,34 +23,34 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${jugadores}" var="jugador">
-            <tr>
-                <td>
-                    <a href="/jugadores/perfil/${jugador.user.username}">
-                        <c:out value="${jugador.user.username}"/>
-                    </a>
-                </td>
-                <td>
-                    <c:out value="${jugador.estaEnPartida ? 'Si, esta jugando' : 'No esta en ninguna partida'}"/>
-                </td>
-                <td>
-                    <c:out value="${jugador.createdDate}"/>
-                </td>
-                <td>
-                    <c:out value="${jugador.creator}"/>
-                </td>
-                <td>
-                    <c:out value="${jugador.lastModifiedDate}"/>
-                </td>
-                <td>
-                    <c:out value="${jugador.modifier}"/>
-                </td>
-                <td> 
-                    <a href="/jugadores/delete/${jugador.id}"> 
-                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                    </a>      
-                </td>
-            </tr>
+        <c:forEach items="${jugadores}" var="jugador" varStatus="status">
+                <tr>
+                    <td>
+                        <a href="/jugadores/perfil/${jugador.user.username}">
+                            <c:out value="${jugador.user.username}"/>
+                        </a>
+                    </td>
+                    <td>
+                        <c:out value="${jugador.estaEnPartida ? 'Si, esta jugando' : 'No esta en ninguna partida'}"/>
+                    </td>
+                    <td>
+                        <c:out value="${fCreado[status.index]}"/>
+                    </td>
+                    <td>
+                        <c:out value="${jugador.creator}"/>
+                    </td>
+                    <td>
+                        <c:out value="${fModificado[status.index]}"/>
+                    </td>
+                    <td>
+                        <c:out value="${jugador.modifier}"/>
+                    </td>
+                    <td> 
+                        <a href="/jugadores/delete/${jugador.id}"> 
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        </a>      
+                    </td>
+                </tr>
         </c:forEach>
         </tbody>
     </table>

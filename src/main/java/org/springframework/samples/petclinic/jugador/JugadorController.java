@@ -3,6 +3,8 @@ package org.springframework.samples.petclinic.jugador;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +26,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import net.bytebuddy.asm.Advice.Local;
 
 @Controller
 @RequestMapping("/jugadores")
@@ -64,7 +68,32 @@ PasswordEncoder passwordEncoder= new BCryptPasswordEncoder();
 @GetMapping()
 public ModelAndView showJugadores() {
     ModelAndView result = new ModelAndView(JUGADORES_LISTING);
-    result.addObject("jugadores", jugadorService.getJugadores());
+    List<Jugador> jugadores = jugadorService.getJugadores();
+    List<String> fechasCreados = new ArrayList<String>();
+    for (Jugador j: jugadores){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy / HH:mm");
+        LocalDateTime dateTime = j.getCreatedDate();
+        if (dateTime != null){
+            String formattedDateTime = dateTime.format(formatter);
+            fechasCreados.add(formattedDateTime);
+        } else {
+            fechasCreados.add("");
+        }
+    }
+    List<String> fechasModificado = new ArrayList<String>();
+    for (Jugador j: jugadores){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy / HH:mm");
+        LocalDateTime dateTime = j.getLastModifiedDate();
+        if (dateTime != null){
+            String formattedDateTime = dateTime.format(formatter);
+            fechasModificado.add(formattedDateTime);
+        } else {
+            fechasModificado.add("");
+        }
+    }
+    result.addObject("fCreado", fechasCreados);
+    result.addObject("fModificado", fechasModificado);
+    result.addObject("jugadores", jugadores);
     return result;
 }
 
