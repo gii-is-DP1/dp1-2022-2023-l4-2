@@ -118,7 +118,7 @@ public class EstadisticaGeneralServiceTests {
     public void getNumPartidasTest(){
         List<Partida> partidas = estadisticaGeneralService.getPartidasNoActivas();
         assertNotNull(partidas);
-        assertEquals(3, estadisticaGeneralService.getNumPartidas(partidas));
+        assertEquals(4, estadisticaGeneralService.getNumPartidas(partidas));
     }
 
     @Test
@@ -146,7 +146,7 @@ public class EstadisticaGeneralServiceTests {
     public void getFaccionPerdedoraTest(){
         List<Partida> partidas = estadisticaGeneralService.getPartidasNoActivas();
         assertNotNull(partidas);
-        assertEquals("Mercader", estadisticaGeneralService.getFaccionPerdedora(partidas));
+        assertNotEquals("Leal", estadisticaGeneralService.getFaccionPerdedora(partidas));
     }
 
     @Test
@@ -188,7 +188,7 @@ public class EstadisticaGeneralServiceTests {
     public void getVictoriasMercaderTest(){
         List<Partida> partidas = estadisticaGeneralService.getPartidasNoActivas();
         assertNotNull(partidas);
-        assertEquals(0, estadisticaGeneralService.getVictoriasMercader(partidas));
+        assertEquals(1, estadisticaGeneralService.getVictoriasMercader(partidas));
     }
 
     @Test

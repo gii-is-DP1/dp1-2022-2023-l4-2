@@ -112,8 +112,8 @@ public class VotoServiceTests {
     public void getVotosTurnoJugadorFailTest() throws Exception{
         //Partida
         Partida partida1 = partidaService.getPartidaById(1).get();
-        Jugador jugador = jugadorService.getJugadorByUsername("Campanas");
-        Jugador jugador2 = jugadorService.getJugadorByUsername("Guaje");
+        Jugador jugador = jugadorService.getJugadorByUsername("JugadorPrueba");
+        Jugador jugador2 = jugadorService.getJugadorByUsername("Manolo");
         Voto voto = new Voto();
 
         //Voto con jugador que no esta en la partida
