@@ -6,21 +6,19 @@
 
 <petclinic:layout pageName="partidas">
 
-    <jsp:attribute name="customScript">
-        <script>
-            $(function () {
-                $("#birthDate").datepicker({dateFormat: 'yy/mm/dd'});
-            });
-        </script>
-    </jsp:attribute>
     <jsp:body>
-        <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>
-            Nueva partida
-        </h2>
+        <div style="text-align: center; ">
+            <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 40px; margin-bottom: 3%;";>Nueva partida</h2>
+        </div>
         <form:form modelAttribute="partida"
                    class="form-horizontal">
             <input type="hidden" name="id" value="${partida.id}"/>
-            <div class="form-group has-feedback">                
+            <div class="form-group has-feedback" style="text-align: center; font-size: x-large; margin-top: 3%;">     
+                <tr>
+                    <spring:url value="/resources/images/logo_big.png" var="logo" />
+                    <img style ="width: 25%;  height: 30%;" src="${logo}" />
+                </br>
+                </tr>           
                 <tr>
                     <td>N&#250;mero de jugadores:</td>
                     <td>
@@ -33,11 +31,13 @@
                     </td>
                 </tr>
             </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10"></div>
-                     <button class="btn btn-default" type="submit" href="/partidas/new">Crear partida</button>
+            <div class="form-group" style="text-align: center; font-size: x-large;">
+                <div style="margin: 3%;">
+                     <button class="btn btn-default" style="font-size: 20px; font-family: 'Dalek Pinpoint', sans-serif; margin-left: 10%; margin-right: 10%;" type="submit" href="/partidas/new">Crear partida</button>
                 </div>
-                <a class="btn btn-default" href="/partidas/seleccionar">VOLVER AL MEN&#218; DE OPCIONES DE PARTIDA</a>
+                <div>
+                    <a class="btn btn-default" style="font-size: 20px; font-family: 'Dalek Pinpoint', sans-serif; margin-left: 10%; margin-right: 10%;" href="/partidas/seleccionar">Volver al menu de opciones de partida</a>
+                </div>
             </div>
         </form:form>        
     </jsp:body>

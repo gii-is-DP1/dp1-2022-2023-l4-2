@@ -7,13 +7,19 @@
 
 <petclinic:lo2 pageName="partidaJoin">
 
-    <button>
-        <a class="btn btn-default" href="/partidas/join"> Volver</a></th>
-    </button>
+    <div style="text-align: center; ">
+        <a class="btn btn-default" style="font-size: 20px; font-family: sans-serif; margin-left: 10%; margin-right: 10%;" href="/partidas/join">Volver</a>
+    </div>
 
-    <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>Partida de ${partida.anfitrion} </h2>
+    <div style="text-align: center; margin: 25px;">
+        <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 30px; ";>Partida de ${partida.anfitrion}</h2>
+    </div>
 
-    <table id="partidaJoin" class="table table-striped">
+    <div style="text-align: center; margin: 25px;">
+        <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 30px; ";>${jugadoresAct} / ${jugadoresMax}</h2>
+    </div>
+
+    <table id="partidaJoin" class="table table-striped" style="border: 1px solid;">
         <thead>
         <tr>
             <th>Jugadores en la sala</th>

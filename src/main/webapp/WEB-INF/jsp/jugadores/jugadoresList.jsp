@@ -6,9 +6,11 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="jugadores">
-    <h2 style = "font-family: 'Dalek Pinpoint', sans-serif;";>Jugadores:</h2>
 
-    <table id="logrosTable" class="table table-striped">
+    <div style="text-align: center; ">
+        <h2 style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 40px; margin-bottom: 3%;";>lista de jugadores</h2>
+    </div>
+    <table id="logrosTable" class="table table-striped" style="border: 1px solid">
         <thead>
         <tr>
             <th>Nombre de usuario</th>

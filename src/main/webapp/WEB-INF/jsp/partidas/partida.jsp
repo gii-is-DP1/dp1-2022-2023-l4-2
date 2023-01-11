@@ -49,23 +49,26 @@
             <c:if test="${partida.ronda != 3 && partida.jugadores.size() < 7}">
                 <div style="text-align:center">
                     Jugadores de la partida:
-                    <table>
-                        <tr>
-                            <c:forEach items="${partida.jugadores}" var="jugador">
-                                <td>
-                                    <div>
-                                        <div style="padding: 2%; text-align:center">
-                                            <c:out value="${jugador.user.username}"/> -  <c:out value="${jugador.rol}"/>
-                                            <div>
-                                                <spring:url value="/resources/images/${jugador.rol.getName()}.png" var="rol"/>
-                                                <img width="70%" height="70%" src="${rol}"/>
+                    <div style="display: flex; flex-direction:column; align-items:center; justify-content: center; padding: 1%; background-color: #f9f9f9; width:100%;">
+                        <table>
+                            <tr>
+                                <c:forEach items="${partida.jugadores}" var="jugador">
+                                    <td>
+                                        <div>
+                                            <div style="padding: 2%; text-align:center; width: 190px;">
+                                                <c:out value="${jugador.user.username}"/> </br>  <c:out value="${jugador.rol}"/>
+                                                <div>
+                                                    <spring:url value="/resources/images/${jugador.rol.getName()}.png" var="rol"/>
+                                                    <img width="70%" height="70%" src="${rol}"/>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </c:forEach>
-                        </tr>
-                    </table>
+                                    </td>
+                                </c:forEach>
+                            </tr>
+                        </table>
+                    </div>
+                    
                 </div>
             </c:if>
             <c:if test="${partida.ronda != 3 && partida.jugadores.size() >= 7}">

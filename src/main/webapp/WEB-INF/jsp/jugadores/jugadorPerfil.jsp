@@ -8,43 +8,23 @@
 	uri="http://www.springframework.org/security/tags"%>
 
 <petclinic:layout pageName="perfil">
-
-    <c:if test = "${jugador.user.username == nombreUsuario}">
-        <a class="btn btn-default" href="/jugadores/editPerfil/${username}">Editar Perfil</a>
-    </c:if>
     
     <div style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 100px;text-align: center;">
         <c:out value ="${jugador.user.username}"/>
     </div>
-    <c:if test="${faccionFavorita == 'Leal'}">
-        <div>
-            <spring:url value="/resources/images/SoldadoLeal.png" htmlEscape="true" var="logo"/>
-            <img class="img-responsive" style ="margin: auto;width: 200px;   height: 200px;   border-radius: 50%;" src="${logo}"/>
+     <div>
+        <spring:url value="/resources/images/Soldado${faccionFavorita}.png" var="img" />
+        <img class="img-responsive" style ="margin: auto;width: 200px;   height: 200px;   border-radius: 50%;" src="${img}" />
+    </div>
+
+    <c:if test = "${jugador.user.username == nombreUsuario}">
+        <div style="text-align: center; ">
+            <a class="btn btn-default" style="font-size: 15px; font-family: sans-serif; margin: 1%;"  href="/jugadores/editPerfil/${username}">Editar Perfil</a>
         </div>
     </c:if>
+    
 
-    <c:if test="${faccionFavorita == 'Mercader'}">
-        <div>
-            <spring:url value="/resources/images/SoldadoNeutral.png" htmlEscape="true" var="logo"/>
-            <img class="img-responsive" style ="margin: auto;width: 200px;   height: 200px;   border-radius: 50%;" src="${logo}"/>
-        </div>
-    </c:if>
-
-    <c:if test="${faccionFavorita == ''}">
-        <div>
-            <spring:url value="/resources/images/SoldadoNeutral.png" htmlEscape="true" var="logo"/>
-            <img class="img-responsive" style ="margin: auto;width: 200px;   height: 200px;   border-radius: 50%;" src="${logo}"/>
-        </div>
-    </c:if>
-
-    <c:if test="${faccionFavorita == 'Traidor'}">
-        <div>
-            <spring:url value="/resources/images/SoldadoTraidor.jpg" htmlEscape="true" var="logo"/>
-            <img class="img-responsive" style ="margin: auto;width: 200px;   height: 200px;   border-radius: 50%;" src="${logo}"/>
-        </div>
-    </c:if>
-
-    <table id="JugadorPerfil" class="table table-striped">
+    <table id="JugadorPerfil" class="table table-striped" style="border: 1px solid">
         <tr>
             <th>Nombre</th>
             <th><c:out value = "${jugador.firstName}"/></th>
@@ -94,11 +74,14 @@
             <th><c:out value = "${siguiendo}"/></th>
         </tr>
     </table>
-    <table  style= "width: 100%; text-align:center;position: relative;">
-        <tr>
-            <th style="text-align: left;"><a class="btn btn-default" href="/jugadores/perfil/${username}/amigos">Amigos</a></th>
-            <th  style="text-align: center;" ><a class="btn btn-default" href="/jugadores/partidas/${username}">Historial de Partidas</a></th>
-            <th  style="text-align: right;"><a class="btn btn-default" href="/jugadores/logros/${username}">Mis Logros</a></th>
-        </tr>
-    </table>   
+
+    <div style="text-align: center; justify-content: space-between;">
+
+        <div style="position: relative; font-family: 'Dalek Pinpoint';">
+                <a class="btn btn-default" style="font-size: 20px; font-family: sans-serif; margin-left: 10%; margin-right: 10%;"  href="/jugadores/perfil/${username}/amigos">Amigos</a>
+                <a class="btn btn-default" style="font-size: 20px; font-family: sans-serif; margin-left: 10%; margin-right: 10%;"  href="/jugadores/partidas/${username}">Historial de Partidas</a>
+                <a class="btn btn-default" style="font-size: 20px; font-family: sans-serif; margin-left: 10%; margin-right: 10%;"  href="/jugadores/logros/${username}">Mis Logros</a>
+        </div>
+    </div>
+    
 </petclinic:layout>
