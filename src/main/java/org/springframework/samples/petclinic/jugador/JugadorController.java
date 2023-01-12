@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.samples.petclinic.estadistica.Logro;
 import org.springframework.samples.petclinic.estadistica.LogroService;
 import org.springframework.samples.petclinic.partida.Partida;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import net.bytebuddy.asm.Advice.Local;
@@ -66,10 +69,13 @@ private LogroService logroService;
 PasswordEncoder passwordEncoder= new BCryptPasswordEncoder();
 
 @GetMapping()
-public ModelAndView showJugadores() {
+public ModelAndView showJugadores(@RequestParam("page") int page) {
     ModelAndView result = new ModelAndView(JUGADORES_LISTING);
-    List<Jugador> jugadores = jugadorService.getJugadores();
+    Pageable request = PageRequest.of(page,7);
+    List<Jugador> todoLosJugadores = jugadorService.getJugadores();
+    List<Jugador> jugadores = jugadorService.getJugadoresPageables(request);
     List<String> fechasCreados = new ArrayList<String>();
+    List<String> fechasModificado = new ArrayList<String>();
     for (Jugador j: jugadores){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy / HH:mm");
         LocalDateTime dateTime = j.getCreatedDate();
@@ -79,18 +85,20 @@ public ModelAndView showJugadores() {
         } else {
             fechasCreados.add("");
         }
-    }
-    List<String> fechasModificado = new ArrayList<String>();
-    for (Jugador j: jugadores){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy / HH:mm");
-        LocalDateTime dateTime = j.getLastModifiedDate();
+        LocalDateTime dateTime2 = j.getLastModifiedDate();
         if (dateTime != null){
-            String formattedDateTime = dateTime.format(formatter);
+            String formattedDateTime = dateTime2.format(formatter);
             fechasModificado.add(formattedDateTime);
         } else {
             fechasModificado.add("");
         }
     }
+    Integer nJugadores= todoLosJugadores.size();
+    Integer i = Integer.valueOf(nJugadores/5);
+    if(i%2==0){
+        i --;
+    }
+    result.addObject("num", i);
     result.addObject("fCreado", fechasCreados);
     result.addObject("fModificado", fechasModificado);
     result.addObject("jugadores", jugadores);

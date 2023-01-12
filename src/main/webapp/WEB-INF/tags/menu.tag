@@ -34,7 +34,7 @@
 						<span class="glyphicon glyphicon-knight" aria-hidden="true"></span>
 						<span>Partidas</span>
 					</petclinic:menuItem>
-					<petclinic:menuItem active="${name eq 'jugadores'}" url="/jugadores"
+					<petclinic:menuItem active="${name eq 'jugadores'}" url="/jugadores?page=0"
 						title="jugadores">
 						<span class="glyphicon glyphicon-bishop" aria-hidden="true"></span>
 						<span>Jugadores</span>
