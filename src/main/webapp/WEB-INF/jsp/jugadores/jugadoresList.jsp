@@ -54,5 +54,23 @@
         </c:forEach>
         </tbody>
     </table>
+    <div style="display: flex; flex-direction: row; justify-content:center; font-size: 19px;">
+        <table >
+            <tr>  
+                <div>
+                    <td><h1 style = " font-size: 20px; margin-bottom: 2%;";>P&#225;ginas:</h1></td>
+                
+                    <c:forEach begin="0" step="1" end="${num}" var="variable">
+                        <td>
+                            <div style="margin-left: 30%;">
+                                <spring:url value="/jugadores?page=${variable}" htmlEscape="true" var="como"/>
+                                <a class="btn btn-default" style="margin-left: 5%;" href="${como}" value = "${variable}"><c:out value = "${variable+1}"/></a>
+                            </div>
+                        </td>
+                    </c:forEach>
+                </div> 
+            </tr>
+        </table>
+    </div>
 
 </petclinic:layout>

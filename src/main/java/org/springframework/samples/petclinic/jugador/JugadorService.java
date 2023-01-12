@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.springframework.data.domain.Pageable;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -248,5 +249,10 @@ public class JugadorService {
         for(int i = 0;i<p.getNumJugadores();i++){
             save2(p.getJugadores().get(i));
         }
+    }
+
+    @Transactional(readOnly = true)
+    public List<Jugador> getJugadoresPageables(Pageable pageable){
+        return jugadorRepo.findAllPageable(pageable);
     }
 }
