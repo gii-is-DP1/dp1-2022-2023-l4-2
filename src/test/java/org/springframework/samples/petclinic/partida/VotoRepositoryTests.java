@@ -33,13 +33,6 @@ public class VotoRepositoryTests {
 
     @Test
     public void findAllTest() throws VotoNoPermitidoException{
-        //Añadir voto
-        Voto voto = new Voto();
-        voto.setRonda(2);
-        voto.setTurno(1);
-        votoService.saveVoto(voto,null);
-
-        //Test
         List<Voto> votos = votoRepository.findAll();
         assertNotNull(votos);
         assertFalse(votos.isEmpty());
@@ -49,14 +42,8 @@ public class VotoRepositoryTests {
     public void findVotosRondaTurnoTest() throws VotoNoPermitidoException{
         //Partida
         Partida partida1 = partidaService.getPartidaById(1).get();
-
-        //Voto
-        Voto voto = new Voto();
-        voto.setRonda(1);
-        voto.setTurno(1);
-        voto.setPartida(partida1);
-        votoService.saveVoto(voto,null);
-
+        partida1.setRonda(1);
+        partida1.setTurno(1);
         //Test
         List<Voto> votos = votoRepository.findVotosRondaTurno(partida1.getRonda(), partida1.getTurno(), partida1);
         assertFalse(votos.isEmpty());
@@ -67,14 +54,8 @@ public class VotoRepositoryTests {
     public void findVotosRondaTurnoFailTest() throws VotoNoPermitidoException{
         //Partida
         Partida partida1 = partidaService.getPartidaById(1).get();
-
-        //Voto
-        Voto voto = new Voto();
-        voto.setRonda(4); //Ronda que no existe
-        voto.setTurno(1);
-        voto.setPartida(partida1);
-        votoService.saveVoto(voto,null);
-
+        partida1.setRonda(1);
+        partida1.setTurno(2);
         //Test
         List<Voto> votos = votoRepository.findVotosRondaTurno(partida1.getRonda(), partida1.getTurno(), partida1);
         assertTrue(votos.isEmpty());
@@ -85,15 +66,8 @@ public class VotoRepositoryTests {
         //Partida
         Partida partida1 = partidaService.getPartidaById(1).get();
         Jugador jugador = jugadorService.getJugadorByUsername("Guaje");
-
-        //Voto
-        Voto voto = new Voto();
-        voto.setRonda(1);
-        voto.setTurno(1);
-        voto.setJugador(jugador);
-        voto.setPartida(partida1);
-        votoService.saveVoto(voto,null);
-
+        partida1.setRonda(1);
+        partida1.setTurno(1);
         //Test
         List<Voto> votos = votoRepository.findVotosTurnoJugador(jugador, partida1.getRonda(), partida1.getTurno(), partida1);
         assertFalse(votos.isEmpty());
@@ -106,26 +80,14 @@ public class VotoRepositoryTests {
         Partida partida1 = partidaService.getPartidaById(1).get();
         Jugador jugador = jugadorService.getJugadorByUsername("Campanas");
         Jugador jugador2 = jugadorService.getJugadorByUsername("Guaje");
-        Voto voto = new Voto();
 
-        //Añado voto sin ningun jugador
-        voto.setRonda(1);
-        voto.setTurno(1);
-        voto.setPartida(partida1);
-        votoService.saveVoto(voto,null);
 
         //Test buscando un jugador que no está
         List<Voto> votos = votoRepository.findVotosTurnoJugador(jugador, partida1.getRonda(), partida1.getTurno(), partida1);
         assertTrue(votos.isEmpty());
 
-        //Voto con ronda que no existe
-        voto.setRonda(2);
-        voto.setTurno(1);
-        voto.setJugador(jugador2);
-        voto.setPartida(partida1);
-        votoService.saveVoto(voto,null);
-
         //Test buscando una ronda que no esta en la partida
+        partida1.setRonda(3);
         List<Voto> votos2 = votoRepository.findVotosTurnoJugador(jugador2, partida1.getRonda(), partida1.getTurno(), partida1);
         assertTrue(votos2.isEmpty());
     }

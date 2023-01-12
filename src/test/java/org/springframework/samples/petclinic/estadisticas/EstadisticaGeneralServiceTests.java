@@ -118,7 +118,7 @@ public class EstadisticaGeneralServiceTests {
     public void getNumPartidasTest(){
         List<Partida> partidas = estadisticaGeneralService.getPartidasNoActivas();
         assertNotNull(partidas);
-        assertEquals(7, estadisticaGeneralService.getNumPartidas(partidas));
+        assertEquals(6, estadisticaGeneralService.getNumPartidas(partidas));
     }
 
     @Test
@@ -188,7 +188,7 @@ public class EstadisticaGeneralServiceTests {
     public void getVictoriasMercaderTest(){
         List<Partida> partidas = estadisticaGeneralService.getPartidasNoActivas();
         assertNotNull(partidas);
-        assertEquals(2, estadisticaGeneralService.getVictoriasMercader(partidas));
+        assertEquals(1, estadisticaGeneralService.getVictoriasMercader(partidas));
     }
 
     @Test

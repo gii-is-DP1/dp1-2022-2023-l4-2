@@ -32,22 +32,20 @@ public class VotoService {
     @Transactional(rollbackFor = VotoNoPermitidoException.class)
     public void saveVoto(Voto v,Jugador j) throws VotoNoPermitidoException{
         try{
-            if(null!=j && v.getPartida()!=null){
-                List<Voto> votosRondaTurno = getVotosTurnoJugador(v.getPartida(), j); 
-                Voto voto = getVotoById(v.getId().longValue()).orElse(null);
-                if(j.getRol().getName().equals("Pretor") && voto != null){
-                    votoRepository.save(v);
-                }else if(!j.getRol().getName().equals("Edil")){
-                    throw new VotoNoPermitidoException();
-                }else if(j.getRol().getName().equals("Edil")&& !votosRondaTurno.isEmpty() && votosRondaTurno.get(0).getElegido()){
-                    v.setElegido(false);
-                    votoRepository.save(v);
-                }else if(j.getRol().getName().equals("Edil")&&!votosRondaTurno.isEmpty()){
-                    throw new VotoNoPermitidoException();                    
-                }
+            List<Voto> votosRondaTurno = getVotosTurnoJugador(v.getPartida(), j); 
+            Voto voto = getVotoById(v.getId().longValue()).orElse(null);
+            if(j.getRol().getName().equals("Pretor") && voto != null){
+                votoRepository.save(v);
+            }else if(!j.getRol().getName().equals("Edil")){
+                throw new VotoNoPermitidoException();
+            }else if(j.getRol().getName().equals("Edil")&& !votosRondaTurno.isEmpty() && votosRondaTurno.get(0).getElegido()){
+                v.setElegido(false);
+                votoRepository.save(v);
+            }else if(j.getRol().getName().equals("Edil")&&!votosRondaTurno.isEmpty()){
+                throw new VotoNoPermitidoException();                    
             }
             votoRepository.save(v);
-        }catch(Exception e){
+        }catch(Exception eE){
             throw new VotoNoPermitidoException();
         }
     }

@@ -85,10 +85,10 @@ public class PartidaServiceTests {
     @Test
     public void deletePartidaTest(){
         List<Partida> partidas1 = partidaService.getPartidas();
-        partidaService.deletePartida(9);
+        partidaService.deletePartida(4);
         List<Partida> partidas2 = partidaService.getPartidas();
         assertNotEquals(partidas1.size(), partidas2.size());
-        Partida p = partidaService.getPartidaById(9).orElse(null);
+        Partida p = partidaService.getPartidaById(4).orElse(null);
         assertNull(p);
         
     }

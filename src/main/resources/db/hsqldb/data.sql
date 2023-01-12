@@ -228,9 +228,9 @@ INSERT INTO partida_participaciones(partida_id,participaciones_id)
     (2,3),
     (3,4),
     (2,2),
-    (8,5),
-    (8,6),
-    (4,7),
+    (7,5),
+    (7,6),
+    (8,7),
     (1,8),
     (1,9),
     (1,10),
@@ -269,16 +269,16 @@ INSERT INTO partida_jugadores(partidas_id,jugadores_id)
     (3,1),
     (2,4),
     (3,2),
-    (4,2),
+    (8,2),
     (5,2),
-    (4,6),
+    (8,6),
     (5,6),
     (6,6),
     (5,5),
     (6,5),
     (7,5),
-    (8,3),
-    (8,1),
+    (7,3),
+    (7,1),
     (5,2),
     (6,2),
     (7,2);
@@ -303,3 +303,6 @@ INSERT INTO mensaje(id, contenido, jugador_id)
     VALUES(29, 'Hola desde DB', 3);
 INSERT INTO chat_mensajes(chat_id, mensajes_id)
     VALUES (8,29);
+
+INSERT INTO voto(id,elegido,ronda,turno,faccion_id,jugador_id,partida_id)
+    VALUES(1,false,1,1,1,1,1);
