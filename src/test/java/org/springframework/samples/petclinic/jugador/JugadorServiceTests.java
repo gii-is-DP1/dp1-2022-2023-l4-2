@@ -259,7 +259,7 @@ public class JugadorServiceTests {
     }
 
     @Test
-    public void TestGetPartidasActivasAmigos(){
+    public void testGetPartidasActivasAmigos(){
         Jugador jugador6 = jugadorService.getJugadorById(6).get();
         Jugador jugador3 = jugadorService.getJugadorById(3).get();
         jugadorService.agregarAmigo(jugador6, jugador3.getUser().getUsername());
@@ -268,7 +268,7 @@ public class JugadorServiceTests {
 
 
     @Test
-    public void TestGetPartidasActivasAmigosFail(){
+    public void testGetPartidasActivasAmigosFail(){
         Jugador jugador7 = jugadorService.getJugadorById(7).get();
         Jugador jugador8 = jugadorService.getJugadorById(8).get();
         List<Partida> listaVacia = jugadorService.getPartidasActivasAmigos(jugador8);
