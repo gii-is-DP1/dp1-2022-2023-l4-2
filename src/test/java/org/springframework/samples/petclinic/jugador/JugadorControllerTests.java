@@ -55,26 +55,7 @@ public class JugadorControllerTests {
         jugador = jugadorService.getJugadorByUsername("Guaje");
         logros = logroService.getLogros();
     }
-    }
-
-    /*@BeforeEach
-    void config(){
-        jugador.setId(1);
-        jugador.setAmigoDe(null);
-        jugador.setCreator(null);
-        User u = new User();
-        u.setUsername("Guaje");
-        u.setPassword("1324134");
-        jugador.setUser(u);
-        jugador.setFirstName("Pablo");
-        jugador.setLastName("Mera");
-        jugador.setEstaEnPartida(false);
-        RolType rt = new RolType();
-        rt.setId(1);
-        rt.setName("Consul");
-        jugador.setRol(rt);
-        jugador.setYaElegido(false);
-    }*/
+}
 
     @WithMockUser(value = "spring")
     @Test
@@ -103,22 +84,5 @@ public class JugadorControllerTests {
         .andExpect(status().is3xxRedirection());
     }
 
-    /*@WithMockUser(value = "spring")
-	@Test
-	void testGetLogrosDelJugador() throws Exception{
-
-        given(logroService.getLogros()).willReturn(logros);
-        given(jugadorService.getJugadorByUsername("Guaje")).willReturn(jugador);
     
-        mockMvc.perform(get("/jugadores/logros/{username}", "Guaje"))
-        .andExpect(status().isOk())
-        .andExpect(model().attribute("logros", hasSize(2)))
-        .andExpect(model().attribute("partidasJugadas", is(1)))
-        .andExpect(model().attribute("partidasGanadas", is(1)))
-        .andExpect(model().attribute("victoriasLeal", is(1)))
-        .andExpect(model().attribute("victoriasTraidor", is(0)))
-        .andExpect(model().attribute("victoriasMercader", is(0)))
-        .andExpect(view().name("jugadores/logrosDelJugador"));
-
-	}*/
 }
