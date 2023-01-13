@@ -46,4 +46,13 @@ Mercaderes.
 
 Tras finalizar la partida, definiremos los jugadores que han vencido y se guardarán los datos con la facción que has ganado y las estadísticas de la partida.
 
+### Trabajo realizado por:
+
++  **antcardia :**  Antonio Carretero Díaz
++  **Domi-ATLAS :**  Eduardo Pizarro López
++  **Alejandrocg024 :**  Alejandro Campano Galán
++  **PabloMera6 :**  Pablo Mera Gómez
++  **davra02 :**  David Reyes Alés
++  **jucamgar2 :**  Juan Jesús Campos Garrido
+
 <img width="1042" alt="petclinic-screenshot" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Vincenzo_Camuccini_-_La_morte_di_Cesare.jpg/1200px-Vincenzo_Camuccini_-_La_morte_di_Cesare.jpg">
