@@ -12,9 +12,13 @@
     <div style = "font-family: 'Dalek Pinpoint', sans-serif; font-size: 100px;text-align: center;">
         <c:out value ="${jugador.user.username}"/>
     </div>
-     <div>
+     <div style = "display: flex; width: 50%;margin-left: 25%;">
         <spring:url value="/resources/images/Soldado${faccionFavorita}.png" var="img" />
+        <c:if test="${jugador.user.username == 'Guaje'}">
+            <img class="img-responsive" style ="margin: auto;width: 200px;   height: 200px;   border-radius: 50%;" src="/resources/images/Fekir.jpg" />
+        </c:if>
         <img class="img-responsive" style ="margin: auto;width: 200px;   height: 200px;   border-radius: 50%;" src="${img}" />
+
     </div>
 
     <c:if test = "${jugador.user.username == nombreUsuario}">
